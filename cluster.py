@@ -16,7 +16,7 @@ def pca(data):
 
 
 # print some properties of each cluster
-def summarize(clusters, exact, k, models, maxNs, dists):
+def summarize(clusters, exact, k, models, maxNs):
     for i in range(k):   # for each cluster
         clust = [exact[p, :] for p in range(len(clusters)) if clusters[p] == i]
         print(f"\nCluster {i + 1}")
@@ -51,10 +51,12 @@ def approximate(points, n):
 
 
 # compute clusters, draw and print some properties
-def cluster(logarithmic_scale=True, by_histograms=True, k=4):
+def cluster(logarithmic_scale=True, by_histograms=True, ks=None):
+    if ks is None:
+        ks = [4, 7, 10]
     name = "histogram" if by_histograms else "moment"
     # import data (parameters and than data)
-    parameters = [(int(p[0]), int(p[1]), p[2]) for p in [par.split(",") for par in
+    parameters = [(int(p[0]), int(p[-1]), p[1:-1]) for p in [par.split("_") for par in
                                                          open(f'collectedData/{"" if logarithmic_scale else "lin-"}'
                                                               f'parameters.txt', "r").read().split("\n")]]
     if by_histograms:
@@ -68,11 +70,10 @@ def cluster(logarithmic_scale=True, by_histograms=True, k=4):
                                  "r").read().split("\n")])
         data = moments
     # make lists of parameters
-    dists = sorted(list({a for _, _, a in parameters}))
     maxNs = sorted(list({a for _, a, _ in parameters}))
     models = sorted(list({a for a, _, _ in parameters}))
     # exact parameters before clustering
-    exact = np.array([[a[0], a[1], dists.index(a[2])] for a in parameters])
+    exact = np.array([[a[0], a[1]] for a in parameters])
 
     # remove linear dependency between dimensions in data
     data, eigval, eigvec, meandata = pca(data)
@@ -84,15 +85,15 @@ def cluster(logarithmic_scale=True, by_histograms=True, k=4):
     # how is it generated from original data (eigenvectors)
     t = bins if name in "histogram" else [i + 1 for i in range(len(eigvec[:, 0]))]
     plt.subplot(221)
-    plt.plot(t, eigval)
+    plt.plot(eigval)
     plt.xlabel(f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}")
     plt.ylabel("Relative probability")
     plt.title(f"Eigenvalues for transformed {name} space")
     plt.subplot(222)
-    plt.plot(t, np.cumsum(eigval) / np.sum(eigval))
+    plt.plot(np.cumsum(eigval) / np.sum(eigval))
     plt.title(f"Explained variance by component for transformed {name} space")
     plt.subplot(223)
-    plt.plot(t, np.log10(eigval + 1e-17))
+    plt.plot(np.log10(eigval + 1e-17))
     plt.title(f"Logarithm of eigenvalues for transformed {name} space")
     plt.subplot(224)
     plt.plot(t, np.abs(eigvec[:, 0]), label="1")
@@ -101,41 +102,39 @@ def cluster(logarithmic_scale=True, by_histograms=True, k=4):
     plt.plot(t, np.abs(eigvec[:, 3]), label="4")
     plt.title(f"Weights for first dimensions in transformed {name} space")
     plt.legend(loc="best")
+    plt.show()
 
-    kmeans = KMeans(n_clusters=k).fit(data)
-    clusters = kmeans.labels_
-    means = kmeans.cluster_centers_
-    means = (np.dot(eigvec, means.T) + np.dot(meandata, np.ones((k, 1)).T))  # stolpec je povprecje gruce
-    if name in "histogram":
-        means = (means.T / np.sum(means, 0).reshape(-1, 1)).T
+    for k in ks:
+        kmeans = KMeans(n_clusters=k).fit(data)
+        clusters = kmeans.labels_
+        means = kmeans.cluster_centers_
+        means = (np.dot(eigvec, means.T) + np.dot(meandata, np.ones((k, 1)).T))  # stolpec je povprecje gruce
+        if name in "histogram":
+            means = (means.T / np.sum(means, 0).reshape(-1, 1)).T
 
-    summarize(clusters, exact, k, models, maxNs, dists)
+        summarize(clusters, exact, k, models, maxNs)
 
-    plt.figure(figsize=(5, 5))
-    plt.plot(t, means[:, 0], label="1")
-    plt.plot(t, means[:, 1], label="2")
-    plt.plot(t, means[:, 2], label="3")
-    plt.plot(t, means[:, 3], label="4")
-    plt.title(f"Mean {name}s for each cluster")
-    plt.legend(loc="best")
-
-    if name in "histograms":
         plt.figure(figsize=(5, 5))
-        means = 1 - np.cumsum(means / np.sum(means, 0), 0)
-        plt.plot(t, means[:, 0], label="1")
-        plt.plot(t, means[:, 1], label="2")
-        plt.plot(t, means[:, 2], label="3")
-        plt.plot(t, means[:, 3], label="4")
-        plt.title(f"Preživetvena funkcija za povprečje gruče")
+        for i in range(k):
+            plt.plot(t, means[:, i], label=f"{i+1}")
+        plt.title(f"Mean {name}s for each cluster")
         plt.legend(loc="best")
 
-    plt.figure(figsize=(12, 12))
-    mark = "P1^*os+x"
-    colors = ["tab:" + c for c in ["blue", "orange", "green", "red", "purple"]]
-    plt.subplot(121, projection='3d')
-    for model in models:
-        for dist in dists:
-            trues = (exact[:, 0] == model) * (exact[:, 2] == dists.index(dist))
+        if name in "histograms":
+            plt.figure(figsize=(5, 5))
+            means = 1 - np.cumsum(means / np.sum(means, 0), 0)
+            for i in range(k):
+                plt.plot(t, means[:, i], label=f"{i + 1}")
+            plt.title(f"Preživetvena funkcija za povprečje gruče")
+            plt.legend(loc="best")
+
+        plt.figure(figsize=(12, 12))
+        mark = "P1^*os+x"
+        colors = ["tab:"+c for c in ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan"]]
+        plt.subplot(121, projection='3d')
+        for model in models:
+            trues = (exact[:, 0] == model)
+            trues = trues * np.random.random(trues.shape[0]) > 0.995
             plt.plot(data[trues, 0],
                      data[trues, 1],
                      data[trues, 2],
@@ -144,34 +143,35 @@ def cluster(logarithmic_scale=True, by_histograms=True, k=4):
                 plt.plot(data[trues * (exact[:, 1] == maxN), 0],
                          data[trues * (exact[:, 1] == maxN), 1],
                          data[trues * (exact[:, 1] == maxN), 2],
-                         marker=mark[dists.index(dist)],
-                         markersize=np.log10(maxN),
+                         marker=mark[4],
+                         markersize=np.log10(maxN)+1,
                          linewidth=0, color=colors[model - 1])
-    plt.title("Coloured by model - after Principal component analysis (PCA)")
+        plt.title("Coloured by model - after Principal component analysis (PCA)")
 
-    ax = plt.subplot(122, projection='3d')
-    for i in range(k):
-        points = data[clusters == i, :3]
-        if name in "histograms":
-            n = 3
-            b, text = approximate(points, n)
-            print(f"cluster {i + 1} surface:\n\t" + text)
-            x = points[:, 0]
-            y = points[:, 1]
-            Z = 1 * b[0] + x * b[1] + y * b[2]
-            if n > 1:
-                Z += x * y * b[3] + x ** 2 * b[4] + y ** 2 * b[5]
-            if n > 2:
-                Z += x ** 2 * y * b[6] + x * y ** 2 * b[7] + x ** 3 * b[8] + y ** 3 * b[9]
-            # Plot the surface.
-            tri = mtri.Triangulation(points[:, 0], points[:, 1])
-            ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
-        ax.plot(points[:, 0], points[:, 1], points[:, 2],
-                label=i + 1, markersize=4, marker='.', linewidth=0)
-        ax.set_xlabel("x1")
-        ax.set_ylabel("x2")
-        ax.set_zlabel("x3")
-    plt.legend(loc="best")
-    plt.title("Coloured by cluster")
+        ax = plt.subplot(122, projection='3d')
+        for i in range(k):
+            points = data[clusters == i, :3]
+            if name in "histograms":
+                n = 3
+                b, text = approximate(points, n)
+                print(f"cluster {i + 1} surface:\n\t" + text)
+                trues = np.random.random(points.shape[0]) > 0.99
+                x = points[trues, 0]
+                y = points[trues, 1]
+                Z = 1 * b[0] + x * b[1] + y * b[2]
+                if n > 1:
+                    Z += x * y * b[3] + x ** 2 * b[4] + y ** 2 * b[5]
+                if n > 2:
+                    Z += x ** 2 * y * b[6] + x * y ** 2 * b[7] + x ** 3 * b[8] + y ** 3 * b[9]
+                # Plot the surface.
+                tri = mtri.Triangulation(x, y)
+                ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
+            trues = np.random.random(points.shape[0]) > 0.995
+            ax.plot(points[trues, 0], points[trues, 1], points[trues, 2], label=i + 1, markersize=4, marker='.', linewidth=0)
+            ax.set_xlabel("x1")
+            ax.set_ylabel("x2")
+            ax.set_zlabel("x3")
+        plt.legend(loc="best")
+        plt.title("Coloured by cluster")
 
-    plt.show()
+        plt.show()

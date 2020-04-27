@@ -6,13 +6,8 @@ method = -1
 
 
 class Histogram:  # object that takes parameters and gives histogram and moments computed
-    def __init__(self, model, max_n, distribution, logarithmic_scale=False, n_bins=100):
-        # object with its parameters, histogram, bins, moments
-        self.parameters = {"model": model, "max_n": max_n, "distribution": distribution,
-                           "logarithmic": logarithmic_scale}
-        with open(f'data/inf_{model}_{max_n}_{"_".join(distribution)}.txt', 'r') as f:  # read data
-            array = [float(line) for line in f.readlines()]
-        array = list(map(lambda x: x if logarithmic_scale else 10 ** x, array))  # transform if logarithmic scale
+    def __init__(self, array, logarithmic_scale=False, n_bins=100):
+        array = np.array(array) if logarithmic_scale else 10 ** np.array(array)  # transform if logarithmic scale
         max_value = 25 if logarithmic_scale else 6e7
         self.histogram, self.bins = np.histogram(array, n_bins, [0, max_value])  # make histogram from 0 to maxValue
         self.bins = np.array([i*max_value/n_bins for i in range(n_bins)])

@@ -7,12 +7,12 @@ from cluster import *
 
 # ============ Parameters ================
 
-run_steps = [1, 5]     # list of steps we want to run from 1 to 5
+run_steps = [5]     # list of steps we want to run from 1 to 5
 # 1: generating data, 2: drawing selected histograms, 3: drawing selected model histograms in 3D
 # 4: drawing distance matrices for some different distances, 5: clustering and cluster analysis
 
 # generating data parameters:
-noIterations = 1e5    # number of generated points for each selected parameters
+noIterations = 1e2    # number of generated points for each selected parameters
 fixed_n = [1, 3, 10, 30, 100, 300, 1000, 3000, 10000]   # list of values for maxN
 
 # general parameters for working with histograms
@@ -29,15 +29,14 @@ draw_model = 1
 draw_distribution = (0, 0, 0, 0, 0, 0)
 
 # number of clusters made
-k = 4    # number of clusters
+ks = [4, 10]    # number of clusters
 
 # ============ Run functions using these parameters ============
 
 # run only selected steps
 if 1 in run_steps:
     print("\n\t1: generating data")
-    #generate(noIterations, fixed_n)
-    collect(bin_no)
+    generate()
 if 2 in run_steps:
     print("\n\t2: draw selected histograms")
     draw_histograms(logarithmic_scale, by_histograms, bin_no)
@@ -50,9 +49,7 @@ if 4 in run_steps:
 if 5 in run_steps:
     print("\n\t5: clustering and analysis of clusters")
     print("clustering by histograms")
-    cluster(logarithmic_scale, by_histograms=True, k=k)
-    print("clustering by moments")
-    cluster(logarithmic_scale, by_histograms=False, k=k)
+    cluster(logarithmic_scale, by_histograms=True, ks=[4, 7, 10])
     # + ... fixed, Y ... halfgauss, ^ ... lognormal,
     # * ... loguniform, o ... uniform
     # blue ... model 1, orange ... model 2, green ... model 3
