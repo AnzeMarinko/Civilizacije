@@ -52,9 +52,9 @@ logarithmic scale.
 
 ## Data comparison: Drawing of selected distributions
 
-We can draw generated data using `plot_L.py` or `plot3D_L.py` where
-we have to set scale (logarithmic scale or not) and list of models
-to draw (`parameters`).
+We can draw generated data using `plot3D_L.py` where
+we have to set scale (logarithmic scale or not) and models
+to draw.
 
 
 
@@ -68,7 +68,7 @@ to draw (`parameters`).
 
 ## Clustering of generated distributions
 
-`cluster.py`
+`cluster.py` and `plot_L.py`
 
 ```
 blue ... model 1
@@ -84,23 +84,16 @@ There is a file `main.py` with all commands collected.
 Set parameters in first section and run the file.
 Parameters to be set:
 
-* list of steps we want to run from 1 to 3:
+* list of steps we want to run from 1 to 2:
 ```
-run_steps = [1, 2, 3]
-# 1: drawing selected histograms,
-# 2: drawing selected model histograms in 3D,
-# 3: clustering and cluster analysis
+run_steps = [1, 2]
+# 1: drawing selected model histograms in 3D,
+# 2: clustering and cluster analysis
 ```
 * general parameters for working with histograms:
 ```
 # scale of x axis for histograms
 logarithmic_scale = True
-```
-* draw selected histograms:
-```
-# selected histograms from clusters made by
-# histogram or moment comparison
-by_histograms = True
 ```
 * selected model and distribution to draw in 3D:
 ```
@@ -114,6 +107,7 @@ draw_distribution = "loguniform"
 * number of clusters made:
 ```
 ks = [4, 7, 10]    # number of clusters from 1 to 10
+by_histograms = True   # cluster by selected space
 ```
 
 ## Report
@@ -123,14 +117,15 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* uredi kodo (plot3D, plot, cluster),
-* uredi grafe, vso kodo prilagodi novim poimenovanjem podatkov,
-uporabljaj hists.txt in ne več dejanskih podatkov
-* odstrani neprimerne porazdelitve (stabilizacija do L < 1e7, po tem odreži)
+* uredi grafe,
+* uredi kodo (cluster.py),
 * konveksna ovojnica ... izberi nekaj robnih primerov za izris
 (3 najbolj različne na gručo in povprečje gruče)
-* dodaj Rare Earth theory
 * uredi README
+
+
+* odstrani neprimerne porazdelitve (stabilizacija do L < 1e7, po tem odreži)
+* dodaj Rare Earth theory
 * napisi poročilo vsega do sedaj v slovenščini
 (kar je v README in opažanja, predvidevanja
  ob slikah, predlogi za naprej)

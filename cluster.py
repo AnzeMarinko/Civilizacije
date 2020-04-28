@@ -173,5 +173,8 @@ def cluster(logarithmic_scale=True, by_histograms=True, ks=None):
             ax.set_zlabel("x3")
         plt.legend(loc="best")
         plt.title("Coloured by cluster")
-
+        
+        # samo za izbrane clusters (seznam), histograms (seznam numpy arrayev) na konveksni ovojnici:
+        # plot_L.draw_histograms(clusters, histograms, logarithmic_scale, by_histograms)
+        
         plt.show()
