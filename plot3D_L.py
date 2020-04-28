@@ -1,42 +1,33 @@
 import matplotlib.pyplot as plt
-import numpy as np
-import os
+from numpy import meshgrid, linspace, log10, array
 from mpl_toolkits import mplot3d
 
 
-def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0, 0, 0), bin_no=100):
+def draw_histograms3D(logarithmic_scale=True, model=3, distribution=(0, 0, 0, 0, 0, 0)):
     # draw in logarithmic scale on x, y axis
-    parameters = sorted([tuple(int(i) for i in r) for r in [result[4:-4].split("_")
-                                                                 for result in os.listdir('data')]],
-                        key=lambda x: (x[0], x[2:], x[1]))
-    # select the ones for drawing
-    parameters = [test for test in parameters if test[0] == model and tuple(test[2:]) == distribution]
-
-    bins = np.linspace(-2, 25, bin_no + 1) if logarithmic_scale else np.linspace(0, parameters[1][1], bin_no + 1)
-    horSec = np.log10(np.array(sorted([par[1] for par in parameters])))
-    Z = []
-
-    for par in parameters:   # read data and make histograms
-        with open(f'data/inf_{par[0]}_{par[1]}_{"_".join([str(i) for i in par[2:]])}.txt', 'r') as f:
-            array = [float(line[0:-1]) if logarithmic_scale else 10**float(line[0:-1]) for line in f.readlines()]
-        Z.append(np.histogram(array, bins)[0])
-        print(par)
-
-    X, Y = np.meshgrid(bins[:-1], horSec)
-    fig = plt.figure()   # draw distributions
-    ax = fig.add_subplot(111, projection='3d')
-    X = np.array(X)
-    Y = np.array(Y)
-    Z = np.array(Z)
-
-    # Plot the surface
-    ax.plot_surface(X, Y, Z, cmap=plt.get_cmap("jet"), shade=True, alpha=0.8)
-
-    ax.set_xlabel("log(L)")
-    ax.set_ylabel("log(N)")
-    ax.set_zlabel("# of hits")
-    plt.title(f"Model {model} with {distribution} distribution in"
-              f"{'logarithmic' if logarithmic_scale else 'linear'} scale")
-    plt.show()
-
-    print("done")
+    # get list of parameters
+    parameters = sorted([([int(i) for i in par.split("_")],
+                          [float(h) if logarithmic_scale else 10 ** float(h) for h in hist.split(",")])
+                         for par, hist in
+                         zip(open(f"collectedData/{'' if logarithmic_scale else 'lin-'}parameters.txt",
+                                  "r").read().split("\n"),
+                             open(f"collectedData/{'' if logarithmic_scale else 'lin-'}hists.txt",
+                                  "r").read().split("\n"))])
+    # filter parameters and histograms
+    parameters = [(par[-1], hist) for par, hist in parameters if par[0] == model and tuple(par[1:-1]) == distribution]
+    if len(parameters) > 0:  # draw histograms of selected model and distribution
+        bins = linspace(-1 if logarithmic_scale else 0, 20 if logarithmic_scale else 5e10, len(parameters[0][1]))
+        Z = array([hist for par, hist in parameters])
+        n = [par for par, hist in parameters]
+        X, Y = meshgrid(bins, log10(n))
+        fig = plt.figure()  # draw distributions
+        ax = fig.add_subplot(111, projection='3d')
+        # Plot the surface
+        ax.plot_surface(X, Y, Z, cmap=plt.get_cmap("jet"), shade=True, alpha=0.8)
+        ax.set_xlabel("log(L)")
+        ax.set_ylabel("log(N)")
+        ax.set_zlabel("# of hits")
+        plt.title(f"Model {model} with {distribution} distribution in "
+                  f"{'logarithmic' if logarithmic_scale else 'linear'} scale")
+        plt.show()
+        print("done")

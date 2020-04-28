@@ -16,8 +16,13 @@ parameters = set([(1, d1, d2, d3, d4, d5, d6) for d1 in range(d) for d2 in range
 existing = {tuple([int(i) for i in par.split("_")[:-1]] + [0] * 3)[:7] for par in
             set(open("collectedData/lin-parameters.txt", "r").read().split("\n") +
                 open("collectedData/parameters.txt", "r").read().split("\n"))}
+# set of parameters that were generated but invalid output
+open(f'collectedData/invalid-parameters.txt', 'a').write("")
+invalid = {tuple([int(i) for i in par.split("_")[:-1]] + [0] * 3)[:7] for par in
+           open(f'collectedData/invalid-parameters.txt', 'r').read().split("\n")[1:]}
 # make set of not generated distributions
 parameters.difference_update(existing)
+parameters.difference_update(invalid)
 
 noIterations = 1e6  # number of generated points for each histogram
 # all maximal numbers of civilisations
@@ -27,12 +32,12 @@ n = 10  # number of computed central moments
 
 
 def generate_by_n(par):  # generate histograms for all max. n-s at selected model and distributions
-    if par[0] == 2:   # model 2 has only 3 random variables
+    if par[0] == 2:  # model 2 has only 3 random variables
         par = par[:4]
     (model, dist) = (par[0], par[1:])
-    name = "_".join([str(p) for p in par])   # make name for file
+    name = "_".join([str(p) for p in par])  # make name for file
     t = time()
-    hists = []   # make some initially empty lists
+    hists = []  # make some initially empty lists
     moments = []
     pars = []
     linhists = []
@@ -41,25 +46,25 @@ def generate_by_n(par):  # generate histograms for all max. n-s at selected mode
     for maxN in nrange:
         # generate points distributed by model using selected distribution and maxN
         arr = array([get_point(maxN, dist, model) for _ in range(0, int(noIterations))])
-        if percentile(arr, 95) > 15:   # if model gives too big probability to too big numbers break
+        if percentile(arr, 95) > 15:  # if model gives too big probability to too big numbers break
             print("Overflow: more than 5 % for more than 10^15 years")
             break
         if isnan(arr).any():
             continue
-        arr = arr[arr < 20]   # remove too big numbers
         for logarithmic_scale in [True, False]:  # make it in logarithmic and linear scale
             # make histogram with selected number of bins, scale, from 0 to some big value
-            hist, _ = histogram(arr if logarithmic_scale else 10 ** arr, bin_no, [0, 20 if logarithmic_scale else 5e10])
-            # make histogram from 0 to maxValue
+            hist, _ = histogram(arr if logarithmic_scale else 10 ** arr, bin_no,
+                                [-1 if logarithmic_scale else 0, 20 if logarithmic_scale else 5e10])
+            # make histogram from minValue to maxValue
             m = mean(hist)
-            mom = moment(hist, range(2, n + 1))   # compute central moments
+            mom = moment(hist, range(2, n + 1))  # compute central moments
             if isnan(mom).any():
                 print("nans: invalid central moments")
                 continue
             if len(hist) != bin_no or len(mom) != n - 1:
                 print("lens: invalid histogram or central moments")
                 continue
-            if logarithmic_scale:   # add generated data to lists
+            if logarithmic_scale:  # add generated data to lists
                 hists.append(hist)
                 moments.append((m, mom))
                 pars.append(str(maxN))
@@ -85,6 +90,9 @@ def generate_by_n(par):  # generate histograms for all max. n-s at selected mode
     t = time() - t
     if len(pars) + len(linpars) > 0:
         print(f"Model {model} distributed {dist}: {t:.4f} s")
+    else:
+        with open(f'collectedData/invalid-parameters.txt', 'a') as f:
+            f.write("\n" + name)
     return t
 
 
@@ -100,7 +108,7 @@ def collect():
         f.write("\n".join([open("data/log-hists-" + par + ".txt", "r").read() for par in params]))
     with open("collectedData/moments.txt", "w") as f:
         f.write("\n".join([open("data/log-moments-" + par + ".txt", "r").read() for par in params]))
-    # add list of parameters in righ order
+    # add list of parameters in right order
     with open("collectedData/lin-parameters.txt", "w") as f:
         f.write("\n".join(["\n".join([par + "_" + mn for mn in open("data/lin-parameters-" + par + ".txt",
                                                                     "r").read().split(",")]) for par in linparams]))

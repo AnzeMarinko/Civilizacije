@@ -18,8 +18,8 @@ by_histograms = True
 
 # selected model and distribution to draw in 3D
 # models: 1, 2, 3
-draw_model = 1
-# distributions: "loguniform", "uniform", "halfgauss", "lognormal", "fixed"
+draw_model = 3
+# distributions 0-4: "loguniform", "uniform", "halfgauss", "lognormal", "fixed"
 draw_distribution = (0, 0, 0, 0, 0, 0)
 
 # number of clusters made

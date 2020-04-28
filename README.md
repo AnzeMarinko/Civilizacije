@@ -43,6 +43,8 @@ for logarithmic or linear scale histograms and moments
 collected histograms for each of parameters
 * `moments.txt` and `lin-moments.txt` with all linearly or logarithmically
 collected histograms transformed to moment space for each of parameters
+* `invalid-parameters.txt` is list of parameters that gave invalid input data
+ (more than 5 % of probability grater than 10^15 years)
 
 Moments are central mathematical moments. First moment is mean and
 second moment is variance. We can make histograms in linear or
@@ -53,6 +55,16 @@ logarithmic scale.
 We can draw generated data using `plot_L.py` or `plot3D_L.py` where
 we have to set scale (logarithmic scale or not) and list of models
 to draw (`parameters`).
+
+
+
+
+
+
+
+
+
+
 
 ## Clustering of generated distributions
 
@@ -111,7 +123,6 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* zabeleži si kje je bil overflow da naslednič preskočiš
 * uredi kodo (plot3D, plot, cluster),
 * uredi grafe, vso kodo prilagodi novim poimenovanjem podatkov,
 uporabljaj hists.txt in ne več dejanskih podatkov
