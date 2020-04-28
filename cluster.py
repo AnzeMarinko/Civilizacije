@@ -2,7 +2,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.cluster import KMeans
-import matplotlib.tri as mtri
+from matplotlib.tri import Triangulation
 
 
 # PCA transformation to draw the most informative graphs
@@ -164,7 +164,7 @@ def cluster(logarithmic_scale=True, by_histograms=True, ks=None):
                 if n > 2:
                     Z += x ** 2 * y * b[6] + x * y ** 2 * b[7] + x ** 3 * b[8] + y ** 3 * b[9]
                 # Plot the surface.
-                tri = mtri.Triangulation(x, y)
+                tri = Triangulation(x, y)
                 ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
             trues = np.random.random(points.shape[0]) > 0.995
             ax.plot(points[trues, 0], points[trues, 1], points[trues, 2], label=i + 1, markersize=4, marker='.', linewidth=0)

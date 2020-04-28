@@ -117,13 +117,13 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* uredi grafe,
-* uredi kodo (cluster.py),
+Sreda:
+* uredi grafe in kodo (cluster.py),
 * konveksna ovojnica ... izberi nekaj robnih primerov za izris
 (3 najbolj različne na gručo in povprečje gruče)
 * uredi README
 
-
+Teden kasneje:
 * odstrani neprimerne porazdelitve (stabilizacija do L < 1e7, po tem odreži)
 * dodaj Rare Earth theory
 * napisi poročilo vsega do sedaj v slovenščini
