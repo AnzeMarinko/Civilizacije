@@ -9,7 +9,7 @@ run_steps = [1, 2]     # list of steps we want to run from 1 to 2
 # 2: clustering and cluster analysis
 
 # general parameters for working with histograms
-logarithmic_scale = True    # scale of x axis for histograms
+logarithmic_scale = False    # scale of x axis for histograms
 
 # selected model and distribution to draw in 3D
 # models: 1, 2, 3

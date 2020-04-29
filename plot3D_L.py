@@ -7,7 +7,7 @@ def draw_histograms3D(logarithmic_scale=True, model=3, distribution=(0, 0, 0, 0,
     # draw in logarithmic scale on x, y axis
     # get list of parameters
     parameters = sorted([([int(i) for i in par.split("_")],
-                          [float(h) if logarithmic_scale else 10 ** float(h) for h in hist.split(",")])
+                          [float(h) for h in hist.split(",")])
                          for par, hist in
                          zip(open(f"collectedData/{'' if logarithmic_scale else 'lin-'}parameters.txt",
                                   "r").read().split("\n"),

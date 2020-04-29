@@ -76,7 +76,6 @@ Parameters to be set:
 where 1) is drawing of selected model histograms in 3D
 and 2) is clustering and cluster analysis.
 * scale of *x* axis for histograms `logarithmic_scale`
-(**Warning:** *linear scale in unstable for computations!*)
 * selected model `draw_model` and distribution to draw
 in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
 integers from 0 to 4 that represent each one random variable
