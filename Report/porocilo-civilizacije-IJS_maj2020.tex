@@ -1,0 +1,68 @@
+\documentclass[a4paper]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts, amsthm,amsmath}
+\usepackage{graphicx}
+
+\title{Civilizacije}
+\author{Anže Marinko \\ mentor: dr. Matjaž Gams \\ Inštitut Jožef Stefan - Ljubljana \\ pomlad 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Uvod, malo o kodi, metodah}
+We want to estimate distribution of time that some civilisation
+survives in our galaxy.
+
+All code is made in Python3.
+
+We are generating data by different models ... Each model takes two more parameters:
+* **maxN** ... maximal number of civilisations in our galaxy. We assume
+that there is at least one civilisation (here we are) and at most 10 000
+civilisations otherwise we would already see them.
+* **distribution** ... some parameters of the model are only bounded
+and we have to define distributions in this bounds. Possible distributions are:
+"loguniform", "uniform", "halfgauss", "lognormal", "fixed".
+
+Models
+
+* **Model 1:** The most elementary model using Sandberg distribution explained
+in `Sandberg-original-paper.pdf`,
+* **Model 2:** We collect together some variables from first model so
+we have only two random variables,
+* **Model 3:** We add a possibility of spreading to other
+planets to first model.
+
+Save collected data for further analysis
+
+`invalid-parameters.txt` is list of parameters that gave invalid input data
+(more than 5 \% of probability grater than 10\^15 years)
+
+Moments are central mathematical moments. First moment is mean and
+second moment is variance. We can make histograms in linear or
+logarithmic scale.
+
+Data comparison: Drawing of selected distributions
+
+We can draw generated data using `plot3D\_L.py` where
+we have to set scale (logarithmic scale or not) and models
+to draw.
+
+Clustering of generated distributions
+
+We can cluster al histograms in selected number of clusters
+using `cluster.py`. It draws us some plots so we can understand
+generated data better. In cloud of points colored by model
+size of marker is equal to `log(maxN)`.
+
+* scale of *x* axis for histograms `logarithmic\_scale`
+* list of numbers of clusters to make `ks` from 1 to 10 so it
+makes an analysis of data clustered ib each number of clusters
+from the list
+* `by\_histograms` should be *True* to cluster by histogram
+space
+
+\section{Rezultati, opažanja, predvidevanja ob slikah, predlogi za naprej}
+
+\end{document}

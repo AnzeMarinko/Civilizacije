@@ -76,6 +76,7 @@ Parameters to be set:
 where 1) is drawing of selected model histograms in 3D
 and 2) is clustering and cluster analysis.
 * scale of *x* axis for histograms `logarithmic_scale`
+(**Warning:** *linear scale in unstable for computations!*)
 * selected model `draw_model` and distribution to draw
 in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
 integers from 0 to 4 that represent each one random variable
@@ -93,11 +94,16 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* uporabi generateData_L.py in collectedData s coco.ijs.si (začel torek 28. 4. ob 20h,
+V torek:
+* uporabi generateData_L.py in collectedData s coco.ijs.si
+(začel torek 28. 4. ob 20h,
 predviden čas: max. 10 dni)
-* odstrani neprimerne porazdelitve (stabilizacija do L < 1e7, po tem odreži)
+* porocilo do sedaj (slike, besedilo)
+
+
+Kasneje:
+* odstrani neprimerne porazdelitve
+(stabilizacija do L < 1e7, po tem odreži)
 * dodaj Rare Earth theory
-* napisi poročilo vsega do sedaj v slovenščini
-(kar je v README in opažanja, predvidevanja
- ob slikah, predlogi za naprej)
+* drugo poročilo vsega novega
  

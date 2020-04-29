@@ -215,7 +215,7 @@ def cluster(logarithmic_scale=True, by_histograms=True, ks=None):
                 plt.plot(bins, get_histogram(p1), colors[i], linewidth=1, label=f"Cluster {i+1}")
                 plt.plot(bins, get_histogram(p2), colors[i], linewidth=1)
                 plt.plot(bins, get_histogram(p3), colors[i], linewidth=1)
-                plt.plot(bins, m / max(m), colors[i], linewidth=3)
+                plt.plot(bins, m / max(m), colors[i], linewidth=2)
             plt.xlabel(f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}")
             plt.ylabel("Relative probability")
             plt.legend(loc="best")
