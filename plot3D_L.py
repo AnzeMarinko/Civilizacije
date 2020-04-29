@@ -20,7 +20,7 @@ def draw_histograms3D(logarithmic_scale=True, model=3, distribution=(0, 0, 0, 0,
         Z = array([hist for par, hist in parameters])
         n = [par for par, hist in parameters]
         X, Y = meshgrid(bins, log10(n))
-        fig = plt.figure()  # draw distributions
+        fig = plt.figure(figsize=(7, 7))  # draw distributions
         ax = fig.add_subplot(111, projection='3d')
         # Plot the surface
         ax.plot_surface(X, Y, Z, cmap=plt.get_cmap("jet"), shade=True, alpha=0.8)

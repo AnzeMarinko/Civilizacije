@@ -56,59 +56,35 @@ We can draw generated data using `plot3D_L.py` where
 we have to set scale (logarithmic scale or not) and models
 to draw.
 
-
-
-
-
-
-
-
-
-
-
 ## Clustering of generated distributions
 
-`cluster.py` and `plot_L.py`
-
-```
-blue ... model 1
-orange ... model 2
-green ... model 3
-
-size of marker ... log(N)
-```
+We can cluster al histograms in selected number of clusters
+using `cluster.py`. It draws us some plots so we can understand
+generated data better. In cloud of points colored by model
+size of marker is equal to `log(maxN)`.
 
 ## Running experiments
 
-There is a file `main.py` with all commands collected.
-Set parameters in first section and run the file.
+There is a file `main.py` with some commands collected
+so we do not need to understand functions to draw plots.
+You just have to set parameters in first section of code
+and run the file.
+
 Parameters to be set:
 
-* list of steps we want to run from 1 to 2:
-```
-run_steps = [1, 2]
-# 1: drawing selected model histograms in 3D,
-# 2: clustering and cluster analysis
-```
-* general parameters for working with histograms:
-```
-# scale of x axis for histograms
-logarithmic_scale = True
-```
-* selected model and distribution to draw in 3D:
-```
-# models from 1 to 3
-draw_model = 1
-
-# distributions:
-# "loguniform", "uniform", "halfgauss", "lognormal", "fixed"
-draw_distribution = "loguniform"
-```
-* number of clusters made:
-```
-ks = [4, 7, 10]    # number of clusters from 1 to 10
-by_histograms = True   # cluster by selected space
-```
+* list of steps `run_steps` we want to run from 1 to 2,
+where 1) is drawing of selected model histograms in 3D
+and 2) is clustering and cluster analysis.
+* scale of *x* axis for histograms `logarithmic_scale`
+* selected model `draw_model` and distribution to draw
+in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
+integers from 0 to 4 that represent each one random variable
+in model distributed in selected distribution
+* list of numbers of clusters to make `ks` from 1 to 10 so it
+makes an analysis of data clustered ib each number of clusters
+from the list
+* `by_histograms` should be *True* to cluster by histogram
+space
 
 ## Report
 
@@ -117,13 +93,8 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-Sreda:
-* uredi grafe in kodo (cluster.py),
-* konveksna ovojnica ... izberi nekaj robnih primerov za izris
-(3 najbolj različne na gručo in povprečje gruče)
-* uredi README
-
-Teden kasneje:
+* uporabi generateData_L.py in collectedData s coco.ijs.si (začel torek 28. 4. ob 20h,
+predviden čas: max. 10 dni)
 * odstrani neprimerne porazdelitve (stabilizacija do L < 1e7, po tem odreži)
 * dodaj Rare Earth theory
 * napisi poročilo vsega do sedaj v slovenščini
