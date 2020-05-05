@@ -54,7 +54,7 @@ def get_point_model_1(max_n=10, distribution=(0, 0, 0, 0, 0, 0)):
     return logL  # rate of birth of new civilisation
 
 
-def get_point_model_2(max_n=10, distribution=(0, 0)):
+def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
     # Model 2: https://arxiv.org/ftp/arxiv/papers/1510/1510.08837.pdf
     # Using Sandberg distribution
     # Model 2 opposite to original Drake equation - model 1 (calculates how many intelligent civilisations are out
@@ -87,13 +87,16 @@ def get_point_model_3(max_n=10, distribution=(0, 0, 0, 0, 0, 0)):  # add expandi
     fLifeEks = float(log10(fLife))
 
     f = 10 ** (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
+
+    # logL = log10(N) - log10(f)   ... model 1 would return logL like this
+
     A = 1
     B = 0.004 / (9.461e12 ** 3)  # number density of stars as per Wikipedia
     a4 = 5.13342 * 1e10 * 10 ** (fPlanets + nEnvironment) * B    # estimated number of earth-like planets
     a14 = f * A   # rate of new intelligent civilisation born
     candidates = list(roots([a4 * a14, 0, 0, a14, -N]))   # zeros of function: a4 * a14 * x^4 + a14 * x - N
     # actually we want to solve equation: f*A * (L + 5.13342*1e10*10**(fPlanets+nEnvironment)*B * L**4) = N
-    L_initial_guess = 10 ** 2  # just a bad approximation to detect true candidate
+    L_initial_guess = N / (a14*log10(a14)**4)  # just a bad approximation to detect true candidate
     candidates.sort(key=lambda x: nabs(x - L_initial_guess))
     L = log10(candidates[0])
     return L

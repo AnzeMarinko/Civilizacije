@@ -41,14 +41,6 @@ for analysis:
 for logarithmic or linear scale histograms and moments
 * `hists.txt` and `lin-hists.txt` with all linearly or logarithmically
 collected histograms for each of parameters
-* `moments.txt` and `lin-moments.txt` with all linearly or logarithmically
-collected histograms transformed to moment space for each of parameters
-* `invalid-parameters.txt` is list of parameters that gave invalid input data
- (more than 5 % of probability grater than 10^15 years)
-
-Moments are central mathematical moments. First moment is mean and
-second moment is variance. We can make histograms in linear or
-logarithmic scale.
 
 ## Data comparison: Drawing of selected distributions
 
@@ -58,7 +50,7 @@ to draw.
 
 ## Clustering of generated distributions
 
-We can cluster al histograms in selected number of clusters
+We can cluster all histograms in selected number of clusters
 using `cluster.py`. It draws us some plots so we can understand
 generated data better. In cloud of points colored by model
 size of marker is equal to `log(maxN)`.
@@ -83,20 +75,17 @@ in model distributed in selected distribution
 * list of numbers of clusters to make `ks` from 1 to 10 so it
 makes an analysis of data clustered ib each number of clusters
 from the list
-* `by_histograms` should be *True* to cluster by histogram
-space
 
 ## Report
 
 There is going to be a report in slovenian language in
-`civilizacije.pdf`.
+`porocilo-civilizacije-IJS_maj2020.pdf`.
 
 ## TODO:
 
-V torek:
-* uporabi generateData_L.py in collectedData s coco.ijs.si
-(začel torek 28. 4. ob 20h,
-predviden čas: max. 10 dni)
+* podatkov je mogoče manj /normaliziraj histograme
+* izkoristi to da model 1 izračunaš ob računanju modela 3
+* več modela 2
 * porocilo do sedaj (slike, besedilo)
 
 
