@@ -81,9 +81,8 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
+* porocilo do sedaj
 * model 4 - povprecje ostalih modelov
-* porocilo do sedaj (slike, besedilo)
-
 
 Kasneje:
 * odstrani neprimerne porazdelitve
