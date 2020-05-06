@@ -138,13 +138,14 @@ def cluster(logarithmic_scale=True, ks=None):
         # draw points transformed by PCA coloured by models
         plt.figure(figsize=(16, 12))
         ax = plt.subplot(121, projection='3d')
-        for model in models:
-            trues = (exact[:, 0] == model)  # points of selected model
-            trues = trues * np.random.random(trues.shape[0]) > 0.5  # less points to easier drawing
+        for model in models:   # take just random 125*9 data from selected model
+            trues = np.random.choice(np.array(range(len(data)))[exact[:, 0] == model], size=125*9, replace=False)
+            trues = np.array([True if i in trues else False for i in range(len(data))])
             for maxN in maxNs:  # set size of marker to log10(maxN)
-                ax.plot(data[trues * (exact[:, 1] == maxN), 0],
-                        data[trues * (exact[:, 1] == maxN), 1],
-                        data[trues * (exact[:, 1] == maxN), 2],
+                points = data[trues * (exact[:, 1] == maxN), :]  # less points to easier drawing
+                ax.plot(points[:, 0],   # color by maxN
+                        points[:, 1],
+                        points[:, 2],
                         marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1])
         ax.set_xlabel("x1")
         ax.set_ylabel("x2")

@@ -84,7 +84,6 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* več modela 2 - numpy.random.choice(data, size=125, replace=False) za vsak model
 * porocilo do sedaj (slike, besedilo)
 
 

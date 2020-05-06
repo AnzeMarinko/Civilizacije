@@ -94,7 +94,7 @@ def generate():
     freeze_support()
     # run generator of histograms on set of free parameters
     # use 10 threads, compute cumulative runtime for all histograms
-    tsum = sum(Pool(9).map(generate_by_n, parameters))
+    tsum = sum(Pool(10).map(generate_by_n, parameters))
     # number of random variables: model 1: 6, model 2: 3, model 3: 6
     tend = time() - t0  # runtime used after multi-threading
     print(f"\n\tTime used: {tend // 3600}h {tend // 60 % 60}min {tend % 60}s")
