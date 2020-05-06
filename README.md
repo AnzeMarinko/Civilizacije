@@ -1,7 +1,7 @@
 # CIVILISATIONS
 
 * Authors: *Anže Marinko, Klara Golob, Ema Jemec*
-* Mentor: *Matjaž Gams*
+* Mentor: *dr. Matjaž Gams*
 * Institution: Jožef Stefan Institute - Ljubljana, Slovenia
 
 We want to estimate distribution of time that some civilisation
@@ -82,11 +82,17 @@ There is going to be a report in slovenian language in
 ## TODO:
 
 * porocilo do sedaj
-* model 4 - povprecje ostalih modelov
-
-Kasneje:
+* model 4 - mean histogram of models 1 and 3 at same
+   distribution and maxN and model 2 at specific parameters
+   where parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2,
+   torej 6 moznosti za vsako kombinacijo parametrov
+* model 5 - za vsake parametre iz modela 2 povprečje
+   z vsemi 6 iz drugih dveh
+   * modela 4 in 5 prineseta približno trikrat več novih točk
+   * če je to slabo, se kakega od obeh modelov znebi
 * odstrani neprimerne porazdelitve
-(stabilizacija do L < 1e7, po tem odreži)
+   (stabilizacija do L < 1e7, po tem odreži)
 * dodaj Rare Earth theory
-* README, drugo poročilo vsega novega
+* izračunavanje na npr. 5e6, N bolj na gosto z močnejšo mašino
+* koda, README, drugo poročilo vsega novega
  

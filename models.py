@@ -95,3 +95,6 @@ def get_point(max_n=10, distribution=(0, 0, 0, 0, 0, 0), model=(1, 3)):   # get 
         return get_point_model_2(max_n, distribution)
     if 1 in model or 3 in model:
         return get_point_model_1_3(model, max_n, distribution)
+
+# model 4 - mean histogram of models 1 and 3 at same distribution and maxN and model 2 at specific parameters
+# parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2, torej 6 moznosti za vsake parametre
