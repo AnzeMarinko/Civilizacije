@@ -27,7 +27,8 @@ _"loguniform", "uniform", "halfgauss", "lognormal", "fixed"_.
 #### Models
 
 * **Model 1:** The most elementary model using Sandberg distribution explained
-in `Sandberg-original-paper.pdf`,
+in `Sandberg-original-paper.pdf`, but we take parameters as random variables to
+get more general model,
 * **Model 2:** We collect together some variables from first model so
 we have only two random variables,
 * **Model 3:** We add a possibility of spreading to other
@@ -83,9 +84,7 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* podatkov je mogoče manj /normaliziraj histograme
-* izkoristi to da model 1 izračunaš ob računanju modela 3
-* več modela 2
+* več modela 2 - numpy.random.choice(data, size=125, replace=False) za vsak model
 * porocilo do sedaj (slike, besedilo)
 
 
@@ -93,5 +92,5 @@ Kasneje:
 * odstrani neprimerne porazdelitve
 (stabilizacija do L < 1e7, po tem odreži)
 * dodaj Rare Earth theory
-* drugo poročilo vsega novega
+* README, drugo poročilo vsega novega
  

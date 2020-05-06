@@ -71,7 +71,7 @@ def cluster(logarithmic_scale=True, ks=None):
 
     # remove linear dependency between dimensions in data
     data, eigval, eigvec, meandata = pca(data)
-    bins = np.linspace(-1 if logarithmic_scale else 0, 10 if logarithmic_scale else 1e10, len(eigval))
+    bins = np.linspace(-1 if logarithmic_scale else 0, 12 if logarithmic_scale else 1e10, len(eigval))
 
     plt.figure(figsize=(16, 12))
     # draw how important is each dimension in transformed data (eigenvalues) and
@@ -140,7 +140,7 @@ def cluster(logarithmic_scale=True, ks=None):
         ax = plt.subplot(121, projection='3d')
         for model in models:
             trues = (exact[:, 0] == model)  # points of selected model
-            trues = trues * np.random.random(trues.shape[0]) > 0.995  # less points to easier drawing
+            trues = trues * np.random.random(trues.shape[0]) > 0.5  # less points to easier drawing
             for maxN in maxNs:  # set size of marker to log10(maxN)
                 ax.plot(data[trues * (exact[:, 1] == maxN), 0],
                         data[trues * (exact[:, 1] == maxN), 1],
@@ -158,7 +158,7 @@ def cluster(logarithmic_scale=True, ks=None):
             n = 3
             b, text = approximate(points, n)
             print(f"cluster {i + 1} surface:\n\t" + text)
-            trues = np.random.random(points.shape[0]) > 0.99   # make triangulation on less points
+            trues = np.random.random(points.shape[0]) > 0.5   # make triangulation on less points
             x = points[trues, 0]
             y = points[trues, 1]
             Z = 1 * b[0] + x * b[1] + y * b[2]   # compute approximated x3
@@ -169,7 +169,7 @@ def cluster(logarithmic_scale=True, ks=None):
             # Plot the surface.
             tri = Triangulation(x, y)
             ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
-            trues = np.random.random(points.shape[0]) > 0.995    # draw less points
+            trues = np.random.random(points.shape[0]) > 0.5    # draw less points
             ax.plot(points[trues, 0], points[trues, 1], points[trues, 2], label=i + 1, markersize=4, marker='.',
                     linewidth=0)
         ax.set_xlabel("x1")

@@ -18,7 +18,7 @@ draw_model = 1
 draw_distribution = (0, 0, 0, 0, 0, 0)
 
 # make analysis
-ks = [4]   # , 7, 10]    # number of clusters
+ks = [4, 7, 10]    # number of clusters
 
 # ============ Run functions using these parameters ============
 

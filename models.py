@@ -35,8 +35,8 @@ def life_dist(mean=0, sigma=50):
 # get log(L) for max_n at random other parameters
 # ============ Models ====================
 
-
-def get_point_model_1(max_n=10, distribution=(0, 0, 0, 0, 0, 0)):
+# model 1 and 3, model 3 adds expanding in universe to model 1
+def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0)):
     # sample parameters in logarithmic scale
     RStarSample = sample_value(0, 2, distributions[distribution[0]])  # rate of new star born
     fPlanets = sample_value(-1, 0, distributions[distribution[1]])  # probability that star has planets
@@ -46,12 +46,29 @@ def get_point_model_1(max_n=10, distribution=(0, 0, 0, 0, 0, 0)):
     #       with other planets
 
     logN = sample_value(0, log10(max_n), distributions[distribution[5]])
-    fLife = life_dist(mean=0, sigma=50)    # probability that life begins
+    fLife = life_dist(mean=0, sigma=50)  # probability that life begins
     fLifeEks = log10(fLife)
 
     # N = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
     logL = logN - (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
-    return logL  # rate of birth of new civilisation
+    if 3 not in model:   # if only model 1
+        return [float(logL.real)]  # rate of birth of new civilisation
+
+    N = 10 ** logL
+    f = 10 ** (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
+    # logL = log10(N) - log10(f)   ... model 1 would return logL like this
+    A = 1
+    B = 0.004 / (9.461e12 ** 3)  # number density of stars as per Wikipedia
+    a4 = 5.13342 * 1e10 * 10 ** (fPlanets + nEnvironment) * B    # estimated number of earth-like planets
+    a14 = f * A   # rate of new intelligent civilisation born
+    candidates = list(roots([a4 * a14, 0, 0, a14, -N]))   # zeros of function: a4 * a14 * x^4 + a14 * x - N
+    # actually we want to solve equation: f*A * (L + 5.13342*1e10*10**(fPlanets+nEnvironment)*B * L**4) = N
+    L_initial_guess = N / (a14*log10(a14)**4)  # just a bad approximation to detect true candidate
+    candidates.sort(key=lambda x: nabs(x - L_initial_guess))
+    logL3 = log10(candidates[0])
+    if 1 in model:
+        return [float(logL.real), float(logL3.real)]
+    return [float(logL3.real)]
 
 
 def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
@@ -70,42 +87,11 @@ def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
 
     N = sample_value(0, log10(max_n), distributions[distribution[1]])
     biotechnicalProbability = sample_value(-11, -3, distributions[distribution[2]])
-    return N - (astrophysicsProbability + biotechnicalProbability)
+    return [float(N - (astrophysicsProbability + biotechnicalProbability)).real]
 
 
-def get_point_model_3(max_n=10, distribution=(0, 0, 0, 0, 0, 0)):  # add expanding in universe to model 1
-    # sample as in model 1
-    RStarSample = sample_value(0, 2, distributions[distribution[0]])
-    fPlanets = sample_value(-1, 0, distributions[distribution[1]])
-    nEnvironment = sample_value(-1, 0, distributions[distribution[2]])
-    fIntelligence = sample_value(-3, 0, distributions[distribution[3]])
-    fCivilization = sample_value(-2, 0, distributions[distribution[4]])
-
-    N = 10 ** sample_value(0, log10(max_n), distributions[distribution[5]])
-
-    fLife = life_dist(mean=0, sigma=50)
-    fLifeEks = float(log10(fLife))
-
-    f = 10 ** (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
-
-    # logL = log10(N) - log10(f)   ... model 1 would return logL like this
-
-    A = 1
-    B = 0.004 / (9.461e12 ** 3)  # number density of stars as per Wikipedia
-    a4 = 5.13342 * 1e10 * 10 ** (fPlanets + nEnvironment) * B    # estimated number of earth-like planets
-    a14 = f * A   # rate of new intelligent civilisation born
-    candidates = list(roots([a4 * a14, 0, 0, a14, -N]))   # zeros of function: a4 * a14 * x^4 + a14 * x - N
-    # actually we want to solve equation: f*A * (L + 5.13342*1e10*10**(fPlanets+nEnvironment)*B * L**4) = N
-    L_initial_guess = N / (a14*log10(a14)**4)  # just a bad approximation to detect true candidate
-    candidates.sort(key=lambda x: nabs(x - L_initial_guess))
-    L = log10(candidates[0])
-    return L
-
-
-def get_point(max_n=10, distribution=(0, 0, 0, 0, 0, 0), model=1):   # get point for selected parameters
-    if model == 1:
-        return float(get_point_model_1(max_n, distribution).real)
-    if model == 2:
-        return float(get_point_model_2(max_n, distribution).real)
-    if model == 3:
-        return float(get_point_model_3(max_n, distribution).real)
+def get_point(max_n=10, distribution=(0, 0, 0, 0, 0, 0), model=(1, 3)):   # get point for selected parameters
+    if 2 in model:
+        return get_point_model_2(max_n, distribution)
+    if 1 in model or 3 in model:
+        return get_point_model_1_3(model, max_n, distribution)
