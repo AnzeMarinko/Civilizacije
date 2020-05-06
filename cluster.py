@@ -159,7 +159,7 @@ def cluster(logarithmic_scale=True, ks=None):
             n = 3
             b, text = approximate(points, n)
             print(f"cluster {i + 1} surface:\n\t" + text)
-            trues = np.random.random(points.shape[0]) > 0.5   # make triangulation on less points
+            trues = np.random.random(points.shape[0]) > 0.7   # make triangulation on less points
             x = points[trues, 0]
             y = points[trues, 1]
             Z = 1 * b[0] + x * b[1] + y * b[2]   # compute approximated x3
@@ -170,7 +170,7 @@ def cluster(logarithmic_scale=True, ks=None):
             # Plot the surface.
             tri = Triangulation(x, y)
             ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
-            trues = np.random.random(points.shape[0]) > 0.5    # draw less points
+            trues = np.random.random(points.shape[0]) > 0.7    # draw less points
             ax.plot(points[trues, 0], points[trues, 1], points[trues, 2], label=i + 1, markersize=4, marker='.',
                     linewidth=0)
         ax.set_xlabel("x1")

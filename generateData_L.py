@@ -1,6 +1,5 @@
 from time import time  # to measure runtime
-from numpy import array, histogram, isnan, percentile, mean
-from scipy.stats import moment  # to compute central moments
+from numpy import array, histogram
 from os import listdir  # to get list of files in directory
 from models import get_point, distributions  # all defined models
 from multiprocessing import Pool, freeze_support   # multi-threading
@@ -103,5 +102,5 @@ def generate():
 
 
 if __name__ == "__main__":
-    generate()
+    # generate()
     collect()

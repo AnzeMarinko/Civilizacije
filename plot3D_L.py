@@ -3,7 +3,7 @@ from numpy import meshgrid, linspace, log10, array
 from mpl_toolkits import mplot3d
 
 
-def draw_histograms3D(logarithmic_scale=True, model=3, distribution=(0, 0, 0, 0, 0, 0)):
+def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0, 0, 0)):
     # draw in logarithmic scale on x, y axis
     # get list of parameters
     parameters = sorted([([int(i) for i in par.split("_")],

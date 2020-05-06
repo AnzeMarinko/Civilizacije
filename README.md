@@ -13,7 +13,7 @@ All code is made in Python3.
 
 At first you have to run `python generateData_L.py` in console to generate data.
 Generated data is than saved in logarithmic scale to directory
-`data` than pgrogram collects all data in just few files in directory `collectedData`.
+`data` than program collects all data in just few files in directory `collectedData`.
 
 We are generating data by different models that are
 defined in `models.py`. Each model takes two more parameters:
@@ -65,11 +65,8 @@ and run the file.
 
 Parameters to be set:
 
-* list of steps `run_steps` we want to run from 1 to 2,
-where 1) is drawing of selected model histograms in 3D
-and 2) is clustering and cluster analysis.
-* scale of *x* axis for histograms `logarithmic_scale`
-* selected model `draw_model` and distribution to draw
+* scale of *x* axis for histograms `logarithmic_scale`,
+selected model `draw_model` and distribution to draw
 in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
 integers from 0 to 4 that represent each one random variable
 in model distributed in selected distribution
@@ -84,6 +81,7 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
+* model 4 - povprecje ostalih modelov
 * porocilo do sedaj (slike, besedilo)
 
 
