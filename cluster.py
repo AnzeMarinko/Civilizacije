@@ -113,7 +113,7 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         means = kmeans.cluster_centers_
         # column in array means is mean of cluster
         means = (np.dot(eigvec, means.T) + np.dot(meandata, np.ones((k, 1)).T))
-        means = (means.T / np.sum(means, 0).reshape(-1, 1)).T   # normalize means that they are distributions
+        means = (means.T / np.sum(means, 0).reshape(-1, 1)).T  # normalize means that they are distributions
         # print some properties of clusters
         summarize(clusters, exact, k, models, maxNs, slo)
 
@@ -143,32 +143,42 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         # draw points transformed by PCA coloured by models
         plt.figure(figsize=(16, 12))
         ax = plt.subplot(121, projection='3d')
-        for model in models:   # take just random 125*9 data from selected model
-            trues = np.random.choice(np.array(range(len(data)))[exact[:, 0] == model], size=125*9, replace=False)
+        tr = np.array([False] * len(data))
+        for model in models:  # take just random 125*9 data from selected model
+            trues = np.random.choice(np.array(range(len(data)))[exact[:, 0] == model], size=125 * 9, replace=False)
             trues = np.array([True if i in trues else False for i in range(len(data))])
+            tr += trues
             for maxN in maxNs:  # set size of marker to log10(maxN)
                 points = data[trues * (exact[:, 1] == maxN), :]  # less points to easier drawing
-                ax.plot(points[:, 0],   # color by maxN
-                        points[:, 1],
-                        points[:, 2],
-                        marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1])
+                if maxN == maxNs[-1]:    # add label to legend only oce per model
+                    ax.plot(points[:, 0],  # color by maxN
+                            points[:, 1],
+                            points[:, 2],
+                            marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1],
+                            label=f"Model {model}")
+                else:
+                    ax.plot(points[:, 0],  # color by maxN
+                            points[:, 1],
+                            points[:, 2],
+                            marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1])
         ax.set_xlabel("x1")
         ax.set_ylabel("x2")
         ax.set_zlabel("x3")
-        plt.title("Obarvano po osnovnih modelih - po PCA transformaciji" if slo else
+        plt.legend(loc="best")
+        plt.title("Obarvano po osnovnih modelih - po PCA" if slo else
                   "Coloured by model - after Principal component analysis (PCA)")
 
         # draw clusters with approximation surface
         ax = plt.subplot(122, projection='3d')
         for i in range(k):
             points = data[clusters == i, :3]
+            trues = tr[clusters == i]
             n = 3
             b, text = approximate(points, n)
-            print(f"\nPloskev gruče {i + 1}:" if slo else f"\ncluster {i + 1} surface:" + text)
-            trues = np.random.random(points.shape[0]) > 0.7   # make triangulation on less points
+            print(f"\nPloskev gruče {i + 1}:" + text if slo else f"\ncluster {i + 1} surface:" + text)
             x = points[trues, 0]
             y = points[trues, 1]
-            Z = 1 * b[0] + x * b[1] + y * b[2]   # compute approximated x3
+            Z = 1 * b[0] + x * b[1] + y * b[2]  # compute approximated x3
             if n > 1:
                 Z += x * y * b[3] + x ** 2 * b[4] + y ** 2 * b[5]
             if n > 2:
@@ -176,7 +186,6 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
             # Plot the surface.
             tri = Triangulation(x, y)
             ax.plot_trisurf(x, y, Z, triangles=tri.triangles, color=colors[i], linewidth=0, shade=True, alpha=0.8)
-            trues = np.random.random(points.shape[0]) > 0.7    # draw less points
             ax.plot(points[trues, 0], points[trues, 1], points[trues, 2], label=i + 1, markersize=4, marker='.',
                     linewidth=0)
         ax.set_xlabel("x1")
@@ -199,12 +208,16 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
             points = points[hull.vertices, :]  # only points from convex hull of a cluster
             m = np.mean(points[:, :2], 0)  # mean of hull
             # select 3 most different
-            p1 = points[np.argmax(np.sum((points[:, :2] - m)**2, 1)), :]
-            p2 = points[np.argmin(np.sum((-(p1[:2]-m)/2+(p1[:2]-m)[::-1]*np.sqrt(3)/2-points[:, :2]) ** 2, 1)), :]
-            p3 = points[np.argmin(np.sum((-(p1[:2]-m)/2-(p1[:2]-m)[::-1]*np.sqrt(3)/2-points[:, :2]) ** 2, 1)), :]
-            m = means[:, i]   # mean of cluster
+            p1 = points[np.argmax(np.sum((points[:, :2] - m) ** 2, 1)), :]
+            p2 = points[
+                 np.argmin(np.sum((-(p1[:2] - m) / 2 + (p1[:2] - m)[::-1] * np.sqrt(3) / 2 - points[:, :2]) ** 2, 1)),
+                 :]
+            p3 = points[
+                 np.argmin(np.sum((-(p1[:2] - m) / 2 - (p1[:2] - m)[::-1] * np.sqrt(3) / 2 - points[:, :2]) ** 2, 1)),
+                 :]
+            m = means[:, i]  # mean of cluster
             # draw histograms of mean and 3 others for each cluster
-            plt.plot(bins, get_histogram(p1), colors[i], linewidth=1, label=f"Cluster {i+1}")
+            plt.plot(bins, get_histogram(p1), colors[i], linewidth=1, label=f"Cluster {i + 1}")
             plt.plot(bins, get_histogram(p2), colors[i], linewidth=1)
             plt.plot(bins, get_histogram(p3), colors[i], linewidth=1)
             plt.plot(bins, m / max(m), colors[i], linewidth=2)
@@ -213,7 +226,7 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         plt.ylabel("Relativna verjetnost" if slo else "Relative probability")
         plt.legend(loc="best")
         plt.title(f'Porazdelitve v {"logaritmski" if logarithmic_scale else "linearni"} '
-                   f'skali izbranih histogramov iz gruč' if slo else
+                  f'skali izbranih histogramov iz gruč' if slo else
                   f'{"Logarithmic" if logarithmic_scale else "Linear"} scale distributions of models clustered')
         # show everything at once about each cluster
         plt.show()

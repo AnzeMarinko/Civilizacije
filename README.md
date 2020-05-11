@@ -93,8 +93,8 @@ There is going to be a report in slovenian language in
 * dodaj Rare Earth theory
 
 
-* izračunavanje na npr. 5e6, N bolj na gosto z močnejšo mašino
+* izračunavanje na npr. 5e6, N bolj na gosto (2**i i=0,...,14) z močnejšo mašino
 * odstrani neprimerne porazdelitve
    (stabilizacija do L < 1e7, po tem odreži)
-* koda, README, drugo poročilo vsega novega
+* koda, README, drugo poročilo vsega novega, zamenjaj projekt
  
