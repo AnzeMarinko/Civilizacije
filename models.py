@@ -54,7 +54,7 @@ def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0))
     if 3 not in model:   # if only model 1
         return [float(logL.real)]  # rate of birth of new civilisation
 
-    N = 10 ** logL
+    N = 10 ** logN
     f = 10 ** (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
     # logL = log10(N) - log10(f)   ... model 1 would return logL like this
     A = 1

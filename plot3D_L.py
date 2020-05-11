@@ -3,7 +3,7 @@ from numpy import meshgrid, linspace, log10, array
 from mpl_toolkits import mplot3d
 
 
-def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0, 0, 0)):
+def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0, 0, 0), slo=True):
     # draw in logarithmic scale on x, y axis
     # get list of parameters
     parameters = sorted([([int(i) for i in par.split("_")],
@@ -26,8 +26,10 @@ def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0,
         ax.plot_surface(X, Y, Z, cmap=plt.get_cmap("jet"), shade=True, alpha=0.8)
         ax.set_xlabel("log(L)")
         ax.set_ylabel("log(N)")
-        ax.set_zlabel("# of hits")
-        plt.title(f"Model {model} with {distribution} distribution in "
+        ax.set_zlabel("Število generiranih točk" if slo else "# of hits")
+        plt.title(f"Model {model} s porazdelitvijo {distribution} v "
+                  f"{'logaritmski' if logarithmic_scale else 'linearni'} skali" if slo else
+                  f"Model {model} with {distribution} distribution in "
                   f"{'logarithmic' if logarithmic_scale else 'linear'} scale")
         plt.show()
         print("done")

@@ -17,12 +17,13 @@ def pca(data):
 
 
 # print some properties of each cluster
-def summarize(clusters, exact, k, models, maxNs):
+def summarize(clusters, exact, k, models, maxNs, slo=True):
     for i in range(k):  # for each cluster
         clust = [exact[p, :] for p in range(len(clusters)) if clusters[p] == i]
-        print(f"\nCluster {i + 1}")
+        print(f"\nGruča {i + 1}" if slo else f"\nCluster {i + 1}")
         # distribution of models in cluster
-        print("Models:\n\t" + "\t\t ".join([str(model) for model in models]))  # distribution of models in cluster
+        print(f"\nModeli:\n\t" + "\t\t ".join([str(model) for model in models]) if slo else
+              "Models:\n\t" + "\t\t ".join([str(model) for model in models]))  # distribution of models in cluster
         print("\t" + "\t\t ".join([str(len([c for c in clust if c[0] == model])) for model in models]))
         # distribution of maxN in cluster
         print("maxN:\n\t" + " \t".join([str(round(np.log10(maxN) * 100) / 100) for maxN in maxNs]))
@@ -53,7 +54,7 @@ def approximate(points, n):
 
 
 # compute clusters, draw and print some properties
-def cluster(logarithmic_scale=True, ks=None):
+def cluster(logarithmic_scale=True, ks=None, slo=True):
     if ks is None:  # ks should bi a list of k-s, that are number of clusters in k-means
         ks = [4, 7, 10]
     # import data (parameters and than data)
@@ -78,27 +79,31 @@ def cluster(logarithmic_scale=True, ks=None):
     # how is it generated from original data (eigenvectors)
     plt.subplot(221)
     plt.plot(eigval)
-    plt.xlabel(f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}")
-    plt.ylabel("Relative probability")
-    plt.title(f"Eigenvalues for transformed histogram space")
+    plt.xlabel("Komponenta prostora" if slo else "Component of space")
+    plt.ylabel("Lastna vrednost" if slo else "Eigenvalue")
+    plt.title("Lastne vrednosti transformiranega prostora histogramov" if slo else
+              "Eigenvalues for transformed histogram space")
     plt.subplot(222)
     plt.plot(np.cumsum(eigval) / np.sum(eigval))
-    plt.xlabel("Component of space")
-    plt.ylabel("Explained variance [%]")
-    plt.title(f"Cumulative explained variance by component for transformed histogram space")
+    plt.xlabel("Komponenta prostora" if slo else "Component of space")
+    plt.ylabel("Razložena varianca [%]" if slo else "Explained variance [%]")
+    plt.title("Kumulativna razložena varianca do komponente transformiranega prostora" if slo else
+              "Cumulative explained variance by component for transformed histogram space")
     plt.subplot(223)
     plt.plot(np.log10(eigval + 1e-17))
-    plt.xlabel("Component of space")
-    plt.ylabel("Logarithm of eigenvalues by component")
-    plt.title(f"Logarithm of eigenvalues for transformed histogram space")
+    plt.xlabel("Komponenta prostora" if slo else "Component of space")
+    plt.ylabel("Logaritmska vrednost lastne vrednosti" if slo else "Logarithm of eigenvalues by component")
+    plt.title("Logaritem lastne vrednosti transformiranega prostora" if slo else
+              "Logarithm of eigenvalues for transformed histogram space")
     plt.subplot(224)
     plt.plot(bins, np.abs(eigvec[:, 0]), label="1")
     plt.plot(bins, np.abs(eigvec[:, 1]), label="2")
     plt.plot(bins, np.abs(eigvec[:, 2]), label="3")
     plt.plot(bins, np.abs(eigvec[:, 3]), label="4")
-    plt.xlabel("Component of space")
-    plt.ylabel("Weight")
-    plt.title(f"Weights (eigenvectors) for first dimensions in transformed histogram space")
+    plt.xlabel("Komponenta prostora" if slo else "Component of space")
+    plt.ylabel("Utež" if slo else "Weight")
+    plt.title("Uteži (lastni vektorji) prvih dimenzij transformranega prostora" if slo else
+              "Weights (eigenvectors) for first dimensions in transformed histogram space")
     plt.legend(loc="best")
     plt.show()
 
@@ -110,15 +115,15 @@ def cluster(logarithmic_scale=True, ks=None):
         means = (np.dot(eigvec, means.T) + np.dot(meandata, np.ones((k, 1)).T))
         means = (means.T / np.sum(means, 0).reshape(-1, 1)).T   # normalize means that they are distributions
         # print some properties of clusters
-        summarize(clusters, exact, k, models, maxNs)
+        summarize(clusters, exact, k, models, maxNs, slo)
 
         # draw means of clusters
         plt.figure(figsize=(7, 7))
         for i in range(k):
             plt.plot(bins, means[:, i], label=f"{i + 1}")
-        plt.xlabel("Component of space")
-        plt.ylabel(f"Mean density")
-        plt.title(f"Mean histogram for each cluster")
+        plt.xlabel(f"{'log(L)' if logarithmic_scale else 'L'}")
+        plt.ylabel("Povprečna gostota" if slo else "Mean density")
+        plt.title("Povprečen histogram za vsako gručo" if slo else "Mean histogram for each cluster")
         plt.legend(loc="best")
 
         # draw survival functions of means if means are distributions (1-F(t), F(t) = int_0^t f(s) ds)
@@ -126,9 +131,9 @@ def cluster(logarithmic_scale=True, ks=None):
         means2 = 1 - np.cumsum(means / np.sum(means, 0), 0)
         for i in range(k):
             plt.plot(bins, means2[:, i], label=f"{i + 1}")
-        plt.xlabel("Component of space")
-        plt.ylabel(f"Probability to survive so many years")
-        plt.title(f"Survival function of cluster means")
+        plt.xlabel(f"{'log(L)' if logarithmic_scale else 'L'}")
+        plt.ylabel("Verjetnost preživetja toliko let" if slo else "Probability to survive so many years")
+        plt.title("Prežvetvena funkcija povprečij gruč" if slo else "Survival function of cluster means")
         plt.legend(loc="best")
 
         # list of 10 colors for at most 10 clusters and models
@@ -150,7 +155,8 @@ def cluster(logarithmic_scale=True, ks=None):
         ax.set_xlabel("x1")
         ax.set_ylabel("x2")
         ax.set_zlabel("x3")
-        plt.title("Coloured by model - after Principal component analysis (PCA)")
+        plt.title("Obarvano po osnovnih modelih - po PCA transformaciji" if slo else
+                  "Coloured by model - after Principal component analysis (PCA)")
 
         # draw clusters with approximation surface
         ax = plt.subplot(122, projection='3d')
@@ -158,7 +164,7 @@ def cluster(logarithmic_scale=True, ks=None):
             points = data[clusters == i, :3]
             n = 3
             b, text = approximate(points, n)
-            print(f"cluster {i + 1} surface:\n\t" + text)
+            print(f"\nPloskev gruče {i + 1}:" if slo else f"\ncluster {i + 1} surface:" + text)
             trues = np.random.random(points.shape[0]) > 0.7   # make triangulation on less points
             x = points[trues, 0]
             y = points[trues, 1]
@@ -177,7 +183,7 @@ def cluster(logarithmic_scale=True, ks=None):
         ax.set_ylabel("x2")
         ax.set_zlabel("x3")
         plt.legend(loc="best")
-        plt.title("Coloured by cluster")
+        plt.title("Obarvano po gručah" if slo else "Coloured by cluster")
 
         # transform point back from pca to histogram space
         def get_histogram(point):
@@ -202,10 +208,12 @@ def cluster(logarithmic_scale=True, ks=None):
             plt.plot(bins, get_histogram(p2), colors[i], linewidth=1)
             plt.plot(bins, get_histogram(p3), colors[i], linewidth=1)
             plt.plot(bins, m / max(m), colors[i], linewidth=2)
-        plt.xlabel(f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}")
-        plt.ylabel("Relative probability")
+        plt.xlabel(f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}" if slo else
+                   f"Expected civilization longevity in {'log(years)' if logarithmic_scale else 'years'}")
+        plt.ylabel("Relativna verjetnost" if slo else "Relative probability")
         plt.legend(loc="best")
-        plt.title(f'Logarithmic scale distributions of models clustered by histograms' if logarithmic_scale else
-                  "Linear scale distributions of models clustered")
+        plt.title(f'Porazdelitve v {"logaritmski" if logarithmic_scale else "linearni"} '
+                   f'skali izbranih histogramov iz gruč' if slo else
+                  f'{"Logarithmic" if logarithmic_scale else "Linear"} scale distributions of models clustered')
         # show everything at once about each cluster
         plt.show()

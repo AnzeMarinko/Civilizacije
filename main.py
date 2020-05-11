@@ -4,6 +4,8 @@ from cluster import *
 
 # ============ Parameters ================
 
+slo = True   # titles and labels in slovenian or english language
+
 # selected model and distribution to draw in 3D
 logarithmic_scale = True    # scale of x axis for histograms
 draw_model = 1   # models: 1, 2, 3
@@ -15,11 +17,11 @@ ks = [4, 7, 10]    # number of clusters
 # ============ Run functions using these parameters ============
 
 print("\n\t1: draw histograms for selected model")
-draw_histograms3D(logarithmic_scale, draw_model, draw_distribution)
+draw_histograms3D(logarithmic_scale, draw_model, draw_distribution, slo=slo)
 
 print("\n\t2: clustering and analysis of clusters on logarithmic scale")
-cluster(logarithmic_scale=True, ks=ks)
+cluster(logarithmic_scale=True, ks=ks, slo=slo)
 print("\n\t2: clustering and analysis of clusters on liner scale")
-cluster(logarithmic_scale=False, ks=ks)
+cluster(logarithmic_scale=False, ks=ks, slo=slo)
 # blue ... model 1, orange ... model 2, green ... model 3
 # size of marker ... log(N)

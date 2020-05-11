@@ -71,7 +71,7 @@ in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
 integers from 0 to 4 that represent each one random variable
 in model distributed in selected distribution
 * list of numbers of clusters to make `ks` from 1 to 10 so it
-makes an analysis of data clustered ib each number of clusters
+makes an analysis of data clustered in each number of clusters
 from the list
 
 ## Report
@@ -81,7 +81,6 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* porocilo do sedaj
 * model 4 - mean histogram of models 1 and 3 at same
    distribution and maxN and model 2 at specific parameters
    where parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2,
@@ -89,10 +88,13 @@ There is going to be a report in slovenian language in
 * model 5 - za vsake parametre iz modela 2 povprečje
    z vsemi 6 iz drugih dveh
    * modela 4 in 5 prineseta približno trikrat več novih točk
+   (skupno imamo že cca. 1 120 000 točk)
    * če je to slabo, se kakega od obeh modelov znebi
+* dodaj Rare Earth theory
+
+
+* izračunavanje na npr. 5e6, N bolj na gosto z močnejšo mašino
 * odstrani neprimerne porazdelitve
    (stabilizacija do L < 1e7, po tem odreži)
-* dodaj Rare Earth theory
-* izračunavanje na npr. 5e6, N bolj na gosto z močnejšo mašino
 * koda, README, drugo poročilo vsega novega
  

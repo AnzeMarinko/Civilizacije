@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {I}Uvod}{1}%
+\contentsline {section}{\numberline {II}Osnovni modeli in njihova posplošitev}{1}%
+\contentsline {subsection}{\numberline {\mbox {II-A}}Model 1}{1}%
+\contentsline {subsection}{\numberline {\mbox {II-B}}Model 2}{2}%
+\contentsline {subsection}{\numberline {\mbox {II-C}}Model 3}{2}%
+\contentsline {subsection}{\numberline {\mbox {II-D}}Implementacija}{2}%
+\contentsline {section}{\numberline {III}Gručenje}{2}%
+\contentsline {subsection}{\numberline {\mbox {III-A}}PCA - Principal component analysis}{2}%
+\contentsline {subsection}{\numberline {\mbox {III-B}}Analiza gruč}{2}%
+\contentsline {section}{\numberline {IV}Rezultati}{2}%
+\contentsline {section}{\numberline {V}Razprava}{3}%
