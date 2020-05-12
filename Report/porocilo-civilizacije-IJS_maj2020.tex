@@ -78,7 +78,16 @@ Za pripravo vsakega histograma za vsako kombinacijo porazdelitev in zgornje meje
 Izračunali histograme za vse možne kombinacije porazdeltev
 pri zgornjih mejah za število inteligentnih civilizacij $N$ nastavljenih na 1, 3, 10, 30, 100, 300, 1000, 3000 in 10 000.
 
-Histogram smo naredili na intervalu $\lbrack 0, 10^10\rbrack$ pri linearni skali in $\lbrack -1, 12\rbrack$ pri logaritmski skali, ker večje vrednosti niso realne in so le teoretične dobljene zaradi posplošitev v modelu.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Figures/porazdelitev3D}
+	\caption{Histogrami v logaritmski skali za prvi model, kjer so vsi parametri porazdeljeni loguniformno.}
+	\label{fig:porazdelitev3d}
+\end{figure}
+
+Primer dobljenih porazdelitev lahko vidimo na sliki \ref{fig:porazdelitev3d}.
+
+Histograme smo naredili na intervalu $\lbrack 0, 10^10\rbrack$ pri linearni skali in $\lbrack -1, 12\rbrack$ pri logaritmski skali, ker večje vrednosti niso realne in so le teoretične dobljene zaradi posplošitev v modelu.
 
 Pri generiranju podatkov smo izkosristili lastnost, da model 1 izračunamo tekom generiranja modela 3. Problem dopušča popolno paralelizacijo računanja vsakega histograma na svojem procesorju. V našem primeru smo uporabili 10 procesorskih enot. Histograme smo si tekom izračunavanja zapisovali v datoteke in jih na koncu združili v 4 datoteke. Posebej linearne in logaritmske histograme in za vsake histograme še sezname parametrov v drugi datoteki.
 
@@ -92,7 +101,7 @@ Izračunamo korelacijsko matriko za vse histograme (dobimo $100\times100$ matrik
 
 Novo dobljene točke so v lastnem prostoru in če so lastne vrednosti urejene padajoče, so prve dimenzije najbolj informativne, ker nosijo največ variance. Velikost lastne vrednosti v primerjavi z vsoto lastnih vrednosti nam pove, koliko variance v podatkih nam ta dimenzija prinese. Torej vzamemo le največje tri lastne vrednosti za izris. Lastni vektorji pa so baza prostora. Inverzna transformacija je enostavna.
 
-PCA ne vpliva na podobnost med histogrami (razdalje se pri rotaciji in translaciji ohranjajo).
+PCA ne vpliva na podobnost med histogrami (razdalje se pri rotaciji in translaciji ohranjajo), ampak se le znebi linearne odvisnosti med komponentami.
 
 \subsection{Analiza gruč}
 
@@ -118,43 +127,87 @@ x_3 &=& b_0 + b_1 x_1 + b_2 x_2 + b_3 x_1 x_2 + b_4 x_1^2 + b_5 x_2^2 + \nonumbe
 \end{eqnarray}
 Izračunano ploskev tudi narišemo na 3-dimenzionalno sliko, kjer so točke in ploskve obarvane po gručah.
 
-
-
-
-
-
-
-
-
-
-
-
 \section{Rezultati}
 
-opažanja in predvidevanja ob slikah
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\linewidth]{Figures/porazdelitev3D}
-	\caption{Histogrami za prvi model, kjer so vsi parametri porazdeljeni loguniformno.}
-	\label{fig:porazdelitev3d}
-\end{figure}
+Oglejmo si nekaj zanimivih rezultatov. Ker je poročilo predvsem namenjeno diskusiji, vsebuje tudi nekatere slike, ki jih ne bomo dovolj dobro predstavili in so namenjene predvsem bralcu za lastna opažanja. Najprej si oglejmo gručenje in analizo gruč histogramov v linearni skali. Slika \ref{fig:lineig} nam prikazuje, kako pomembna je kakšna dimenzija transformiranega prostora, kar vidimo iz velikosti lastne vrednosti. Opazimo, da je že druga sploh pa tretja lastna vrednost zelo majhna v prmerjavi s prvo torej nam ta dimenzija prinese največ variance. Kumulativno nam prve tri dimenzije razložijo že skoraj vso varianco med histogrami. Graf desno spodaj nam prikazuje lastne vektorje za prve 4 lastne vrednosti, torej bazo transformiranega prostora.
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/porazdelitev3D}
-	\caption{Histogrami za prvi model, kjer so vsi parametri porazdeljeni loguniformno.}
-	\label{fig:porazdelitev3d}
+	\includegraphics[width=0.9\linewidth]{Figures/lin_eigendecomp}
+	\caption{Lastne vrednosti in lastni vektorji prostora linearnih histogramov.}
+	\label{fig:lineig}
 \end{figure*}
 
+Slike  \ref{fig:lin4pca}, \ref{fig:lin10pca}, \ref{fig:log4pca} in \ref{fig:log10pca} nam prikazujejo oblak točk obarvan po modelih (levo) in po gručah (desno). Gruče so tudi aproksimirane s ploskvijo. Opazimo, da so gruče razdeljene predvem vzdolž prve komponente pri linearnih histogramih, pri loaritmskih pa dobimo zanimive luske.
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/lin4pca}
+	\caption{Prve tri komponente transformiranega prostora.}
+	\label{fig:lin4pca}
+\end{figure*}
 
+Na slikah \ref{fig:lin4konveks} in \ref{fig:log4konveks} vidimo povprečne histograme in tri histograme s konveksne ovojnice vsake od gruč. Hitro opazimo osnovne lastnosti gruč.
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.8\linewidth]{Figures/lin4konveks}
+	\caption{Povprečja in robni primeri iz vsake gruče.}
+	\label{fig:lin4konveks}
+\end{figure*}
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/lin10pca}
+	\caption{Prve tri komponente transformiranega prostora.}
+	\label{fig:lin10pca}
+\end{figure*}
 
+Na slikah \ref{fig:lin10clust} in \ref{fig:log10clust} vidimo povprečja gruč in njihove preživetvene funkcije, ki nam za vsako gručo povedo, kakšno vvrejetnost nam gruča pripisuje, da preživimo konkretno število let.
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.49\linewidth]{Figures/lin10mean} \includegraphics[width=0.49\linewidth]{Figures/lin10surv}
+	\caption{Povprečni histogrami in njihove preživetvene funkcije.}
+	\label{fig:lin10clust}
+\end{figure*}
 
+Tudi slika \ref{fig:logeig} nam prikazuje, kako pomembna je kakšna dimenzija transformiranega prostora, a tokrat logaritmskih histogramov. Opazimo, da tudi v tem primeru lastne vrednosti hitro padajo proti nič, a nam prve tri dimenzije povejo manj o celotni varianci podatkov.
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/log_eigendecomp}
+	\caption{Lastne vrednosti in lastni vektorji prostora logaritmskih histogramov.}
+	\label{fig:logeig}
+\end{figure*}
 
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.8\linewidth]{Figures/log4pca}
+	\caption{Prve tri komponente transformiranega prostora.}
+	\label{fig:log4pca}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/log4konveks}
+	\caption{Povprečja in robni primeri iz vsake gruče.}
+	\label{fig:log4konveks}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/log10pca}
+	\caption{Prve tri komponente transformiranega prostora.}
+	\label{fig:log10pca}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.49\linewidth]{Figures/log10mean} \includegraphics[width=0.49\linewidth]{Figures/log10surv}
+	\caption{Povprečni logaritmski histogrami in njihove preživetvene funkcije.}
+	\label{fig:log10clust}
+\end{figure*}
 
 \section{Razprava}
 

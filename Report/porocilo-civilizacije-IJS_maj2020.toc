@@ -7,5 +7,5 @@
 \contentsline {section}{\numberline {III}Gručenje}{2}%
 \contentsline {subsection}{\numberline {\mbox {III-A}}PCA - Principal component analysis}{2}%
 \contentsline {subsection}{\numberline {\mbox {III-B}}Analiza gruč}{2}%
-\contentsline {section}{\numberline {IV}Rezultati}{2}%
+\contentsline {section}{\numberline {IV}Rezultati}{3}%
 \contentsline {section}{\numberline {V}Razprava}{3}%

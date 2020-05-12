@@ -81,6 +81,9 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
+* za modela 4 in 5 samo na podlagi ze izracunanih histogramov
+(prave sestej skupaj in jih deli z njihovim stevilom), uporabi
+mnozico existing
 * model 4 - mean histogram of models 1 and 3 at same
    distribution and maxN and model 2 at specific parameters
    where parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2,

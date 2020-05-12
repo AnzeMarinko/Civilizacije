@@ -24,7 +24,7 @@ existing = {((1, 3), tuple([int(i) for i in par.split("_")[1:-1]])) if "2" not i
 # make set of not generated distributions
 parameters.difference_update(existing)
 print(len(parameters))
-parameters = sorted(list(parameters))
+# parameters = sorted(list(parameters))
 
 
 def generate_by_n(par):  # generate histograms for all max. n-s at selected model and distributions
@@ -61,7 +61,7 @@ def generate_by_n(par):  # generate histograms for all max. n-s at selected mode
                     "\n".join([",".join([str(x) for x in line]) for line in hists[m]]))
     t = time() - t
     print(f"\tModel {model} distributed {dist}"
-          f" generated cca. {p/(2*len(model)*len(nrange)*noIterations)*100:.2f} % points:\t\t {t:.4f} s")
+          f" generated points:\t\t {t:.4f} s")
     return t
 
 
@@ -93,7 +93,7 @@ def generate():
     freeze_support()
     # run generator of histograms on set of free parameters
     # use 10 threads, compute cumulative runtime for all histograms
-    tsum = sum(Pool(10).map(generate_by_n, parameters))
+    tsum = sum(Pool(9).map(generate_by_n, parameters))
     # number of random variables: model 1: 6, model 2: 3, model 3: 6
     tend = time() - t0  # runtime used after multi-threading
     print(f"\n\tTime used: {tend // 3600}h {tend // 60 % 60}min {tend % 60}s")
