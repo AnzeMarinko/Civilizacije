@@ -16,7 +16,7 @@ def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0,
     # filter parameters and histograms
     parameters = [(par[-1], hist) for par, hist in parameters if par[0] == model and tuple(par[1:-1]) == distribution]
     if len(parameters) > 0:  # draw histograms of selected model and distribution
-        bins = linspace(-1 if logarithmic_scale else 0, 12 if logarithmic_scale else 1e10, len(parameters[0][1]))
+        bins = linspace(-1 if logarithmic_scale else 0, 8 if logarithmic_scale else 1e8, len(parameters[0][1]))
         Z = array([hist for par, hist in parameters])
         n = [par for par, hist in parameters]
         X, Y = meshgrid(bins, log10(n))

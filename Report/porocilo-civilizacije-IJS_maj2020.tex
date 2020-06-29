@@ -16,13 +16,13 @@
 
 Oceniti želimo porazdelitev časa, ki ga inteligentna civilizacija preživi v naši galaksiji (in posplošeno v celotnem vesolju). Civilizacija se šteje za inteligentno, če je sposobna radio-komunikacije z drugimi planeti. Porazdelitev ocenjujemo z uporabo Drakeove enačbe. Želimo pa zajeti čim večji prostor relevantnih modelov. Relevantni modeli so tiste porazdelitve, ki ne dajejo prevelike verjetnosti temu, da bi inteligentna civilizacija obstajala več milijonov let in ki imajo s časom padajočo gostoto, torej da je bolj verjetno, da bi obstajali (bili sposobni radio-komunikacije) le tisoč let kakor pa med tisoč in dvatisoč let.
 
-Pripravili smo tri bolj splošne modele, katerim smo spreminjali parametre, da bi dobili čim več različnih porazdelitev, ki ustrezajo Drakeovi enačbi. Vse te porazdelitve smo potem gručili po podobnosti in dobili nekaj značilnih porazdelitev, ki jih lahko posamično obravnavamo in izključujemo z razvojem znanosti in vedenja o vesolju. To nam pomaga oceniti, koliko let obstoja še preostaja naši civilizaciji na tem planetu. Če je verjetnost, da obstajamo še dolgo, majhna, se moramo toliko bolj potruditi, da ne propademo že prej.
+Pripravili smo štiri bolj splošne modele, katerim smo spreminjali parametre, da bi dobili čim več različnih porazdelitev, ki ustrezajo Drakeovi enačbi. Vse te porazdelitve smo potem gručili po podobnosti in dobili nekaj značilnih porazdelitev, ki jih lahko posamično obravnavamo in izključujemo z razvojem znanosti in vedenja o vesolju. To nam pomaga oceniti, koliko let obstoja še preostaja naši civilizaciji na tem planetu. Če je verjetnost, da obstajamo še dolgo, majhna, se moramo toliko bolj potruditi, da ne propademo že prej.
 
 Vsa koda je pripravljena v programskem jeziku Python 3, kakih 470 vrstic urejene kode s komentarji.
 
 \section{Osnovni modeli in njihova posplošitev}
 
-V nadaljevanju vam bomo predstavili razširjen Sandbergov model in dva druga modela dobljena s spremembo prvega. Vsak model pa je odvisen od nekaj parametrov, za katere znamo ceniti spodnjo in zgornjo mejo, ne vemo pa njihove dejanske vrednosti ali celo porazdelitve na tem intervalu. Za razliko od Sandberga bomo namesto fiksnih vrednosti uporabili različne porazdelitve na izbranem intervalu. Vsak parameter porazdelimo z eno izmed petih izbranih porazdelitev ter tako dobimo možnih izbranih porazdelitev $5^{\#parametrov}$ za vsako zgornjo mejo za $N$ za vsak model.
+V nadaljevanju vam bomo predstavili razširjen Sandbergov model in dva druga modela dobljena s spremembo prvega ter četrti model po teoriji redke zemlje. Vsak model pa je odvisen od nekaj parametrov, za katere znamo ceniti spodnjo in zgornjo mejo, ne vemo pa njihove dejanske vrednosti ali celo porazdelitve na tem intervalu. Za razliko od Sandberga bomo namesto fiksnih vrednosti uporabili različne porazdelitve na izbranem intervalu. Vsak parameter porazdelimo z eno izmed petih izbranih porazdelitev ter tako dobimo možnih izbranih porazdelitev $5^{\#parametrov}$ za vsako zgornjo mejo za $N$ za vsak model.
 
 Izbrane porazdelitve so:
 \begin{enumerate}
@@ -51,6 +51,13 @@ Imamo 6 parametrov:
 
 Tako dobimo za izbrane porazdelitve in zgornjo mejo za $N$ možno porazdelitev, torej $5^6$ različnih porazdelitev za vsako izbrano zgornjo mejo za $N$. Enako velja tudi za preostale modele.
 
+
+
+
+
+
+
+
 \subsection{Model 2}
 
 V drugem modelu zberemo nekatere parametre iz prvega modela skupaj tako, da imamo le tri parametre. Za razliko od prvega modela, ki po Drakeovi enačbi računa glede na število inteligentnih civilizacij v tem trenutku, drugi model uporablja namesto stopnje nastanka nove zvezde kar število vseh zvezd. Parametre pa združi zgolj v tri:
@@ -62,6 +69,13 @@ V drugem modelu zberemo nekatere parametre iz prvega modela skupaj tako, da imam
 
 Tu je $L$ ponovno izračunan kot $N / (f_a + f_b)$.
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Figures/log_model2}
+	\caption{Histogrami v logaritmski skali za prvi model, kjer so vsi parametri porazdeljeni loguniformno.}
+	\label{fig:model2}
+\end{figure}
+
 \subsection{Model 3}
 
 Modelu 1 dodamo možnost širjenja na druge planete. Izračunamo parametre za model 1:
@@ -70,6 +84,25 @@ $N$ in $f := R_\ast f_p f_e f_i f_c$, kjer je $f$ stopnja nastanka nove intelige
 $E = 5.1334 * 10^{10 + f_p + f_e} S$ je ocenjeno število zemlji podobnih planetov, kjer je $S = 4.7233 * 10^{-42}$ gostota zvezd glede na Wikipedijo.
 
 Iščemo ničle polinoma $p(L) = E f L^4 + f L - N$ oz. rešitev enačbe $f * (L + E L^4) = N$, kjer je $L$ pozitivna realna ničla polinoma oz. pozitivna realna rešitev enačbe.
+
+\subsection{Model 4}
+
+Poleg tega je že v pripravi nov model (tega še ni v naslednjem poglavju), ki veliko bolj pesimistično ocenjuje vrednosti parametrov in pravi, da je razvoj tovrstne civilizacije praktično nemogoč, torej da smo skoraj gotovo edini v vesolju. Ker pa ne vemo, kaj bi bilo realistično, ne vemo ali to tudi zares je preveč pesimistično. Ta teorija se imenuje Rare Earth theory oz. Rare Earth hypothesis. Pravi, da je Zelmja zelo edinstven in redek planet zarad vseh svojih lastnosti, ter je zaradi tega malo njej podobnih planetov. Število let $L$ računamo s pomočjo Rare earth enačbe: $N = N*\times n_g \times f_p \times f_{pm} \times f_i \times f_c \times f_l \times f_m \times f_j \times f_{me}$  in Drakove enačbe. Kjer so naslednji še neznani parametri:
+
+\begin{enumerate}
+	\item $N*$ je število zvezd v naši galaksiji, med 250 in 150 milijard.
+	\item $n_g$ število planetov v galaktični naselitveni coni, priblizno 40 bilijonov.
+	\item $f_{pm}$ delež planetov, ki so bogati s kovinam, med 1 in 10 odstotki.
+	\item $f_m$ delež naseljivih planetov, z veliko luno, med 0.3 in 3 odstotki.
+	\item $f_j$ delež planetarnih sistemov z velikim jupitrovskim planetom, med 5 in 10 odstotki.
+	\item $f_{me}$ delež planetov z zelo niskom številom izumirajočih dogodkov, med 1 in 10 odsotki.
+\end{enumerate}
+
+Število let obstoja civilizacije smo z izpeljavo izračunali po naslednji formuli:
+
+\begin{equation}
+L = \frac{N*\times  f_{pm} \times n_g \times f_m \times f_j \times f_{me}}{R*} \nonumber
+\end{equation}
 
 \subsection{Implementacija}
 
@@ -113,9 +146,11 @@ Na primer za neko gručo:
 	Model & 1 & 2 & 3 \\ \hline
 	 & 523 & 425 & 3
 	\end{tabular}
-\begin{tabular}{ l|ccccccccc } 
-	$N_{max}$ & 0 &	0.5&1 &1.5 &2 &2.5 &3 &	3.5&4 \\ \hline
-	&25 &45 &60 &81&110 &148 &177 &165 &140
+\begin{tabular}{ l|ccccc } 
+	$log(N_{max})$ & 0 &	0.5&1 &1.5 &2 \\ \hline
+	&25 &45 &60 &81&110 \\ \hline\hline
+	$log(N_{max})$ &2.5 &3 &	3.5&4 &\\ \hline
+	&148 &177 &165 &140&
 \end{tabular}
 \end{center}
 
@@ -211,11 +246,9 @@ Tudi slika \ref{fig:logeig} nam prikazuje, kako pomembna je kakšna dimenzija tr
 
 \section{Razprava}
 
-Želimo zapolniti še luknje v tem oblaku točk, da bi dobili čim bolj celostno podobo možnih histogramov. V nadaljevanju bomo dodali še četrti model, ki je povprečje modela 1 in 3 pri istih porazdelitvah in isti zgornji meji za $N$ ter eno izmed izmed porazdelitev iz modela 2 upoštevajoč porazdelitev iz prvih dveh modelov.
+Želimo zapolniti še luknje v tem oblaku točk, da bi dobili čim bolj celostno podobo možnih histogramov. V nadaljevanju bomo dodali še peti model, ki je povprečje modela 1 in 3 pri istih porazdelitvah in isti zgornji meji za $N$ ter eno izmed izmed porazdelitev iz modela 2 upoštevajoč porazdelitev iz prvih dveh modelov.
 
-Peti model bi bil za vsako porazdelitev iz modela 2 povprečje z vsemi histogrami iz modela 1 in 3 s primerljivimi porazdelitvami. Prvih pet modelov bi nam tako že dali okrog 1 120 000 histogramov. Če pa kakšen izmed novih dveh modelov ne prinaša dovolj nove informacije oz. le zgosti porazdelitev točk v že gostih delih oblaka točk, se ga znebimo, ker želimo točke čim bolj enakomerno porazdeliti.
-
-Poleg tega je že v pripravi nov model, ki veliko bolj pesimistično ocenjuje vrednosti parametrov in pravi, da je razvoj tovrstne civilizacije praktično nemogoč, torej da smo skoraj gotovo edini v vesolju. Ker pa ne vemo, kaj bi bilo realistično, ne vemo ali to tudi zares je preveč pesimistično. Ta teorija se imenuje Rare Earth theory.
+Šesti model bi bil za vsako porazdelitev iz modela 2 povprečje z vsemi histogrami iz modela 1 in 3 s primerljivimi porazdelitvami. Če pa kakšen izmed novih dveh modelov ne prinaša dovolj nove informacije oz. le zgosti porazdelitev točk v že gostih delih oblaka točk, se ga znebimo, ker želimo točke čim bolj enakomerno porazdeliti.
 
 Ko bomo imeli vse te modele pripravljene, bomo izračunali histograme na podlagi vsaj 5 milijonov generiranih točk za bolj gladke histograme in na večji množici zgornjih mej za $N$.
 

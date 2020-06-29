@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 from matplotlib.tri import Triangulation
 from scipy.spatial import ConvexHull
+from generateData_L import noIterations
 
 
 # PCA transformation to draw the most informative graphs
@@ -63,6 +64,9 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
                                                                   f'parameters.txt', "r").read().split("\n")]]
     hists = np.array([[float(x) for x in par.split(",")] for par in
                       open(f'collectedData/{"" if logarithmic_scale else "lin-"}hists.txt', "r").read().split("\n")])
+    parameters = np.array(parameters)
+    parameters = [list(par) for par in parameters[np.sum(hists, 1) > noIterations * 2/3]]
+    hists = hists[np.sum(hists, 1) > noIterations * 2 / 3]
     data = hists
     # make lists of parameters
     maxNs = sorted(list({a for _, a, _ in parameters}))
@@ -70,9 +74,11 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
     # exact parameters before clustering
     exact = np.array([[a[0], a[1]] for a in parameters])
 
+    minimal = min(np.sum(exact[:, 0] == model) for model in models)
+
     # remove linear dependency between dimensions in data
     data, eigval, eigvec, meandata = pca(data)
-    bins = np.linspace(-1 if logarithmic_scale else 0, 12 if logarithmic_scale else 1e10, len(eigval))
+    bins = np.linspace(-1 if logarithmic_scale else 0, 8 if logarithmic_scale else 1e8, len(eigval))
 
     plt.figure(figsize=(16, 12))
     # draw how important is each dimension in transformed data (eigenvalues) and
@@ -120,7 +126,9 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         # draw means of clusters
         plt.figure(figsize=(7, 7))
         for i in range(k):
-            plt.plot(bins, means[:, i], label=f"{i + 1}")
+            med = bins[np.argmin(np.abs(np.cumsum(means[:, i] / np.sum(means[:, i]))-0.5))]
+            avg = sum(bins*means[:, i])/sum(means[:, i])
+            plt.plot(bins, means[:, i], label=f"{i + 1}, median = {med:2.3f}, avg = {avg:2.3f}")
         plt.xlabel(f"{'log(L)' if logarithmic_scale else 'L'}")
         plt.ylabel("Povprečna gostota" if slo else "Mean density")
         plt.title("Povprečen histogram za vsako gručo" if slo else "Mean histogram for each cluster")
@@ -145,7 +153,7 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         ax = plt.subplot(121, projection='3d')
         tr = np.array([False] * len(data))
         for model in models:  # take just random 125*9 data from selected model
-            trues = np.random.choice(np.array(range(len(data)))[exact[:, 0] == model], size=125 * 9, replace=False)
+            trues = np.random.choice(np.array(range(len(data)))[exact[:, 0] == model], size=minimal, replace=False)
             trues = np.array([True if i in trues else False for i in range(len(data))])
             tr += trues
             for maxN in maxNs:  # set size of marker to log10(maxN)

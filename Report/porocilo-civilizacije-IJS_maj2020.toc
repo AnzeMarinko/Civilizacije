@@ -3,9 +3,10 @@
 \contentsline {subsection}{\numberline {\mbox {II-A}}Model 1}{1}%
 \contentsline {subsection}{\numberline {\mbox {II-B}}Model 2}{2}%
 \contentsline {subsection}{\numberline {\mbox {II-C}}Model 3}{2}%
-\contentsline {subsection}{\numberline {\mbox {II-D}}Implementacija}{2}%
-\contentsline {section}{\numberline {III}Gručenje}{2}%
-\contentsline {subsection}{\numberline {\mbox {III-A}}PCA - Principal component analysis}{2}%
-\contentsline {subsection}{\numberline {\mbox {III-B}}Analiza gruč}{2}%
+\contentsline {subsection}{\numberline {\mbox {II-D}}Model 4}{2}%
+\contentsline {subsection}{\numberline {\mbox {II-E}}Implementacija}{2}%
+\contentsline {section}{\numberline {III}Gručenje}{3}%
+\contentsline {subsection}{\numberline {\mbox {III-A}}PCA - Principal component analysis}{3}%
+\contentsline {subsection}{\numberline {\mbox {III-B}}Analiza gruč}{3}%
 \contentsline {section}{\numberline {IV}Rezultati}{3}%
 \contentsline {section}{\numberline {V}Razprava}{3}%

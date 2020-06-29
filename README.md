@@ -9,6 +9,12 @@ survives in our galaxy.
 
 All code is made in Python3.
 
+## Assumptions:
+* There is at least one civilisation (we are) and at most 10 000 civilisations, otherwise we would
+ already detect them,
+* Inteligent civilisation survives at most 10^8 years and already this bound seems to be too optimistic,
+* Drake equation holds.
+
 ## Generate new distributions
 
 At first you have to run `python generateData_L.py` in console to generate data.
@@ -33,6 +39,9 @@ get more general model,
 we have only two random variables,
 * **Model 3:** We add a possibility of spreading to other
 planets to first model.
+* **Model 4:** Rare Earth Theory
+* **Model 5:** Interpolation of previous models to fill holes
+(only in logarithmic scale, take two random generated histograms)
 
 #### Save collected data for further analysis
 
@@ -81,23 +90,6 @@ There is going to be a report in slovenian language in
 
 ## TODO:
 
-* za modela 4 in 5 samo na podlagi ze izracunanih histogramov
-(prave sestej skupaj in jih deli z njihovim stevilom), uporabi
-mnozico existing
-* model 4 - mean histogram of models 1 and 3 at same
-   distribution and maxN and model 2 at specific parameters
-   where parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2,
-   torej 6 moznosti za vsako kombinacijo parametrov
-* model 5 - za vsake parametre iz modela 2 povprečje
-   z vsemi 6 iz drugih dveh
-   * modela 4 in 5 prineseta približno trikrat več novih točk
-   (skupno imamo že cca. 1 120 000 točk)
-   * če je to slabo, se kakega od obeh modelov znebi
-* dodaj Rare Earth theory
-
-
-* izračunavanje na npr. 5e6, N bolj na gosto (2**i i=0,...,14) z močnejšo mašino
-* odstrani neprimerne porazdelitve
-   (stabilizacija do L < 1e7, po tem odreži)
-* koda, README, drugo poročilo vsega novega, zamenjaj projekt
+* koda, README, Github
+* koncno porocilo
  

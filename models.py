@@ -4,7 +4,7 @@ from numpy import log10, roots, abs as nabs, exp as nexp
 
 # all possible distributions and models (lists for iterating)
 distributions = ["loguniform", "uniform", "halfgauss", "lognormal", "fixed"]  # all possible distributions
-models = [1, 2, 3]
+models = [1, 2, 3, 4]
 
 
 def sample_value(fromv, tov, distribution="fixed"):
@@ -51,7 +51,7 @@ def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0))
 
     # N = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
     logL = logN - (RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization)
-    if 3 not in model:   # if only model 1
+    if 3 not in model:  # if only model 1
         return [float(logL.real)]  # rate of birth of new civilisation
 
     N = 10 ** logN
@@ -59,11 +59,11 @@ def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0))
     # logL = log10(N) - log10(f)   ... model 1 would return logL like this
     A = 1
     B = 0.004 / (9.461e12 ** 3)  # number density of stars as per Wikipedia
-    a4 = 5.13342 * 1e10 * 10 ** (fPlanets + nEnvironment) * B    # estimated number of earth-like planets
-    a14 = f * A   # rate of new intelligent civilisation born
-    candidates = list(roots([a4 * a14, 0, 0, a14, -N]))   # zeros of function: a4 * a14 * x^4 + a14 * x - N
+    a4 = 5.13342 * 1e10 * 10 ** (fPlanets + nEnvironment) * B  # estimated number of earth-like planets
+    a14 = f * A  # rate of new intelligent civilisation born
+    candidates = list(roots([a4 * a14, 0, 0, a14, -N]))  # zeros of function: a4 * a14 * x^4 + a14 * x - N
     # actually we want to solve equation: f*A * (L + 5.13342*1e10*10**(fPlanets+nEnvironment)*B * L**4) = N
-    L_initial_guess = N / (a14*log10(a14)**4)  # just a bad approximation to detect true candidate
+    L_initial_guess = N / (a14 * log10(a14) ** 4)  # just a bad approximation to detect true candidate
     candidates.sort(key=lambda x: nabs(x - L_initial_guess))
     logL3 = log10(candidates[0])
     if 1 in model:
@@ -90,11 +90,25 @@ def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
     return [float(N - (astrophysicsProbability + biotechnicalProbability)).real]
 
 
-def get_point(max_n=10, distribution=(0, 0, 0, 0, 0, 0), model=(1, 3)):   # get point for selected parameters
+# rare earth theory
+def get_point_model_4(distribution=(0, 0, 0, 0, 0, 0, 0)):
+    RStarSample = sample_value(0, 2, distributions[distribution[0]])
+    nStars = uniform(11, 11.60205999132)
+    fMetal = sample_value(-2, -1, distributions[distribution[1]])
+    ngalactic = sample_value(10.3, 10.6, distributions[distribution[2]])  # about 20 to 40 billion stars.
+    fMoon = sample_value(-2.5, -1.5, distributions[distribution[3]])
+    fExtinct = sample_value(-2, -1, distributions[distribution[4]])
+    fj = sample_value(-1.3, -1, distributions[distribution[5]])
+    Nzvezdica_ne = sample_value(11.5, 11.9, distributions[distribution[6]])
+
+    L = (Nzvezdica_ne + fMetal + ngalactic + fMoon + fExtinct + fj) - (RStarSample + nStars)
+    return [float(L).real]
+
+
+def get_point(max_n=10, distribution=(0, 0, 0, 0, 0, 0), model=(1, 3)):  # get point for selected parameters
     if 2 in model:
         return get_point_model_2(max_n, distribution)
     if 1 in model or 3 in model:
         return get_point_model_1_3(model, max_n, distribution)
-
-# model 4 - mean histogram of models 1 and 3 at same distribution and maxN and model 2 at specific parameters
-# parameter 2 -> 1, (0 ali 1) -> 0, (3 ali 4 ali 5) -> 2, torej 6 moznosti za vsake parametre
+    if 4 in model:
+        return get_point_model_4(distribution)
