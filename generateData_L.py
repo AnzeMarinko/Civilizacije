@@ -32,10 +32,10 @@ def collect():
     print("Collecting data is done.")
 
 
-collect()  # to be sure that all generated data is already collected
+collect()  # to be sure that all generated data is already collected before the run
 
 d = len(distributions)
-# make set of all possible combinations for distributions (models 1 and 3 have 6 random parameters, 2 has 3)
+# make set of all possible combinations for distributions (models 1 and 3 have 6 random parameters, 2 has 3, 4 has 7)
 parameters = set([((1, 3), (d1, d2, d3, d4, d5, d6, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
                   for d4 in range(d) for d5 in range(d) for d6 in range(d)] +
                  [((0, 2), (d1, d2, d3, 0, 0, 0, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)] +
@@ -54,13 +54,11 @@ existing = {((1, 3), tuple([int(i) for i in par.split("_")[1:-1]] + [0])) if "2"
 # make set of not generated distributions
 parameters.difference_update(existing)
 print(len(parameters))
-
-
 # parameters = sorted(list(parameters))
 
 
-def generate_by_n(par):  # generate histograms for all max. n-s at selected model and distributions
-    if 2 in par[0]:  # model 2 has only 3 random variables
+def generate_by_n(par):  # generate histograms for all maxN-s at selected model and distributions
+    if 2 in par[0]:  # model 2 has only 3 random variables etc.
         (model, dist) = ((2,), par[1][:3])
     elif 4 not in par[0]:
         (model, dist) = (par[0], par[1][:6])
@@ -115,21 +113,22 @@ def generate():
 def interpolate(nInterpolations):  # only for logarithmic scale
     print("Interpolating ...")
     logarithmic_scale = True
+    # all generated histograms:
     exist = np.array([[float(x) for x in par.split(",")] for par in
-                      open(f'collectedData/{"" if logarithmic_scale else "lin-"}hists.txt', "r").read().split(
-                          "\n")])
+                      open(f'collectedData/{"" if logarithmic_scale else "lin-"}hists.txt', "r").read().split("\n")])
     new = np.array([])
     i = 0
     while i < nInterpolations:
         # take random two distributions out of already generated
         selected = exist[np.random.choice(range(len(exist)), size=2, replace=False)]
         if np.sum(np.abs(selected[0, :]-selected[1, :])) > 2e5:  # only if enough different
-            p = np.random.random()*0.9+0.05  # make some affine combination of those models
+            p = 0.5+np.cbrt(np.random.random()/4-1/8)  # make some affine combination of those models
+            # we want uniformly distributed so we took more probability for close to 0 or 1
             interp = np.dot(np.array([p, 1-p]), selected)
-            new = np.append(new.reshape(-1, 100), interp.reshape(1, 100), axis=0)
+            new = np.append(new.reshape(-1, 100), interp.reshape(1, 100), axis=0)  # add new histogram to generated
             exist = np.append(exist.reshape(-1, 100), interp.reshape(1, 100), axis=0)
             i += 1
-    with open(f'data/{"log-" if logarithmic_scale else "lin-"}hists-5_0.txt', 'w') as f:
+    with open(f'data/{"log-" if logarithmic_scale else "lin-"}hists-5_0.txt', 'w') as f:  # write new histograms in file
         f.write(",".join(["3000"] * nInterpolations) + "\n" +
                 "\n".join([",".join([str(x) for x in line]) for line in new]))
     print("\t... is done!")
@@ -137,7 +136,7 @@ def interpolate(nInterpolations):  # only for logarithmic scale
 
 if __name__ == "__main__":
     # generate()
-    for i in range(20):
+    for i in range(10):
         print(i+1)   # make few iterations where previous histograms from model 5 are lost to scatter more uniformly
         interpolate(2000)
         collect()

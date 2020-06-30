@@ -74,7 +74,8 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
     # exact parameters before clustering
     exact = np.array([[a[0], a[1]] for a in parameters])
 
-    minimal = min(np.sum(exact[:, 0] == model) for model in models)
+    minimal = min(np.sum(exact[:, 0] == model) for model in models)   # we need to know how many histograms came from
+    # which model that we can draw later as many as possible points but still equal number for each model
 
     # remove linear dependency between dimensions in data
     data, eigval, eigvec, meandata = pca(data)

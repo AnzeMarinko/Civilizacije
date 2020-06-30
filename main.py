@@ -21,7 +21,6 @@ draw_histograms3D(logarithmic_scale, draw_model, draw_distribution, slo=slo)
 
 print("\n\t2: clustering and analysis of clusters on logarithmic scale")
 cluster(logarithmic_scale=True, ks=ks, slo=slo)
-print("\n\t2: clustering and analysis of clusters on liner scale")
+print("\n\t2: clustering and analysis of clusters on linear scale")
 cluster(logarithmic_scale=False, ks=ks, slo=slo)
-# blue ... model 1, orange ... model 2, green ... model 3
 # size of marker ... log(N)

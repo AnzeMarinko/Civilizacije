@@ -10,10 +10,10 @@ survives in our galaxy.
 All code is made in Python3.
 
 ## Assumptions:
-* There is at least one civilisation (we are) and at most 10 000 civilisations, otherwise we would
- already detect them,
-* Inteligent civilisation survives at most 10^8 years and already this bound seems to be too optimistic,
-* Drake equation holds.
+* There is at least one civilisation (here we are) and at most 10 000 civilisations, otherwise we would
+ already detect any of them,
+* Intelligent civilisation survives at most 10^8 years and already this bound seems to be too optimistic,
+* Drake equation holds and its parameters are independently distributed by some selected distributions.
 
 ## Generate new distributions
 
@@ -38,10 +38,10 @@ get more general model,
 * **Model 2:** We collect together some variables from first model so
 we have only two random variables,
 * **Model 3:** We add a possibility of spreading to other
-planets to first model.
-* **Model 4:** Rare Earth Theory
+planets for the first model,
+* **Model 4:** Rare Earth Theory equation included,
 * **Model 5:** Interpolation of previous models to fill holes
-(only in logarithmic scale, take two random generated histograms)
+(only in logarithmic scale, take combination of two random generated histograms).
 
 #### Save collected data for further analysis
 
@@ -76,8 +76,8 @@ Parameters to be set:
 
 * scale of *x* axis for histograms `logarithmic_scale`,
 selected model `draw_model` and distribution to draw
-in 3D `draw_distribution` that is tuple of 6 (3 at model 2)
-integers from 0 to 4 that represent each one random variable
+in 3D `draw_distribution` that is tuple of 6 for models 1 and 3 or 3 integers
+from 0 to 4 at model 2 that represent each one random variable
 in model distributed in selected distribution
 * list of numbers of clusters to make `ks` from 1 to 10 so it
 makes an analysis of data clustered in each number of clusters
@@ -87,9 +87,3 @@ from the list
 
 There is going to be a report in slovenian language in
 `porocilo-civilizacije-IJS_maj2020.pdf`.
-
-## TODO:
-
-* koda, README, Github
-* koncno porocilo
- 

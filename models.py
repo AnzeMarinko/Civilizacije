@@ -100,7 +100,7 @@ def get_point_model_4(distribution=(0, 0, 0, 0, 0, 0, 0)):
     fExtinct = sample_value(-2, -1, distributions[distribution[4]])
     fj = sample_value(-1.3, -1, distributions[distribution[5]])
     Nzvezdica_ne = sample_value(11.5, 11.9, distributions[distribution[6]])
-
+    # Drake equation using Rare Earth equation
     L = (Nzvezdica_ne + fMetal + ngalactic + fMoon + fExtinct + fj) - (RStarSample + nStars)
     return [float(L).real]
 
