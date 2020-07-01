@@ -7,26 +7,28 @@ from multiprocessing import Pool, freeze_support  # multi-threading
 
 noIterations = 2e5  # number of generated points for each histogram
 # all maximal numbers of civilisations
-nrange = [1, 3, 10, 30, 100, 300, 1000, 3000, 10000]
+nrange = [1, 12, 24, 36, 48, 60, 72, 84, 96]
+# or [1, 3, 10, 30, 100, 300, 1000, 3000, 10000] or [1, 2, 4, 8, 16, 32, 64, 100]
 bin_no = 100  # number of bins in histograms
+folder = "100" if max(nrange) <= 100 else ""
 
 
 def collect():
     # collect all generated histograms and moments in only 4 files (2 linear and 2 logarithmic)
-    params = sorted([name[:-4].split("-")[-1] for name in listdir("data") if "log" in name])
-    linparams = sorted([name[:-4].split("-")[-1] for name in listdir("data") if "lin" in name])
+    params = sorted([name[:-4].split("-")[-1] for name in listdir(f"data{folder}") if "log" in name])
+    linparams = sorted([name[:-4].split("-")[-1] for name in listdir(f"data{folder}") if "lin" in name])
     lindata = [(p[0].split(","), "\n".join(p[1:])) for p in
-               [open("data/lin-hists-" + par + ".txt", "r").read().split("\n") for par in linparams]]
-    with open("collectedData/lin-hists.txt", "w") as f:
+               [open(f"data{folder}/lin-hists-" + par + ".txt", "r").read().split("\n") for par in linparams]]
+    with open(f"collectedData{folder}/lin-hists.txt", "w") as f:
         f.write("\n".join([p for n, p in lindata]))
-    with open("collectedData/lin-parameters.txt", "w") as f:
+    with open(f"collectedData{folder}/lin-parameters.txt", "w") as f:
         f.write("\n".join(["\n".join([par + "_" + n for par, ns in
                                       zip(linparams, [n for n, p in lindata]) for n in ns])]))
     logdata = [(p[0].split(","), "\n".join(p[1:])) for p in
-               [open("data/log-hists-" + par + ".txt", "r").read().split("\n") for par in params]]
-    with open("collectedData/hists.txt", "w") as f:
+               [open(f"data{folder}/log-hists-" + par + ".txt", "r").read().split("\n") for par in params]]
+    with open(f"collectedData{folder}/hists.txt", "w") as f:
         f.write("\n".join([p for n, p in logdata]))
-    with open("collectedData/parameters.txt", "w") as f:
+    with open(f"collectedData{folder}/parameters.txt", "w") as f:
         f.write("\n".join(["\n".join([par + "_" + n for par, ns in
                                       zip(params, [n for n, p in logdata]) for n in ns])]))
     print("Collecting data is done.")
@@ -42,17 +44,24 @@ parameters = set([((1, 3), (d1, d2, d3, d4, d5, d6, 0)) for d1 in range(d) for d
                  [((0, 4), (d1, d2, d3, d4, d5, d6, d7)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
                   for d4 in range(d) for d5 in range(d) for d6 in range(d) for d7 in range(d)])
 # make set of already generated combinations
-open(f'collectedData/lin-parameters.txt', 'a').write("")
-open(f'collectedData/parameters.txt', 'a').write("")
+open(f'collectedData{folder}/lin-parameters.txt', 'a').write("")
+open(f'collectedData{folder}/parameters.txt', 'a').write("")
 existing = {((1, 3), tuple([int(i) for i in par.split("_")[1:-1]] + [0])) if "2" not in par.split("_")[0] else
             ((0, 2), tuple([int(i) for i in par.split("_")[1:-1]] + [0, 0, 0, 0])) if "4" not in par.split("_")[0] else
             ((0, 4), tuple([int(i) for i in par.split("_")[1:-1]]))
             for par in
-            set(open("collectedData/lin-parameters.txt", "r").read().split("\n") +
-                open("collectedData/parameters.txt", "r").read().split("\n")) if "5" not in par.split("_")[0]}
+            set(open(f"collectedData{folder}/lin-parameters.txt", "r").read().split("\n") +
+                open(f"collectedData{folder}/parameters.txt", "r").read().split("\n")) if "5" not in par.split("_")[0]}
 
 # make set of not generated distributions
 parameters.difference_update(existing)
+
+if True:
+    parameters = list(set(((1, 3), (d1, d2, d3, d4, d5, d6, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
+                      for d4 in range(d) for d5 in range(d) for d6 in range(d)))[:d**4]
+    parameters += [((0, 2), (d1, d2, d3, 0, 0, 0, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)]
+    parameters += list(set(((0, 4), (d1, d2, d3, d4, d5, d6, d7)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
+                       for d4 in range(d) for d5 in range(d) for d6 in range(d) for d7 in range(d)))[:d**4]
 print(len(parameters))
 # parameters = sorted(list(parameters))
 
@@ -83,10 +92,10 @@ def generate_by_n(par):  # generate histograms for all maxN-s at selected model 
                     linhists[m].append(hist)
     for m in range(len(model)):
         # write all histograms and moments and list of parameters in files to get processed data faster
-        with open(f'data/lin-hists-{name[m]}.txt', 'w') as f:
+        with open(f'data{folder}/lin-hists-{name[m]}.txt', 'w') as f:
             f.write(",".join([str(n) for n in (nrange if model[0] != 4 else [3000])]) + "\n" +
                     "\n".join([",".join([str(x) for x in line]) for line in linhists[m]]))
-        with open(f'data/log-hists-{name[m]}.txt', 'w') as f:
+        with open(f'data{folder}/log-hists-{name[m]}.txt', 'w') as f:
             f.write(",".join([str(n) for n in (nrange if model[0] != 4 else [3000])]) + "\n" +
                     "\n".join([",".join([str(x) for x in line]) for line in hists[m]]))
     t = time() - t
@@ -115,20 +124,22 @@ def interpolate(nInterpolations):  # only for logarithmic scale
     logarithmic_scale = True
     # all generated histograms:
     exist = np.array([[float(x) for x in par.split(",")] for par in
-                      open(f'collectedData/{"" if logarithmic_scale else "lin-"}hists.txt', "r").read().split("\n")])
+                      open(f'collectedData{folder}/{"" if logarithmic_scale else "lin-"}hists.txt',
+                           "r").read().split("\n")])
     new = np.array([])
     i = 0
     while i < nInterpolations:
         # take random two distributions out of already generated
         selected = exist[np.random.choice(range(len(exist)), size=2, replace=False)]
         if np.sum(np.abs(selected[0, :]-selected[1, :])) > 2e5:  # only if enough different
-            p = 0.5+np.cbrt(np.random.random()/4-1/8)  # make some affine combination of those models
+            p = 0.5+np.cbrt(np.random.random()/4-1/8)*0.9  # make some affine combination of those models
             # we want uniformly distributed so we took more probability for close to 0 or 1
             interp = np.dot(np.array([p, 1-p]), selected)
             new = np.append(new.reshape(-1, 100), interp.reshape(1, 100), axis=0)  # add new histogram to generated
             exist = np.append(exist.reshape(-1, 100), interp.reshape(1, 100), axis=0)
             i += 1
-    with open(f'data/{"log-" if logarithmic_scale else "lin-"}hists-5_0.txt', 'w') as f:  # write new histograms in file
+    with open(f'data{folder}/{"log-" if logarithmic_scale else "lin-"}hists-5_0.txt', 'w') as f:
+        # write new histograms in file
         f.write(",".join(["3000"] * nInterpolations) + "\n" +
                 "\n".join([",".join([str(x) for x in line]) for line in new]))
     print("\t... is done!")
@@ -136,7 +147,8 @@ def interpolate(nInterpolations):  # only for logarithmic scale
 
 if __name__ == "__main__":
     # generate()
-    for i in range(10):
+    collect()
+    for i in range(0):
         print(i+1)   # make few iterations where previous histograms from model 5 are lost to scatter more uniformly
-        interpolate(2000)
+        interpolate(1500)
         collect()

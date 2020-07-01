@@ -6,6 +6,8 @@ from matplotlib.tri import Triangulation
 from scipy.spatial import ConvexHull
 from generateData_L import noIterations
 
+folder = "100" if True else ""   # maxN <= 100 or not
+
 
 # PCA transformation to draw the most informative graphs
 def pca(data):
@@ -27,8 +29,10 @@ def summarize(clusters, exact, k, models, maxNs, slo=True):
               "Models:\n\t" + "\t\t ".join([str(model) for model in models]))  # distribution of models in cluster
         print("\t" + "\t\t ".join([str(len([c for c in clust if c[0] == model])) for model in models]))
         # distribution of maxN in cluster
-        print("maxN:\n\t" + " \t".join([str(round(np.log10(maxN) * 100) / 100) for maxN in maxNs]))
-        print("\t" + " \t\t".join([str(len([c for c in clust if c[1] == maxN])) for maxN in maxNs]))
+        print(f"{'log ' if '100' not in folder else ''}maxN:\n\t" + " \t".join([str(round(np.log10(maxN) * 100) / 100)
+                                                                                if "100" not in folder else str(maxN)
+                                                                                for maxN in maxNs]))
+        print("\t" + " \t\t".join([str(len([c for c in clust if c[1] == maxN and c[0] < 4])) for maxN in maxNs]))
 
 
 # compute polynomial surface approximating cluster
@@ -60,10 +64,12 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
         ks = [4, 7, 10]
     # import data (parameters and than data)
     parameters = [(int(p[0]), int(p[-1]), p[1:-1]) for p in [par.split("_") for par in
-                                                             open(f'collectedData/{"" if logarithmic_scale else "lin-"}'
+                                                             open(f'collectedData{folder}/'
+                                                                  f'{"" if logarithmic_scale else "lin-"}'
                                                                   f'parameters.txt', "r").read().split("\n")]]
     hists = np.array([[float(x) for x in par.split(",")] for par in
-                      open(f'collectedData/{"" if logarithmic_scale else "lin-"}hists.txt', "r").read().split("\n")])
+                      open(f'collectedData{folder}/{"" if logarithmic_scale else "lin-"}'
+                           f'hists.txt', "r").read().split("\n")])
     parameters = np.array(parameters)
     parameters = [list(par) for par in parameters[np.sum(hists, 1) > noIterations * 2/3]]
     hists = hists[np.sum(hists, 1) > noIterations * 2 / 3]
@@ -163,13 +169,13 @@ def cluster(logarithmic_scale=True, ks=None, slo=True):
                     ax.plot(points[:, 0],  # color by maxN
                             points[:, 1],
                             points[:, 2],
-                            marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1],
+                            marker='o', markersize=2*np.log10(maxN) + 1, linewidth=0, color=colors[model - 1],
                             label=f"Model {model}")
                 else:
                     ax.plot(points[:, 0],  # color by maxN
                             points[:, 1],
                             points[:, 2],
-                            marker='o', markersize=np.log10(maxN) + 1, linewidth=0, color=colors[model - 1])
+                            marker='o', markersize=2*np.log10(maxN) + 1, linewidth=0, color=colors[model - 1])
         ax.set_xlabel("x1")
         ax.set_ylabel("x2")
         ax.set_zlabel("x3")

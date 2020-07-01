@@ -87,3 +87,6 @@ from the list
 
 There is going to be a report in slovenian language in
 `porocilo-civilizacije-IJS_maj2020.pdf`.
+
+# TODO:
+* report
