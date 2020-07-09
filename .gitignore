@@ -125,4 +125,4 @@ dmypy.json
 .pyre/
 
 oldData/
-data100/
+/data/
