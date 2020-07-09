@@ -72,8 +72,6 @@ so we do not need to understand functions to draw plots.
 You just have to set parameters in first section of code
 and run the file.
 
-Parameter to be set:
-
-* list of numbers of clusters to make `ks` from 1 to 10 so it
+Parameter to be set: list of numbers of clusters to make `ks` from 1 to 10 so it
 makes an analysis of data clustered in each number of clusters
 from the list
