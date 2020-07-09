@@ -41,7 +41,7 @@ we have only two random variables,
 planets for the first model,
 * **Model 4:** Rare Earth Theory equation included,
 * **Model 5:** Interpolation of previous models to fill holes
-(only in logarithmic scale, take combination of two random generated histograms).
+(take combination of two random generated histograms).
 
 #### Save collected data for further analysis
 
@@ -72,21 +72,8 @@ so we do not need to understand functions to draw plots.
 You just have to set parameters in first section of code
 and run the file.
 
-Parameters to be set:
+Parameter to be set:
 
-* scale of *x* axis for histograms `logarithmic_scale`,
-selected model `draw_model` and distribution to draw
-in 3D `draw_distribution` that is tuple of 6 for models 1 and 3 or 3 integers
-from 0 to 4 at model 2 that represent each one random variable
-in model distributed in selected distribution
 * list of numbers of clusters to make `ks` from 1 to 10 so it
 makes an analysis of data clustered in each number of clusters
 from the list
-
-## Report
-
-There is going to be a report in slovenian language in
-`porocilo-civilizacije-IJS_maj2020.pdf`.
-
-# TODO:
-* report
