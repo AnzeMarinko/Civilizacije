@@ -86,10 +86,11 @@ def generate():
         parameters = list(
             set(((1, 3), (d1, d2, d3, d4, d5, d6, 0), folder) for d1 in range(d) for d2 in range(d) for d3 in range(d)
                 for d4 in range(d) for d5 in range(d) for d6 in range(d)))[:d ** 3]
-        parameters += [((0, 2), (d1, d2, d3, 0, 0, 0, 0), folder) for d1 in range(d) for d2 in range(d) for d3 in range(d)]
+        parameters += [((0, 2), (d1, d2, d3, 0, 0, 0, 0), folder) for d1 in range(d) for d2 in range(d)
+                       for d3 in range(d)]
         parameters += list(set(((0, 4), (d1, d2, d3, d4, d5, d6, d7), folder) for d1 in range(d) for d2 in range(d)
-                               for d3 in range(d)
-                               for d4 in range(d) for d5 in range(d) for d6 in range(d) for d7 in range(d)))[:d ** 3 * len(nrange)]
+                               for d3 in range(d) for d4 in range(d) for d5 in range(d) for d6 in range(d)
+                               for d7 in range(d)))[:d ** 3 * len(nrange)]
         parameters = list(set(parameters))
         print(len(parameters))
         t0 = time()
