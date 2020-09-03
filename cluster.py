@@ -55,8 +55,8 @@ def approximate(points, n):
 
 
 # compute clusters, draw and print some properties
-def cluster(folder, ks=None, slo=True):
-    for logarithmic_scale in [True, False]:
+def cluster(folder, ks=None, slo=True, logscale=None):
+    for logarithmic_scale in logscale:
         if ks is None:  # ks should bi a list of k-s, that are number of clusters in k-means
             ks = [4, 7, 10]
         # import data (parameters and than data)
@@ -68,6 +68,8 @@ def cluster(folder, ks=None, slo=True):
                           open(f'collectedData/data{folder}/{"" if logarithmic_scale else "lin-"}'
                                f'hists.txt', "r").read().split("\n")])
         parameters = np.array(parameters)
+        hists = hists[parameters[:, 0] < 5]
+        parameters = parameters[parameters[:, 0] < 5]
         parameters = [list(par) for par in parameters[np.sum(hists, 1) > noIterations * 2/3]]
         hists = hists[np.sum(hists, 1) > noIterations * 2 / 3]
         data0 = hists

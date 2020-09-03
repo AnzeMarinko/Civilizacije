@@ -36,7 +36,7 @@ def life_dist(mean=0, sigma=50):
 # ============ Models ====================
 
 # model 1 and 3, model 3 adds expanding in universe to model 1
-def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0)):
+def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0)):
     # sample parameters in logarithmic scale
     RStarSample = sample_value(0, 2, distributions[distribution[0]])  # rate of new star born
     fPlanets = sample_value(-1, 0, distributions[distribution[1]])  # probability that star has planets
@@ -45,7 +45,7 @@ def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0))
     fCivilization = sample_value(-2, 0, distributions[distribution[4]])  # prob. this beings are possible to communicate
     #       with other planets
 
-    logN = sample_value(0, log10(max_n), distributions[distribution[5]])
+    logN = log10(max_n)
     fLife = life_dist(mean=0, sigma=50)  # probability that life begins
     fLifeEks = log10(fLife)
 
@@ -71,7 +71,7 @@ def get_point_model_1_3(model=(1, 3), max_n=10, distribution=(0, 0, 0, 0, 0, 0))
     return [float(logL3.real)]
 
 
-def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
+def get_point_model_2(max_n=10, distribution=(0, 0)):
     # Model 2: https://arxiv.org/ftp/arxiv/papers/1510/1510.08837.pdf
     # Using Sandberg distribution
     # Model 2 opposite to original Drake equation - model 1 (calculates how many intelligent civilisations are out
@@ -85,8 +85,8 @@ def get_point_model_2(max_n=10, distribution=(0, 0, 0)):
     if astrophysicsProbability < -2:
         astrophysicsProbability = sample_value(-1.95, -1.65, distributions[distribution[0]])
 
-    N = sample_value(0, log10(max_n), distributions[distribution[1]])
-    biotechnicalProbability = sample_value(-11, -3, distributions[distribution[2]])
+    N = log10(max_n)
+    biotechnicalProbability = sample_value(-11, -3, distributions[distribution[1]])
     return [float(N - (astrophysicsProbability + biotechnicalProbability)).real]
 
 
