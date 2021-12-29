@@ -77,8 +77,8 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
     p = np.load(f"{collected_folder}/pca_parameters.npy")
     hists = np.load(f"{collected_folder}/pca_histograms{'' if supermodel == 1 else '_supermodel2'}.npy")
     parameters = np.array([list(m) for m in p])
-    if supermodel == 3:
-        selected = np.logical_not((parameters[:, 0] == 4) * (np.random.random(parameters.shape[0]) > 0.1))   # delete 90 % of 4. model
+    if supermodel == 2:
+        selected = np.logical_not((parameters[:, 0] == 4) * (np.random.random(parameters.shape[0]) < 0.5))   # delete 50 % of 4. model
         hists = hists[selected, :]
         parameters = parameters[selected, :]
 

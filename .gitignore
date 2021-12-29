@@ -1,7 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.zip
 *$py.class
+.idea/
 
 # C extensions
 *.so
@@ -126,3 +128,4 @@ dmypy.json
 
 collectedData/
 data/
+slike/

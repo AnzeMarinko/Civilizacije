@@ -109,9 +109,9 @@ def modeli_napake(printing=False):
         # print(f"\r {round((j + 1)/20 * 100)}%", end=" ", flush=True)
         j = k // 4 + (k % 4) * 7
         plt.subplot(4, 7, j + 1)
-        criterion = [("mse", "MSE"), ("mae", "MAE")][0]
-        model = RandomForestRegressor(criterion=criterion[0], n_estimators=300, max_depth=4, random_state=1,
-                                      min_samples_leaf=0.01)  # regresor
+        criterion = [("squared_error", "MSE"), ("absolute_error", "MAE")][0]
+        model = RandomForestRegressor(criterion=criterion[0], n_estimators=300 if printing else 50,
+                                      max_depth=4, random_state=1, min_samples_leaf=0.01)  # regresor
         model = model.fit(X, Y)
         feat_importances = pd.Series(model.feature_importances_,
                                      [f"${p}$" if "(" in p else p for p in columns])
@@ -122,43 +122,44 @@ def modeli_napake(printing=False):
             plt.ylabel(f"{label[0]}\nParameter importance")
         if j // 7 < 3:
             plt.xticks([])
-        rules = []
-        for i, tree in enumerate(model.estimators_):  # sestavi slovar in vrni nekaj pogostejših in njihovo pojavnost
-            rules += rules_from_tree(tree, columns, printing_trees and i < 3)
-        # print(len(rules), len(set(rules)))
-        rules_raw = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)]) for rule in rules]
-        rules_text = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)] + list(rule[-2:])) for rule in rules]
-        rules_exact = [[(r1, r2, r3) for _, r1, r2, r3 in rule[:-3]] + [rule[-3:]] for rule in rules if rule[-1] < 0.2]
-        # print(rules_exact)
-        rules_raw = sorted([rule for rule in set(rules_raw)], key=lambda x: -rules_raw.count(x) / len(rules) * 100)
-        ind_rules = np.array([[rules_raw.index(rule[:-2]), rule[-2], rule[-1]] for rule in rules_text])
-        rules = [(rule, np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 1]), 1),
-                  np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 2]), 3)) for i, rule in enumerate(rules_raw)]
-        rules = [(rule, samples, gini_impurity) for rule, samples, gini_impurity in rules if gini_impurity < 0.2]
-        # print(len(rules))
-        land = "\\land"
-        proc = '~\\%'
-        if len(rules) > 0:
-            pra = "\n\\subsection{" + f"{subdata}" + "}" + f"\n{label[0]}:\n" + "\\begin{itemize}\n"
-            pra += "\n".join([f"\\item $({(') ' + land + ' (').join(r[0][:-1]) if len(r[0]) > 1 else 'T'}) \\Rightarrow "
-                             f"{label[0]} = {r[0][-1] * 100 if 'P' in label[0] else 10 ** r[0][-1]:.1f}"
-                             f"{proc if 'P' in label[0] else ''}$,\\hfill Size={round(r[1])} \\%, {criterion[1]}={r[2]}"
-                              for r in rules[:25]])
-            pra += "\n\\end{itemize}\n"
-            if printing:
-                print(pra, end="")
-            pr += pra
-        rules_exact0.append((subdata, label[0], rules_exact))
+        if printing:
+            rules = []
+            for i, tree in enumerate(model.estimators_):  # sestavi slovar in vrni nekaj pogostejših in njihovo pojavnost
+                rules += rules_from_tree(tree, columns, printing_trees and i < 3)
+            # print(len(rules), len(set(rules)))
+            rules_raw = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)]) for rule in rules]
+            rules_text = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)] + list(rule[-2:])) for rule in rules]
+            rules_exact = [[(r1, r2, r3) for _, r1, r2, r3 in rule[:-3]] + [rule[-3:]] for rule in rules if rule[-1] < 0.2]
+            # print(rules_exact)
+            rules_raw = sorted([rule for rule in set(rules_raw)], key=lambda x: -rules_raw.count(x) / len(rules) * 100)
+            ind_rules = np.array([[rules_raw.index(rule[:-2]), rule[-2], rule[-1]] for rule in rules_text])
+            rules = [(rule, np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 1]), 1),
+                      np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 2]), 3)) for i, rule in enumerate(rules_raw)]
+            rules = [(rule, samples, gini_impurity) for rule, samples, gini_impurity in rules if gini_impurity < 0.2]
+            # print(len(rules))
+            land = "\\land"
+            proc = '~\\%'
+            if len(rules) > 0:
+                pra = "\n\\subsection{" + f"{subdata}" + "}" + f"\n{label[0]}:\n" + "\\begin{itemize}\n"
+                pra += "\n".join([f"\\item $({(') ' + land + ' (').join(r[0][:-1]) if len(r[0]) > 1 else 'T'}) \\Rightarrow "
+                                 f"{label[0]} = {r[0][-1] * 100 if 'P' in label[0] else 10 ** r[0][-1]:.1f}"
+                                 f"{proc if 'P' in label[0] else ''}$,\\hfill Size={round(r[1])} \\%, {criterion[1]}={r[2]}"
+                                  for r in rules[:25]])
+                pra += "\n\\end{itemize}\n"
+                # print(pra, end="")
+                pr += pra
+            rules_exact0.append((subdata, label[0], rules_exact))
     if printing:
         with open("rules.txt", "w") as f:
             f.write(pr)
         plt.close()
+        with open("rules_exact.txt", "w") as f:
+            f.write(str(rules_exact0))
     else:
         plt.savefig(f'slike/importance-random_forest_model.png')
         plt.show()
-    with open("rules_exact.txt", "w") as f:
-        f.write(str(rules_exact0))
+    return pr
 
 
 if __name__ == "__main__":
-    modeli_napake(True)
+    print(modeli_napake(True))
