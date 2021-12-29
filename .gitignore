@@ -124,5 +124,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-oldData/
-/data/
+collectedData/
+data/

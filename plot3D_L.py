@@ -1,35 +1,85 @@
 import matplotlib.pyplot as plt
-from numpy import meshgrid, linspace, log10, array
+from numpy import meshgrid, load
 from mpl_toolkits import mplot3d
+from config import *
 
 
-def draw_histograms3D(logarithmic_scale=True, model=1, distribution=(0, 0, 0, 0, 0, 0), slo=True):
+def draw_histograms3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
     # draw in logarithmic scale on x, y axis
+
     # get list of parameters
-    parameters = sorted([([int(i) for i in par.split("_")],
-                          [float(h) for h in hist.split(",")])
-                         for par, hist in
-                         zip(open(f"collectedData/{'' if logarithmic_scale else 'lin-'}parameters.txt",
-                                  "r").read().split("\n"),
-                             open(f"collectedData/{'' if logarithmic_scale else 'lin-'}hists.txt",
-                                  "r").read().split("\n"))])
-    # filter parameters and histograms
-    parameters = [(par[-1], hist) for par, hist in parameters if par[0] == model and tuple(par[1:-1]) == distribution]
-    if len(parameters) > 0:  # draw histograms of selected model and distribution
-        bins = linspace(-1 if logarithmic_scale else 0, 8 if logarithmic_scale else 1e8, len(parameters[0][1]))
-        Z = array([hist for par, hist in parameters])
-        n = [par for par, hist in parameters]
-        X, Y = meshgrid(bins, log10(n))
-        fig = plt.figure(figsize=(7, 7))  # draw distributions
-        ax = fig.add_subplot(111, projection='3d')
+    file = f"{data_folder}/hists-{model}_{'_'.join([str(d) for d in distribution])}.npy"
+    data = load(file)
+    X, Y = meshgrid(xLogL, xLogN2 if supermodel == 2 else xLogN)
+    plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)  # draw distributions
+    title = ["Supermodel", "Model I", "Model II", "Model III", "Model IV"][model]
+    d = distribution[0]
+    ax = plt.subplot(1, 1, 1, projection='3d')
+    # Plot the surface
+    ax.plot_surface(X, Y, weight_dist(data, d, supermodel, model), cmap=plt.get_cmap("jet"),
+                    shade=True, alpha=0.8, linewidth=0)
+    # ax.view_init(60, 270)
+    ax.set_xlabel("log(L)")
+    ax.set_ylabel("log(N)")
+    ax.set_zlabel("density")
+    plt.title(f"{title} distributed by {distributions[d]}")
+    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_3D.png")
+
+    plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)
+    plt.imshow(weight_dist(data, d, supermodel, model)[::-1, :], cmap=plt.get_cmap("jet"),
+               extent=[xLogL.min(), xLogL.max(), xLogN.min(), xLogN.max()])
+    plt.colorbar(label="density", orientation="horizontal")
+    plt.xlabel("log(L)")
+    plt.ylabel("log(N)")
+    plt.title(f"{title} distributed by {distributions[d]}")
+    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_heatmap.png")
+
+    plt.figure(figsize=(10, 4), dpi=300, tight_layout=True)
+    plt.suptitle(f"{title} distributed by {distributions[d]}")
+    plt.subplot(131)
+    plt.plot(xLogL, np.sum(weight_dist(data, d, supermodel, model), 0))
+    plt.title("Density function by L")
+    plt.xlabel("log(L)")
+    plt.ylabel("Density")
+    plt.subplot(132)
+    plt.plot(xLogL, 1 - np.cumsum(np.sum(weight_dist(data, d, supermodel, model), 0)))
+    plt.title("Survival function by L")
+    plt.xlabel("log(L)")
+    plt.ylabel("Probability")
+    plt.grid(alpha=0.4)
+    plt.subplot(133)
+    plt.plot(xLogN if supermodel == 1 else xLogN2, np.sum(weight_dist(data, d, supermodel, model), 1))
+    plt.title("Density function by N")
+    plt.xlabel("log(N)")
+    plt.ylabel("Density")
+    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_properties.png")
+
+
+def draw_histograms_N3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
+    # draw in logarithmic scale on x, y axis
+
+    # get list of parameters
+    file = f"{data_folder}/hists-{model}_{'_'.join([str(d) for d in distribution])}.npy"
+    data = load(file)
+    X, Y = meshgrid(xLogL, xLogN2 if supermodel == 2 else xLogN)
+    plt.figure(figsize=(10, 4), dpi=300)  # draw distributions
+    for d in range(len(distributions)):
+        ax = plt.subplot(1, 3, d+1, projection='3d')
         # Plot the surface
-        ax.plot_surface(X, Y, Z, cmap=plt.get_cmap("jet"), shade=True, alpha=0.8)
+        ax.plot_surface(X, Y, weight_dist(data, d, supermodel, model), cmap=plt.get_cmap("jet"),
+                        shade=True, alpha=0.8)
+        # ax.view_init(60, 270)
         ax.set_xlabel("log(L)")
         ax.set_ylabel("log(N)")
-        ax.set_zlabel("Število generiranih točk" if slo else "# of hits")
-        plt.title(f"Model {model} s porazdelitvijo {distribution} v "
-                  f"{'logaritmski' if logarithmic_scale else 'linearni'} skali" if slo else
-                  f"Model {model} with {distribution} distribution in "
-                  f"{'logarithmic' if logarithmic_scale else 'linear'} scale")
-        plt.show()
-        print("done")
+        ax.set_zlabel("density")
+        plt.title(f"N distributed by {distributions[d]}")
+    plt.savefig(f"slike/distribute-N_3D.png")
+
+
+if __name__ == "__main__":
+    plt.close()
+    draw_histograms3D(model=1, distribution=tuple(0 for _ in range(6)), supermodel=1)
+    draw_histograms3D(model=2, distribution=tuple(0 for _ in range(2)), supermodel=1)
+    draw_histograms3D(model=3, distribution=tuple(1 for _ in range(6)), supermodel=1)
+    draw_histograms3D(model=4, distribution=tuple(0 for _ in range(8)), supermodel=1)
+    plt.show()
