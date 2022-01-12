@@ -1,9 +1,7 @@
 """
 Anže Marinko, januar 2022
 
-Run:
-bokeh serve interactive_graphs.py
--> Open printed URL
+Run:  bokeh serve interactive_graphs.py
 """
 from bokeh.io import curdoc
 from bokeh.layouts import column, row

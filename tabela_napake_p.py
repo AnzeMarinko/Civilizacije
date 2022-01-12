@@ -165,7 +165,7 @@ def modeli_napake():
             # print(pra, end="")
             pr += pra
     pr = "\\documentclass[numbered]{CSL}\n\\usepackage[utf8]{inputenc}\n\\begin{document}\n" + pr + "\n\\end{document}"
-    with open("out/rules.tex", "w") as f:
+    with open("01_rules.tex", "w") as f:
         f.write(pr)
     plt.savefig(f'out/importance-random_forest_model.png')
     plt.show()

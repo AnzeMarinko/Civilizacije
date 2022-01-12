@@ -24,10 +24,13 @@ We run all the cells in Jupyter notebook:
 We can convert it after execution 
 to `.pdf` format running command:
 ```
-jupyter nbconvert --to pdf supermodel.ipynb --output out/supermodel.ipynb
+jupyter nbconvert --to pdf supermodel.ipynb --output 01_supermodel
 ```
 
-All the output files are now in folder: `out`.
+All the output files are now in:
+* folder `out`,
+* `01_rules.tex` and
+* `01_supermodel.pdf`.
 
 ## Rule inspector
 

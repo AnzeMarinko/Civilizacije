@@ -1,0 +1,860 @@
+\documentclass[numbered]{CSL}
+\usepackage[utf8]{inputenc}
+\begin{document}
+
+\subsection{Model I}
+L:
+\begin{itemize}
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 3.0~\%) \Rightarrow L = 80.1$,\hfill Size=9 \%, MSE=0.194
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 3.0~\%) \Rightarrow L = 25.6$,\hfill Size=16 \%, MSE=0.152
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 20.0~\%) \land (f_c > 3.0~\%) \Rightarrow L = 27.3$,\hfill Size=17 \%, MSE=0.165
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 4.0~\%) \Rightarrow L = 24.9$,\hfill Size=16 \%, MSE=0.157
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 50.0~\%) \Rightarrow L = 2.3$,\hfill Size=10 \%, MSE=0.168
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 50.0~\%) \Rightarrow L = 6.3$,\hfill Size=27 \%, MSE=0.182
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 4.0~\%) \Rightarrow L = 77.1$,\hfill Size=10 \%, MSE=0.192
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 25.0~\%) \Rightarrow L = 3.2$,\hfill Size=20 \%, MSE=0.183
+\item $(N \leq 13.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N \leq 4.0) \Rightarrow L = 3.3$,\hfill Size=20 \%, MSE=0.189
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 25.0~\%) \Rightarrow L = 8.1$,\hfill Size=16 \%, MSE=0.17
+\item $(N \leq 13.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N > 4.0) \Rightarrow L = 8.5$,\hfill Size=19 \%, MSE=0.19
+\item $(N \leq 10.0) \land (f_c \leq 10.0~\%) \land (f_p > 20.0~\%) \land (f_c \leq 3.0~\%) \Rightarrow L = 83.8$,\hfill Size=10 \%, MSE=0.198
+\item $(N \leq 16.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N \leq 4.0) \Rightarrow L = 3.5$,\hfill Size=22 \%, MSE=0.19
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N \leq 4.0) \Rightarrow L = 3.3$,\hfill Size=21 \%, MSE=0.188
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 40.0~\%) \Rightarrow L = 7.4$,\hfill Size=22 \%, MSE=0.184
+\item $(N \leq 16.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N > 4.0) \Rightarrow L = 9.9$,\hfill Size=19 \%, MSE=0.198
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (N > 4.0) \Rightarrow L = 8.0$,\hfill Size=15 \%, MSE=0.176
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 40.0~\%) \Rightarrow L = 2.9$,\hfill Size=16 \%, MSE=0.183
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c > 30.0~\%) \Rightarrow L = 3.1$,\hfill Size=18 \%, MSE=0.187
+\item $(N \leq 10.0) \land (f_c > 10.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 30.0~\%) \Rightarrow L = 7.9$,\hfill Size=20 \%, MSE=0.185
+\end{itemize}
+
+\subsection{Model I}
+P(L < 1 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L < 1 000) = 94.0~\%$,\hfill Size=100 \%, MSE=0.059
+\item $(N \leq 100.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=95 \%, MSE=0.038
+\item $(N \leq 60.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=93 \%, MSE=0.035
+\item $(N \leq 80.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=94 \%, MSE=0.037
+\item $(N \leq 40.0) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=91 \%, MSE=0.031
+\item $(N \leq 60.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=88 \%, MSE=0.018
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=90 \%, MSE=0.022
+\item $(N \leq 40.0) \land (f_p > 8.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=85 \%, MSE=0.012
+\item $(N \leq 80.0) \land (f_p > 10.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=86 \%, MSE=0.015
+\item $(N \leq 100.0) \land (f_p > 10.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=86 \%, MSE=0.016
+\item $(N \leq 60.0) \land (f_p > 8.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=87 \%, MSE=0.016
+\item $(N \leq 100.0) \land (f_p > 8.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=88 \%, MSE=0.018
+\item $(N \leq 80.0) \land (f_p > 8.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=88 \%, MSE=0.017
+\item $(N \leq 60.0) \land (f_p > 10.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=84 \%, MSE=0.011
+\item $(N \leq 80.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=89 \%, MSE=0.02
+\item $(N \leq 60.0) \land (f_p \leq 10.0~\%) \Rightarrow P(L < 1 000) = 73.0~\%$,\hfill Size=9 \%, MSE=0.198
+\item $(N \leq 40.0) \land (f_p > 10.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=84 \%, MSE=0.01
+\item $(N \leq 40.0) \land (f_p \leq 10.0~\%) \Rightarrow P(L < 1 000) = 73.0~\%$,\hfill Size=8 \%, MSE=0.196
+\item $(N \leq 100.0) \land (f_p > 10.0~\%) \land (N > 25.0) \Rightarrow P(L < 1 000) = 87.0~\%$,\hfill Size=7 \%, MSE=0.11
+\item $(N \leq 100.0) \land (f_p \leq 10.0~\%) \Rightarrow P(L < 1 000) = 73.0~\%$,\hfill Size=9 \%, MSE=0.199
+\end{itemize}
+
+\subsection{Model I}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 5.0~\%$,\hfill Size=100 \%, MSE=0.051
+\item $(N \leq 40.0) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=91 \%, MSE=0.029
+\item $(N \leq 40.0) \land (f_p > 8.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=85 \%, MSE=0.012
+\item $(N \leq 25.0) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=86 \%, MSE=0.024
+\item $(N > 25.0) \Rightarrow P(1 000 < L < 10 000) = 23.0~\%$,\hfill Size=14 \%, MSE=0.18
+\item $(N \leq 25.0) \land (f_p > 8.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=80 \%, MSE=0.007
+\item $(N \leq 25.0) \land (f_p \leq 8.0~\%) \Rightarrow P(1 000 < L < 10 000) = 24.0~\%$,\hfill Size=6 \%, MSE=0.182
+\item $(N \leq 60.0) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=94 \%, MSE=0.033
+\item $(N > 25.0) \land (f_c > 13.0~\%) \Rightarrow P(1 000 < L < 10 000) = 11.0~\%$,\hfill Size=7 \%, MSE=0.095
+\item $(N \leq 40.0) \land (f_p \leq 8.0~\%) \Rightarrow P(1 000 < L < 10 000) = 27.0~\%$,\hfill Size=7 \%, MSE=0.195
+\item $(N \leq 40.0) \land (f_p > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=86 \%, MSE=0.014
+\item $(N \leq 40.0) \land (f_p > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=83 \%, MSE=0.01
+\item $(f_p > 13.0~\%) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=89 \%, MSE=0.029
+\item $(f_p > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=94 \%, MSE=0.035
+\item $(f_p \leq 13.0~\%) \Rightarrow P(1 000 < L < 10 000) = 24.0~\%$,\hfill Size=11 \%, MSE=0.184
+\item $(N \leq 80.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=94 \%, MSE=0.035
+\item $(f_p > 8.0~\%) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=93 \%, MSE=0.034
+\item $(N \leq 40.0) \land (f_p \leq 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 25.0~\%$,\hfill Size=8 \%, MSE=0.186
+\item $(N \leq 40.0) \land (f_p > 8.0~\%) \land (N > 13.0) \Rightarrow P(1 000 < L < 10 000) = 7.0~\%$,\hfill Size=10 \%, MSE=0.066
+\item $(N \leq 40.0) \land (f_p > 8.0~\%) \land (N \leq 13.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=75 \%, MSE=0.004
+\end{itemize}
+
+\subsection{Model I}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=100 \%, MSE=0.008
+\item $(N \leq 100.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.002
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_p > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_c > 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=91 \%, MSE=0.001
+\item $(N \leq 100.0) \land (f_c > 2.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=91 \%, MSE=0.001
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \land (f_c > 2.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=85 \%, MSE=0.0
+\item $(N \leq 80.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.002
+\item $(N \leq 100.0) \land (f_p > 5.0~\%) \land (R_* > 1.3) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=85 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \land (R_* > 1.3) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=85 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_c > 1.6~\%) \land (f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \land (N \leq 30.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_c > 1.6~\%) \land (f_i > 40.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.0
+\item $(N \leq 130.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=96 \%, MSE=0.002
+\item $(N \leq 80.0) \land (f_p > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_p > 5.0~\%) \land (N \leq 30.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.0
+\item $(N \leq 100.0) \land (N \leq 25.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.001
+\item $(N \leq 80.0) \land (f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(N \leq 100.0) \land (N > 25.0) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=7 \%, MSE=0.01
+\item $(N \leq 100.0) \land (f_c > 1.6~\%) \land (f_l > 40.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.0
+\end{itemize}
+
+\subsection{Model I}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=100 \%, MSE=0.001
+\item $(N \leq 60.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=94 \%, MSE=0.0
+\item $(N > 60.0) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=6 \%, MSE=0.013
+\item $(f_p > 5.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(N \leq 100.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(f_p > 6.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(N \leq 130.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=96 \%, MSE=0.0
+\item $(N \leq 80.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(f_c > 1.6~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.001
+\item $(f_i \leq 100.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.001
+\item $(f_l > 40.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.001
+\item $(f_p > 5.0~\%) \land (N \leq 100.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=91 \%, MSE=0.0
+\item $(f_l > 30.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=96 \%, MSE=0.001
+\end{itemize}
+
+\subsection{Model II}
+L:
+\begin{itemize}
+\item $(f_b > 1.6~\%) \land (f_a > 0.8) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.9$,\hfill Size=17 \%, MSE=0.199
+\item $(f_b > 1.6~\%) \land (f_a > 1.0) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.8$,\hfill Size=16 \%, MSE=0.193
+\item $(f_b > 2.5~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.8$,\hfill Size=17 \%, MSE=0.196
+\item $(f_b > 2.5~\%) \land (f_a > 0.8) \land (N \leq 8.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.9$,\hfill Size=17 \%, MSE=0.197
+\item $(f_b > 2.5~\%) \land (f_a > 0.8) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.8$,\hfill Size=17 \%, MSE=0.196
+\item $(f_b > 3.0~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.8$,\hfill Size=17 \%, MSE=0.192
+\item $(f_b > 3.0~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b \leq 20.0~\%) \Rightarrow L = 9.4$,\hfill Size=13 \%, MSE=0.197
+\item $(f_b > 2.0~\%) \land (f_a > 0.8) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.8$,\hfill Size=17 \%, MSE=0.196
+\item $(f_b > 3.0~\%) \land (f_a > 0.8) \land (N \leq 8.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.8$,\hfill Size=17 \%, MSE=0.197
+\item $(f_b > 2.5~\%) \land (f_a > 1.0) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.7$,\hfill Size=16 \%, MSE=0.185
+\item $(f_b > 1.6~\%) \land (f_a > 1.3) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.6$,\hfill Size=15 \%, MSE=0.168
+\item $(f_b > 3.2~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b > 25.0~\%) \Rightarrow L = 1.6$,\hfill Size=14 \%, MSE=0.187
+\item $(f_b > 1.6~\%) \land (f_a > 1.6) \land (N \leq 8.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.6$,\hfill Size=15 \%, MSE=0.168
+\item $(f_b > 2.5~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b > 25.0~\%) \Rightarrow L = 1.6$,\hfill Size=14 \%, MSE=0.186
+\item $(f_b > 1.6~\%) \land (f_a > 1.0) \land (f_b > 20.0~\%) \land (N \leq 6.0) \Rightarrow L = 1.7$,\hfill Size=16 \%, MSE=0.184
+\item $(f_b > 3.0~\%) \land (f_a > 0.8) \land (N \leq 6.0) \land (f_b > 20.0~\%) \Rightarrow L = 1.9$,\hfill Size=17 \%, MSE=0.199
+\item $(f_b \leq 3.2~\%) \land (f_a > 1.0) \land (f_b > 0.5~\%) \land (N \leq 5.0) \Rightarrow L = 51.7$,\hfill Size=6 \%, MSE=0.192
+\item $(f_b > 3.0~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b > 25.0~\%) \Rightarrow L = 1.6$,\hfill Size=14 \%, MSE=0.185
+\item $(f_b > 2.5~\%) \land (f_a > 1.0) \land (N \leq 8.0) \land (f_b \leq 20.0~\%) \Rightarrow L = 9.7$,\hfill Size=14 \%, MSE=0.197
+\item $(f_b > 2.0~\%) \land (f_a > 1.0) \land (f_b > 20.0~\%) \land (N \leq 8.0) \Rightarrow L = 1.7$,\hfill Size=16 \%, MSE=0.185
+\end{itemize}
+
+\subsection{Model II}
+P(L < 1 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L < 1 000) = 79.0~\%$,\hfill Size=100 \%, MSE=0.164
+\item $(f_b > 1.6~\%) \Rightarrow P(L < 1 000) = 92.0~\%$,\hfill Size=74 \%, MSE=0.072
+\item $(f_b > 0.4~\%) \Rightarrow P(L < 1 000) = 88.0~\%$,\hfill Size=87 \%, MSE=0.109
+\item $(f_b \leq 0.4~\%) \Rightarrow P(L < 1 000) = 26.0~\%$,\hfill Size=13 \%, MSE=0.192
+\item $(f_b > 1.0~\%) \Rightarrow P(L < 1 000) = 90.0~\%$,\hfill Size=79 \%, MSE=0.088
+\item $(f_b \leq 1.6~\%) \land (f_a \leq 1.6) \Rightarrow P(L < 1 000) = 15.0~\%$,\hfill Size=12 \%, MSE=0.126
+\item $(f_b > 0.5~\%) \Rightarrow P(L < 1 000) = 88.0~\%$,\hfill Size=85 \%, MSE=0.103
+\item $(f_b > 1.6~\%) \land (f_a > 0.16) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=62 \%, MSE=0.028
+\item $(f_b > 0.4~\%) \land (f_a > 0.25) \Rightarrow P(L < 1 000) = 95.0~\%$,\hfill Size=69 \%, MSE=0.046
+\item $(f_b \leq 1.6~\%) \land (f_a \leq 1.0) \Rightarrow P(L < 1 000) = 11.0~\%$,\hfill Size=10 \%, MSE=0.097
+\item $(f_b > 1.6~\%) \land (f_a > 0.2) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=61 \%, MSE=0.026
+\item $(f_b > 1.6~\%) \land (f_a > 0.16) \land (N \leq 40.0) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=57 \%, MSE=0.007
+\item $(f_b > 0.4~\%) \land (f_a \leq 0.25) \land (f_b > 4.0~\%) \Rightarrow P(L < 1 000) = 78.0~\%$,\hfill Size=13 \%, MSE=0.172
+\item $(f_b > 0.5~\%) \land (f_a > 0.25) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=68 \%, MSE=0.041
+\item $(f_b \leq 1.6~\%) \land (f_a > 1.6) \land (f_b > 0.16~\%) \Rightarrow P(L < 1 000) = 87.0~\%$,\hfill Size=10 \%, MSE=0.115
+\item $(f_b > 0.4~\%) \land (f_a \leq 0.25) \land (f_b > 4.0~\%) \land (N \leq 6.0) \Rightarrow P(L < 1 000) = 94.0~\%$,\hfill Size=7 \%, MSE=0.06
+\item $(f_b \leq 1.6~\%) \land (f_a \leq 0.8) \Rightarrow P(L < 1 000) = 10.0~\%$,\hfill Size=10 \%, MSE=0.091
+\item $(f_b \leq 0.4~\%) \land (f_a \leq 1.6) \Rightarrow P(L < 1 000) = 4.0~\%$,\hfill Size=7 \%, MSE=0.042
+\item $(f_b > 1.6~\%) \land (f_a \leq 0.16) \land (f_b > 16.0~\%) \Rightarrow P(L < 1 000) = 86.0~\%$,\hfill Size=7 \%, MSE=0.123
+\item $(f_b \leq 1.6~\%) \land (f_a > 1.0) \land (f_b > 0.16~\%) \Rightarrow P(L < 1 000) = 84.0~\%$,\hfill Size=11 \%, MSE=0.135
+\end{itemize}
+
+\subsection{Model II}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 13.0~\%$,\hfill Size=100 \%, MSE=0.113
+\item $(f_b > 1.6~\%) \Rightarrow P(1 000 < L < 10 000) = 7.0~\%$,\hfill Size=74 \%, MSE=0.064
+\item $(f_b > 2.0~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=71 \%, MSE=0.058
+\item $(f_b > 2.5~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=70 \%, MSE=0.057
+\item $(f_b > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 5.0~\%$,\hfill Size=62 \%, MSE=0.047
+\item $(f_b \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 26.0~\%$,\hfill Size=38 \%, MSE=0.193
+\item $(f_b \leq 4.0~\%) \land (f_a > 1.6) \Rightarrow P(1 000 < L < 10 000) = 18.0~\%$,\hfill Size=21 \%, MSE=0.149
+\item $(f_b \leq 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 25.0~\%$,\hfill Size=40 \%, MSE=0.19
+\item $(f_b > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 5.0~\%$,\hfill Size=60 \%, MSE=0.044
+\item $(f_b > 1.6~\%) \land (f_a > 0.2) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=60 \%, MSE=0.024
+\item $(f_b \leq 1.6~\%) \land (f_a > 2.5) \Rightarrow P(1 000 < L < 10 000) = 23.0~\%$,\hfill Size=12 \%, MSE=0.177
+\item $(f_b \leq 2.5~\%) \land (f_a > 2.5) \Rightarrow P(1 000 < L < 10 000) = 20.0~\%$,\hfill Size=12 \%, MSE=0.159
+\item $(f_b > 1.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=79 \%, MSE=0.072
+\item $(f_b > 1.6~\%) \land (f_a > 0.2) \land (N \leq 40.0) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=55 \%, MSE=0.005
+\item $(f_b \leq 2.0~\%) \land (f_a > 2.5) \Rightarrow P(1 000 < L < 10 000) = 21.0~\%$,\hfill Size=12 \%, MSE=0.165
+\item $(f_b > 2.0~\%) \land (f_a \leq 0.2) \Rightarrow P(1 000 < L < 10 000) = 27.0~\%$,\hfill Size=12 \%, MSE=0.196
+\item $(f_b > 2.0~\%) \land (f_a > 0.13) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=62 \%, MSE=0.027
+\item $(f_b > 2.0~\%) \land (f_a > 0.2) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=59 \%, MSE=0.021
+\item $(f_b > 2.5~\%) \land (f_a \leq 0.16) \Rightarrow P(1 000 < L < 10 000) = 27.0~\%$,\hfill Size=11 \%, MSE=0.196
+\item $(f_b > 2.5~\%) \land (f_a > 0.2) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=58 \%, MSE=0.02
+\end{itemize}
+
+\subsection{Model II}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(10 000 < L < 100 000) = 5.0~\%$,\hfill Size=100 \%, MSE=0.05
+\item $(f_b > 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=74 \%, MSE=0.01
+\item $(f_b \leq 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 18.0~\%$,\hfill Size=26 \%, MSE=0.146
+\item $(f_b > 1.6~\%) \land (N \leq 50.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=68 \%, MSE=0.003
+\item $(f_b > 1.6~\%) \land (N \leq 50.0) \land (f_a > 0.06) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=64 \%, MSE=0.0
+\item $(f_b \leq 1.6~\%) \land (f_a > 0.5) \Rightarrow P(10 000 < L < 100 000) = 8.0~\%$,\hfill Size=18 \%, MSE=0.078
+\item $(f_b > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=78 \%, MSE=0.015
+\item $(f_b > 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=82 \%, MSE=0.019
+\item $(f_b \leq 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 19.0~\%$,\hfill Size=22 \%, MSE=0.154
+\item $(f_b \leq 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 21.0~\%$,\hfill Size=18 \%, MSE=0.164
+\item $(f_b \leq 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 20.0~\%$,\hfill Size=18 \%, MSE=0.163
+\item $(f_b > 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=82 \%, MSE=0.018
+\item $(f_b \leq 1.6~\%) \land (f_a > 0.4) \Rightarrow P(10 000 < L < 100 000) = 9.0~\%$,\hfill Size=19 \%, MSE=0.079
+\item $(f_b \leq 0.6~\%) \land (f_a > 0.5) \Rightarrow P(10 000 < L < 100 000) = 11.0~\%$,\hfill Size=13 \%, MSE=0.1
+\item $(f_b > 1.6~\%) \land (N \leq 50.0) \land (f_a > 0.05) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=64 \%, MSE=0.0
+\item $(f_b > 1.3~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=76 \%, MSE=0.013
+\item $(f_b \leq 1.3~\%) \Rightarrow P(10 000 < L < 100 000) = 18.0~\%$,\hfill Size=24 \%, MSE=0.15
+\item $(f_b > 1.0~\%) \land (f_a > 0.05) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=73 \%, MSE=0.007
+\item $(f_b > 1.0~\%) \land (f_a > 0.05) \land (N \leq 50.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=68 \%, MSE=0.001
+\item $(f_b \leq 1.6~\%) \land (f_a > 0.5) \land (N \leq 8.0) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=13 \%, MSE=0.038
+\end{itemize}
+
+\subsection{Model II}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=100 \%, MSE=0.024
+\item $(f_b > 0.13~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=93 \%, MSE=0.008
+\item $(f_b \leq 0.13~\%) \Rightarrow P(L > 100 000) = 24.0~\%$,\hfill Size=7 \%, MSE=0.181
+\item $(f_b > 0.08~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=95 \%, MSE=0.01
+\item $(f_b > 0.1~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=94 \%, MSE=0.009
+\item $(f_b > 0.13~\%) \land (N \leq 60.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=87 \%, MSE=0.003
+\item $(f_b \leq 0.1~\%) \Rightarrow P(L > 100 000) = 26.0~\%$,\hfill Size=6 \%, MSE=0.194
+\item $(f_b > 0.13~\%) \land (N > 50.0) \Rightarrow P(L > 100 000) = 7.0~\%$,\hfill Size=6 \%, MSE=0.062
+\item $(f_b > 0.13~\%) \land (N \leq 50.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.003
+\item $(f_b > 0.13~\%) \land (f_a > 0.05) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=87 \%, MSE=0.003
+\item $(f_b > 0.13~\%) \land (f_a > 0.05) \land (f_b > 0.4~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=82 \%, MSE=0.001
+\item $(f_b > 0.08~\%) \land (f_a > 0.04) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=89 \%, MSE=0.004
+\item $(f_b > 0.13~\%) \land (f_b > 0.4~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=87 \%, MSE=0.004
+\item $(f_b > 0.13~\%) \land (f_a > 0.04) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.003
+\item $(f_b > 0.13~\%) \land (f_a \leq 0.05) \Rightarrow P(L > 100 000) = 7.0~\%$,\hfill Size=7 \%, MSE=0.066
+\item $(f_b \leq 0.2~\%) \Rightarrow P(L > 100 000) = 20.0~\%$,\hfill Size=9 \%, MSE=0.163
+\item $(f_b > 0.2~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=91 \%, MSE=0.006
+\item $(f_b > 0.08~\%) \land (f_a \leq 0.05) \Rightarrow P(L > 100 000) = 11.0~\%$,\hfill Size=6 \%, MSE=0.101
+\item $(f_b > 0.08~\%) \land (f_a > 0.05) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=89 \%, MSE=0.004
+\item $(f_b > 0.13~\%) \land (N > 60.0) \Rightarrow P(L > 100 000) = 7.0~\%$,\hfill Size=6 \%, MSE=0.065
+\end{itemize}
+
+\subsection{Model III}
+L:
+\begin{itemize}
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 25.0~\%) \Rightarrow L = 4.2$,\hfill Size=31 \%, MSE=0.19
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 25.0~\%) \land (f_c > 40.0~\%) \Rightarrow L = 2.4$,\hfill Size=12 \%, MSE=0.144
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 40.0~\%) \Rightarrow L = 6.0$,\hfill Size=20 \%, MSE=0.158
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 32.0~\%) \Rightarrow L = 4.2$,\hfill Size=32 \%, MSE=0.19
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 32.0~\%) \land (f_c \leq 40.0~\%) \Rightarrow L = 6.1$,\hfill Size=20 \%, MSE=0.154
+\item $(N \leq 8.0) \land (f_c > 13.0~\%) \land (f_p > 32.0~\%) \land (f_c > 40.0~\%) \Rightarrow L = 2.3$,\hfill Size=12 \%, MSE=0.139
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c \leq 5.0~\%) \Rightarrow L = 60.5$,\hfill Size=11 \%, MSE=0.171
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c > 5.0~\%) \Rightarrow L = 19.9$,\hfill Size=15 \%, MSE=0.168
+\item $(N \leq 8.0) \land (f_c > 16.0~\%) \land (f_p > 32.0~\%) \Rightarrow L = 3.8$,\hfill Size=28 \%, MSE=0.18
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c > 4.0~\%) \Rightarrow L = 21.2$,\hfill Size=16 \%, MSE=0.169
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c \leq 4.0~\%) \Rightarrow L = 65.0$,\hfill Size=10 \%, MSE=0.176
+\item $(N \leq 13.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c > 5.0~\%) \Rightarrow L = 20.5$,\hfill Size=17 \%, MSE=0.192
+\item $(N \leq 8.0) \land (f_c \leq 16.0~\%) \land (f_p > 20.0~\%) \land (f_c > 5.0~\%) \Rightarrow L = 17.6$,\hfill Size=17 \%, MSE=0.178
+\item $(N \leq 13.0) \land (f_c \leq 13.0~\%) \land (f_p > 20.0~\%) \land (f_c \leq 5.0~\%) \Rightarrow L = 66.2$,\hfill Size=13 \%, MSE=0.194
+\item $(N \leq 8.0) \land (f_c \leq 16.0~\%) \land (f_p > 20.0~\%) \land (f_c \leq 5.0~\%) \Rightarrow L = 60.3$,\hfill Size=11 \%, MSE=0.172
+\item $(f_c > 13.0~\%) \land (N \leq 8.0) \land (f_p > 25.0~\%) \Rightarrow L = 4.2$,\hfill Size=31 \%, MSE=0.19
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 25.0~\%) \land (f_c > 5.0~\%) \Rightarrow L = 20.7$,\hfill Size=14 \%, MSE=0.166
+\item $(N \leq 8.0) \land (f_c \leq 13.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 5.0~\%) \Rightarrow L = 61.3$,\hfill Size=10 \%, MSE=0.17
+\item $(N \leq 8.0) \land (f_c \leq 16.0~\%) \land (f_p > 25.0~\%) \land (f_c \leq 5.0~\%) \Rightarrow L = 59.0$,\hfill Size=11 \%, MSE=0.168
+\item $(N \leq 8.0) \land (f_c \leq 16.0~\%) \land (f_p > 25.0~\%) \land (f_c > 5.0~\%) \Rightarrow L = 17.2$,\hfill Size=17 \%, MSE=0.175
+\end{itemize}
+
+\subsection{Model III}
+P(L < 1 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L < 1 000) = 95.0~\%$,\hfill Size=100 \%, MSE=0.051
+\item $(N \leq 60.0) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=93 \%, MSE=0.026
+\item $(N \leq 60.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=87 \%, MSE=0.013
+\item $(N \leq 30.0) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=89 \%, MSE=0.02
+\item $(N \leq 80.0) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=94 \%, MSE=0.029
+\item $(N \leq 60.0) \land (f_p \leq 6.0~\%) \Rightarrow P(L < 1 000) = 77.0~\%$,\hfill Size=6 \%, MSE=0.179
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=83 \%, MSE=0.008
+\item $(N \leq 80.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=88 \%, MSE=0.016
+\item $(N \leq 80.0) \land (f_p \leq 6.0~\%) \Rightarrow P(L < 1 000) = 76.0~\%$,\hfill Size=6 \%, MSE=0.183
+\item $(N \leq 80.0) \land (f_p > 6.0~\%) \land (N \leq 30.0) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=83 \%, MSE=0.007
+\item $(N > 30.0) \land (f_c > 13.0~\%) \Rightarrow P(L < 1 000) = 85.0~\%$,\hfill Size=6 \%, MSE=0.129
+\item $(N > 30.0) \land (f_c > 10.0~\%) \Rightarrow P(L < 1 000) = 84.0~\%$,\hfill Size=6 \%, MSE=0.132
+\item $(N \leq 50.0) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=91 \%, MSE=0.023
+\item $(N \leq 30.0) \land (f_p \leq 6.0~\%) \Rightarrow P(L < 1 000) = 80.0~\%$,\hfill Size=6 \%, MSE=0.163
+\item $(N \leq 60.0) \land (f_p > 6.0~\%) \land (N \leq 32.0) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=82 \%, MSE=0.007
+\item $(N \leq 60.0) \land (f_p > 5.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=89 \%, MSE=0.015
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \land (f_p > 25.0~\%) \Rightarrow P(L < 1 000) = 100.0~\%$,\hfill Size=74 \%, MSE=0.003
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \land (f_p \leq 25.0~\%) \Rightarrow P(L < 1 000) = 95.0~\%$,\hfill Size=9 \%, MSE=0.046
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \land (f_p > 13.0~\%) \Rightarrow P(L < 1 000) = 100.0~\%$,\hfill Size=78 \%, MSE=0.004
+\item $(N \leq 50.0) \land (f_p > 6.0~\%) \Rightarrow P(L < 1 000) = 99.0~\%$,\hfill Size=85 \%, MSE=0.01
+\end{itemize}
+
+\subsection{Model III}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 5.0~\%$,\hfill Size=100 \%, MSE=0.046
+\item $(N \leq 60.0) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=93 \%, MSE=0.025
+\item $(N \leq 30.0) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=89 \%, MSE=0.018
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=83 \%, MSE=0.007
+\item $(N \leq 60.0) \land (f_p > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=87 \%, MSE=0.013
+\item $(N \leq 60.0) \land (f_p \leq 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 20.0~\%$,\hfill Size=6 \%, MSE=0.162
+\item $(N \leq 50.0) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=92 \%, MSE=0.023
+\item $(N > 30.0) \land (f_c > 13.0~\%) \Rightarrow P(1 000 < L < 10 000) = 15.0~\%$,\hfill Size=6 \%, MSE=0.128
+\item $(N > 30.0) \land (f_c > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 15.0~\%$,\hfill Size=6 \%, MSE=0.129
+\item $(N \leq 30.0) \land (f_p \leq 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 19.0~\%$,\hfill Size=6 \%, MSE=0.151
+\item $(N \leq 50.0) \land (f_p > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=87 \%, MSE=0.013
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \land (f_p > 25.0~\%) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=74 \%, MSE=0.002
+\item $(N \leq 80.0) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=94 \%, MSE=0.028
+\item $(N \leq 30.0) \land (f_p > 6.0~\%) \land (f_p \leq 25.0~\%) \Rightarrow P(1 000 < L < 10 000) = 5.0~\%$,\hfill Size=10 \%, MSE=0.047
+\item $(N \leq 50.0) \land (f_p \leq 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 20.0~\%$,\hfill Size=6 \%, MSE=0.159
+\item $(N \leq 60.0) \land (f_p > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=84 \%, MSE=0.011
+\item $(N \leq 60.0) \land (f_p \leq 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 17.0~\%$,\hfill Size=8 \%, MSE=0.14
+\item $(N \leq 60.0) \land (f_p > 6.0~\%) \land (N \leq 32.0) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=82 \%, MSE=0.007
+\item $(N \leq 30.0) \land (f_p > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=81 \%, MSE=0.005
+\item $(N \leq 30.0) \land (f_p \leq 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 15.0~\%$,\hfill Size=8 \%, MSE=0.127
+\end{itemize}
+
+\subsection{Model III}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=100 \%, MSE=0.005
+\item $(N \leq 100.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.002
+\item $(N \leq 80.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=94 \%, MSE=0.002
+\item $(N > 80.0) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=6 \%, MSE=0.057
+\item $(f_p > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.002
+\item $(N \leq 100.0) \land (f_p > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(f_p > 5.0~\%) \land (N \leq 100.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=91 \%, MSE=0.0
+\item $(N \leq 80.0) \land (f_p > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(N \leq 80.0) \land (f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=89 \%, MSE=0.0
+\item $(N \leq 100.0) \land (f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(f_p > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=94 \%, MSE=0.002
+\item $(f_p \leq 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 5.0~\%$,\hfill Size=6 \%, MSE=0.05
+\item $(f_p > 5.0~\%) \land (N \leq 80.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=90 \%, MSE=0.0
+\item $(f_p > 6.0~\%) \land (N \leq 100.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=89 \%, MSE=0.0
+\item $(f_p > 6.0~\%) \land (N \leq 80.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=89 \%, MSE=0.0
+\item $(f_p > 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=92 \%, MSE=0.002
+\item $(f_p \leq 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 5.0~\%$,\hfill Size=8 \%, MSE=0.044
+\item $(f_p > 8.0~\%) \land (N \leq 80.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.0
+\item $(f_p \leq 13.0~\%) \Rightarrow P(10 000 < L < 100 000) = 3.0~\%$,\hfill Size=12 \%, MSE=0.034
+\item $(f_p > 13.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.001
+\end{itemize}
+
+\subsection{Model III}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=100 \%, MSE=0.0
+\item $(N \leq 100.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(f_p > 5.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=96 \%, MSE=0.0
+\item $(f_p > 6.0~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(N \leq 80.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.0
+\item $(N > 80.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=6 \%, MSE=0.005
+\item $(N \leq 130.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=96 \%, MSE=0.0
+\end{itemize}
+
+\subsection{Model III - 2}
+L:
+\begin{itemize}
+\item $(N > 800.0) \land (N > 400000.0) \Rightarrow L = 110451.1$,\hfill Size=41 \%, MSE=0.168
+\item $(N > 800.0) \land (N > 200000.0) \Rightarrow L = 95129.0$,\hfill Size=49 \%, MSE=0.18
+\item $(N > 1000.0) \land (N > 400000.0) \Rightarrow L = 108319.5$,\hfill Size=42 \%, MSE=0.17
+\item $(N > 800.0) \land (N \leq 400000.0) \land (N > 16000.0) \Rightarrow L = 30344.6$,\hfill Size=28 \%, MSE=0.135
+\item $(N > 800.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \Rightarrow L = 83423.3$,\hfill Size=33 \%, MSE=0.094
+\item $(N > 800.0) \land (N > 400000.0) \land (f_p \leq 25.0~\%) \Rightarrow L = 378161.6$,\hfill Size=8 \%, MSE=0.14
+\item $(N > 800.0) \land (N > 200000.0) \land (f_p \leq 25.0~\%) \Rightarrow L = 328148.2$,\hfill Size=9 \%, MSE=0.154
+\item $(N > 800.0) \land (N > 200000.0) \land (f_p > 25.0~\%) \Rightarrow L = 72186.5$,\hfill Size=40 \%, MSE=0.107
+\item $(N > 800.0) \land (N \leq 200000.0) \land (N > 8000.0) \Rightarrow L = 23941.7$,\hfill Size=23 \%, MSE=0.145
+\item $(N > 1000.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \Rightarrow L = 82065.0$,\hfill Size=34 \%, MSE=0.098
+\item $(N > 1000.0) \land (N > 400000.0) \land (f_p \leq 25.0~\%) \Rightarrow L = 372376.4$,\hfill Size=8 \%, MSE=0.14
+\item $(N > 800.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \land (N \leq 4000000.0) \Rightarrow L = 58817.6$,\hfill Size=19 \%, MSE=0.064
+\item $(N > 800.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \land (N > 4000000.0) \Rightarrow L = 133401.9$,\hfill Size=14 \%, MSE=0.063
+\item $(N > 2000.0) \land (N > 400000.0) \Rightarrow L = 108945.0$,\hfill Size=42 \%, MSE=0.17
+\item $(N > 1000.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \land (N > 4000000.0) \Rightarrow L = 133752.9$,\hfill Size=14 \%, MSE=0.065
+\item $(N > 1000.0) \land (N > 400000.0) \land (f_p > 25.0~\%) \land (N \leq 4000000.0) \Rightarrow L = 57458.8$,\hfill Size=20 \%, MSE=0.065
+\item $(N > 1000.0) \land (N \leq 400000.0) \land (N > 16000.0) \Rightarrow L = 30339.2$,\hfill Size=28 \%, MSE=0.135
+\item $(N > 800.0) \land (N \leq 400000.0) \land (N > 16000.0) \land (f_p > 50.0~\%) \Rightarrow L = 22205.6$,\hfill Size=20 \%, MSE=0.071
+\item $(N > 800.0) \land (N \leq 400000.0) \land (N > 16000.0) \land (f_p \leq 50.0~\%) \Rightarrow L = 76321.6$,\hfill Size=6 \%, MSE=0.114
+\item $(N > 1000.0) \land (N > 200000.0) \Rightarrow L = 92024.6$,\hfill Size=50 \%, MSE=0.184
+\end{itemize}
+
+\subsection{Model III - 2}
+P(L < 1 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L < 1 000) = 15.0~\%$,\hfill Size=100 \%, MSE=0.126
+\item $(N \leq 400.0) \Rightarrow P(L < 1 000) = 81.0~\%$,\hfill Size=16 \%, MSE=0.152
+\item $(N > 400.0) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=84 \%, MSE=0.02
+\item $(N \leq 600.0) \Rightarrow P(L < 1 000) = 77.0~\%$,\hfill Size=18 \%, MSE=0.179
+\item $(N > 600.0) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=82 \%, MSE=0.011
+\item $(N \leq 800.0) \Rightarrow P(L < 1 000) = 74.0~\%$,\hfill Size=19 \%, MSE=0.191
+\item $(N > 800.0) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=81 \%, MSE=0.006
+\item $(N > 600.0) \land (N > 2500.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=77 \%, MSE=0.001
+\item $(N > 400.0) \land (N > 1600.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=78 \%, MSE=0.002
+\item $(N > 500.0) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=83 \%, MSE=0.015
+\item $(N \leq 500.0) \Rightarrow P(L < 1 000) = 78.0~\%$,\hfill Size=17 \%, MSE=0.169
+\item $(N > 600.0) \land (N > 2500.0) \land (N > 8000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=72 \%, MSE=0.0
+\item $(N > 800.0) \land (N \leq 4000.0) \Rightarrow P(L < 1 000) = 9.0~\%$,\hfill Size=6 \%, MSE=0.079
+\item $(N > 800.0) \land (N > 4000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=75 \%, MSE=0.0
+\item $(N > 400.0) \land (N > 1600.0) \land (N > 5000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=74 \%, MSE=0.0
+\item $(N > 400.0) \land (N > 2000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=78 \%, MSE=0.002
+\item $(N > 500.0) \land (N > 2000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=78 \%, MSE=0.002
+\item $(N \leq 600.0) \land (N \leq 80.0) \Rightarrow P(L < 1 000) = 92.0~\%$,\hfill Size=11 \%, MSE=0.071
+\item $(N > 400.0) \land (N \leq 2000.0) \Rightarrow P(L < 1 000) = 26.0~\%$,\hfill Size=6 \%, MSE=0.191
+\item $(N \leq 400.0) \land (N \leq 80.0) \Rightarrow P(L < 1 000) = 93.0~\%$,\hfill Size=11 \%, MSE=0.069
+\end{itemize}
+
+\subsection{Model III - 2}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 13.0~\%$,\hfill Size=100 \%, MSE=0.113
+\item $(N > 20000.0) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=67 \%, MSE=0.02
+\item $(N > 40000.0) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=63 \%, MSE=0.011
+\item $(N > 20000.0) \land (N \leq 60000.0) \Rightarrow P(1 000 < L < 10 000) = 14.0~\%$,\hfill Size=7 \%, MSE=0.122
+\item $(N > 20000.0) \land (N > 60000.0) \Rightarrow P(1 000 < L < 10 000) = 1.0~\%$,\hfill Size=59 \%, MSE=0.006
+\item $(N \leq 20000.0) \land (N \leq 130.0) \Rightarrow P(1 000 < L < 10 000) = 11.0~\%$,\hfill Size=13 \%, MSE=0.094
+\item $(N \leq 40000.0) \land (N \leq 130.0) \Rightarrow P(1 000 < L < 10 000) = 10.0~\%$,\hfill Size=12 \%, MSE=0.092
+\item $(N > 20000.0) \land (N \leq 100000.0) \Rightarrow P(1 000 < L < 10 000) = 12.0~\%$,\hfill Size=10 \%, MSE=0.109
+\item $(N > 40000.0) \land (N > 100000.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=57 \%, MSE=0.003
+\item $(N > 20000.0) \land (N > 100000.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=57 \%, MSE=0.003
+\item $(N > 40000.0) \land (N \leq 100000.0) \Rightarrow P(1 000 < L < 10 000) = 9.0~\%$,\hfill Size=6 \%, MSE=0.079
+\item $(N \leq 20000.0) \land (N \leq 80.0) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=11 \%, MSE=0.076
+\item $(N \leq 20000.0) \land (N \leq 130.0) \land (f_c > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=8 \%, MSE=0.032
+\item $(N \leq 40000.0) \land (N \leq 80.0) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=11 \%, MSE=0.071
+\item $(N > 20000.0) \land (N > 100000.0) \land (f_c \leq 60.0~\%) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=52 \%, MSE=0.001
+\item $(N > 40000.0) \land (N > 100000.0) \land (f_c \leq 60.0~\%) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=52 \%, MSE=0.001
+\item $(N > 40000.0) \land (N > 80000.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=58 \%, MSE=0.004
+\item $(N > 20000.0) \land (N > 60000.0) \land (N > 160000.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=51 \%, MSE=0.001
+\item $(N > 20000.0) \land (N > 60000.0) \land (N > 130000.0) \Rightarrow P(1 000 < L < 10 000) = 0.0~\%$,\hfill Size=54 \%, MSE=0.001
+\item $(N > 20000.0) \land (N > 60000.0) \land (N \leq 160000.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=8 \%, MSE=0.038
+\end{itemize}
+
+\subsection{Model III - 2}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(N \leq 2000.0) \Rightarrow P(10 000 < L < 100 000) = 5.0~\%$,\hfill Size=22 \%, MSE=0.046
+\item $(N \leq 2000.0) \land (f_p > 40.0~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=17 \%, MSE=0.014
+\item $(N > 2000.0) \land (N > 4000000.0) \Rightarrow P(10 000 < L < 100 000) = 26.0~\%$,\hfill Size=18 \%, MSE=0.191
+\item $(N > 2000.0) \land (N \leq 4000000.0) \Rightarrow P(10 000 < L < 100 000) = 73.0~\%$,\hfill Size=59 \%, MSE=0.198
+\item $(N > 2000.0) \land (N > 8000000.0) \Rightarrow P(10 000 < L < 100 000) = 19.0~\%$,\hfill Size=13 \%, MSE=0.155
+\item $(N \leq 4000.0) \Rightarrow P(10 000 < L < 100 000) = 8.0~\%$,\hfill Size=25 \%, MSE=0.075
+\item $(N \leq 2000.0) \land (f_p > 40.0~\%) \land (f_c > 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=13 \%, MSE=0.0
+\item $(N \leq 2500.0) \Rightarrow P(10 000 < L < 100 000) = 7.0~\%$,\hfill Size=24 \%, MSE=0.064
+\item $(N \leq 2000.0) \land (f_p > 40.0~\%) \land (N \leq 400.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=12 \%, MSE=0.0
+\item $(N \leq 3000.0) \Rightarrow P(10 000 < L < 100 000) = 8.0~\%$,\hfill Size=24 \%, MSE=0.07
+\item $(N > 2000.0) \land (N \leq 4000000.0) \land (f_p > 13.0~\%) \Rightarrow P(10 000 < L < 100 000) = 77.0~\%$,\hfill Size=53 \%, MSE=0.175
+\item $(N \leq 2000.0) \land (f_p > 40.0~\%) \land (f_c > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=13 \%, MSE=0.0
+\item $(N > 2000.0) \land (N \leq 3000000.0) \Rightarrow P(10 000 < L < 100 000) = 73.0~\%$,\hfill Size=58 \%, MSE=0.196
+\item $(N > 2000.0) \land (N \leq 2000000.0) \Rightarrow P(10 000 < L < 100 000) = 75.0~\%$,\hfill Size=52 \%, MSE=0.186
+\item $(N > 2000.0) \land (N > 8000000.0) \land (f_c \leq 20.0~\%) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=7 \%, MSE=0.053
+\item $(N > 2000.0) \land (N > 4000000.0) \land (f_c \leq 13.0~\%) \Rightarrow P(10 000 < L < 100 000) = 7.0~\%$,\hfill Size=8 \%, MSE=0.064
+\item $(N > 2000.0) \land (N \leq 3200000.0) \Rightarrow P(10 000 < L < 100 000) = 74.0~\%$,\hfill Size=57 \%, MSE=0.194
+\item $(N \leq 2500.0) \land (f_p > 40.0~\%) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=18 \%, MSE=0.016
+\item $(N \leq 2000.0) \land (N \leq 600.0) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=18 \%, MSE=0.024
+\item $(N > 2000.0) \land (N > 4000000.0) \land (f_c \leq 20.0~\%) \Rightarrow P(10 000 < L < 100 000) = 13.0~\%$,\hfill Size=11 \%, MSE=0.113
+\end{itemize}
+
+\subsection{Model III - 2}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 23.0~\%$,\hfill Size=100 \%, MSE=0.177
+\item $(N \leq 2000000.0) \Rightarrow P(L > 100 000) = 9.0~\%$,\hfill Size=76 \%, MSE=0.083
+\item $(N \leq 1600000.0) \Rightarrow P(L > 100 000) = 8.0~\%$,\hfill Size=74 \%, MSE=0.076
+\item $(N \leq 1300000.0) \Rightarrow P(L > 100 000) = 7.0~\%$,\hfill Size=71 \%, MSE=0.067
+\item $(N \leq 2000000.0) \land (f_p > 25.0~\%) \Rightarrow P(L > 100 000) = 3.0~\%$,\hfill Size=63 \%, MSE=0.034
+\item $(N \leq 1300000.0) \land (f_p > 10.0~\%) \Rightarrow P(L > 100 000) = 4.0~\%$,\hfill Size=65 \%, MSE=0.035
+\item $(N > 1600000.0) \land (f_c \leq 13.0~\%) \Rightarrow P(L > 100 000) = 87.0~\%$,\hfill Size=11 \%, MSE=0.111
+\item $(N \leq 1600000.0) \land (f_p > 10.0~\%) \Rightarrow P(L > 100 000) = 4.0~\%$,\hfill Size=67 \%, MSE=0.042
+\item $(N > 2000000.0) \land (f_c \leq 13.0~\%) \Rightarrow P(L > 100 000) = 86.0~\%$,\hfill Size=12 \%, MSE=0.12
+\item $(N \leq 1600000.0) \land (f_p > 25.0~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=60 \%, MSE=0.024
+\item $(N \leq 2000000.0) \land (f_p > 10.0~\%) \Rightarrow P(L > 100 000) = 5.0~\%$,\hfill Size=68 \%, MSE=0.045
+\item $(N \leq 2000000.0) \land (f_p > 25.0~\%) \land (N \leq 500000.0) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=51 \%, MSE=0.007
+\item $(N > 2000000.0) \land (f_c \leq 20.0~\%) \Rightarrow P(L > 100 000) = 82.0~\%$,\hfill Size=14 \%, MSE=0.145
+\item $(N \leq 2000000.0) \land (f_p > 25.0~\%) \land (N > 500000.0) \Rightarrow P(L > 100 000) = 15.0~\%$,\hfill Size=11 \%, MSE=0.127
+\item $(N \leq 2500000.0) \Rightarrow P(L > 100 000) = 10.0~\%$,\hfill Size=78 \%, MSE=0.09
+\item $(N \leq 2000000.0) \land (f_p \leq 25.0~\%) \land (N \leq 100000.0) \Rightarrow P(L > 100 000) = 8.0~\%$,\hfill Size=8 \%, MSE=0.077
+\item $(N > 1300000.0) \land (f_c \leq 13.0~\%) \Rightarrow P(L > 100 000) = 85.0~\%$,\hfill Size=12 \%, MSE=0.126
+\item $(N \leq 1300000.0) \land (f_p > 25.0~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=59 \%, MSE=0.021
+\item $(N \leq 2000000.0) \land (f_p > 25.0~\%) \land (N > 500000.0) \land (f_c > 13.0~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=6 \%, MSE=0.016
+\item $(N > 1300000.0) \land (f_c \leq 10.0~\%) \Rightarrow P(L > 100 000) = 88.0~\%$,\hfill Size=10 \%, MSE=0.102
+\end{itemize}
+
+\subsection{Model IV}
+L:
+\begin{itemize}
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (f_{pm} > 10.0~\%) \land (f_m \leq 1.0~\%) \Rightarrow L = 17188.0$,\hfill Size=7 \%, MSE=0.194
+\item $(N_* n_e > 31.6 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_m \leq 1.0~\%) \Rightarrow L = 59547.5$,\hfill Size=13 \%, MSE=0.193
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} \leq 1.3~\%) \Rightarrow L = 77269.4$,\hfill Size=17 \%, MSE=0.193
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_{pm} > 10.0~\%) \land (f_m > 1.0~\%) \land (f_{me} \leq 1.3~\%) \Rightarrow L = 41271.7$,\hfill Size=6 \%, MSE=0.192
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} > 1.3~\%) \Rightarrow L = 200646.0$,\hfill Size=12 \%, MSE=0.199
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (f_{pm} > 10.0~\%) \land (f_m > 1.0~\%) \land (f_{me} > 1.0~\%) \Rightarrow L = 92447.9$,\hfill Size=6 \%, MSE=0.175
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} \leq 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_m \leq 1.0~\%) \Rightarrow L = 21607.9$,\hfill Size=6 \%, MSE=0.184
+\item $(N_* n_e > 31.6 * 10^{10}) \land (f_{pm} \leq 6.0~\%) \land (N_* n_e \leq 100.0 * 10^{10}) \land (f_m > 1.3~\%) \Rightarrow L = 51877.8$,\hfill Size=7 \%, MSE=0.195
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} \leq 0.6~\%) \Rightarrow L = 67364.4$,\hfill Size=9 \%, MSE=0.197
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 5.0~\%) \land (f_m > 1.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \Rightarrow L = 149340.0$,\hfill Size=18 \%, MSE=0.199
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (f_{pm} > 8.0~\%) \land (f_m > 1.0~\%) \land (f_{me} > 1.3~\%) \Rightarrow L = 101824.6$,\hfill Size=6 \%, MSE=0.19
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_m > 1.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \Rightarrow L = 176842.8$,\hfill Size=16 \%, MSE=0.195
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} > 1.3~\%) \Rightarrow L = 213107.2$,\hfill Size=11 \%, MSE=0.194
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} \leq 1.3~\%) \Rightarrow L = 81260.0$,\hfill Size=14 \%, MSE=0.188
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_m \leq 1.0~\%) \land (f_{me} > 1.0~\%) \Rightarrow L = 28667.7$,\hfill Size=6 \%, MSE=0.19
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 1.3~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \Rightarrow L = 212723.6$,\hfill Size=8 \%, MSE=0.179
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_m \leq 1.0~\%) \Rightarrow L = 65113.5$,\hfill Size=11 \%, MSE=0.185
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 5.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} > 1.3~\%) \Rightarrow L = 192786.1$,\hfill Size=11 \%, MSE=0.196
+\item $(N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 5.0~\%) \land (N_* n_e \leq 125.9 * 10^{10}) \land (f_{me} \leq 1.3~\%) \Rightarrow L = 75371.0$,\hfill Size=16 \%, MSE=0.194
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (f_{pm} > 10.0~\%) \land (f_m > 1.0~\%) \land (f_{me} \leq 1.3~\%) \Rightarrow L = 38873.0$,\hfill Size=6 \%, MSE=0.192
+\end{itemize}
+
+\subsection{Model IV}
+P(L < 1 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=100 \%, MSE=0.008
+\item $(N_* n_e > 10.0 * 10^{10}) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=94 \%, MSE=0.004
+\item $(N_* n_e \leq 10.0 * 10^{10}) \Rightarrow P(L < 1 000) = 8.0~\%$,\hfill Size=6 \%, MSE=0.073
+\item $(N_* n_e > 7.9 * 10^{10}) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=95 \%, MSE=0.004
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{pm} > 2.5~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=84 \%, MSE=0.001
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{pm} \leq 2.5~\%) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=6 \%, MSE=0.024
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{pm} > 2.5~\%) \land (n_e \leq 4.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=79 \%, MSE=0.0
+\item $(N_* n_e > 7.9 * 10^{10}) \land (f_{pm} > 2.5~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.002
+\item $(N_* n_e > 7.9 * 10^{10}) \land (f_{pm} \leq 2.5~\%) \Rightarrow P(L < 1 000) = 3.0~\%$,\hfill Size=7 \%, MSE=0.031
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{me} \leq 0.5~\%) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=9 \%, MSE=0.02
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{me} > 0.5~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=84 \%, MSE=0.002
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{pm} > 2.5~\%) \land (R_* \leq 4.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=82 \%, MSE=0.001
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{me} \leq 0.4~\%) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=7 \%, MSE=0.021
+\item $(N_* n_e > 10.0 * 10^{10}) \land (f_{me} > 0.4~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=85 \%, MSE=0.002
+\item $(N_* n_e > 10.0 * 10^{10}) \land (R_* > 3.0) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=14 \%, MSE=0.017
+\item $(N_* n_e > 10.0 * 10^{10}) \land (R_* \leq 3.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=80 \%, MSE=0.002
+\item $(N_* n_e > 10.0 * 10^{10}) \land (n_e \leq 4.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=86 \%, MSE=0.002
+\item $(N_* n_e > 7.9 * 10^{10}) \land (f_{pm} > 2.5~\%) \land (n_e \leq 4.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=84 \%, MSE=0.002
+\item $(N_* n_e > 7.9 * 10^{10}) \land (f_j \leq 50.0~\%) \Rightarrow P(L < 1 000) = 2.0~\%$,\hfill Size=17 \%, MSE=0.018
+\item $(N_* n_e > 7.9 * 10^{10}) \land (f_{me} > 0.4~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=88 \%, MSE=0.003
+\end{itemize}
+
+\subsection{Model IV}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 15.0~\%$,\hfill Size=100 \%, MSE=0.127
+\item $(N_* n_e > 25.1 * 10^{10}) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=70 \%, MSE=0.058
+\item $(N_* n_e > 31.6 * 10^{10}) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=69 \%, MSE=0.056
+\item $(N_* n_e > 20.0 * 10^{10}) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=78 \%, MSE=0.072
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=61 \%, MSE=0.038
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 21.0~\%$,\hfill Size=12 \%, MSE=0.165
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} > 3.0~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=62 \%, MSE=0.038
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} \leq 3.0~\%) \Rightarrow P(1 000 < L < 10 000) = 23.0~\%$,\hfill Size=9 \%, MSE=0.178
+\item $(N_* n_e > 20.0 * 10^{10}) \land (f_{pm} \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 22.0~\%$,\hfill Size=15 \%, MSE=0.169
+\item $(N_* n_e > 20.0 * 10^{10}) \land (f_{pm} > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=62 \%, MSE=0.041
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (f_m > 0.8~\%) \Rightarrow P(1 000 < L < 10 000) = 26.0~\%$,\hfill Size=22 \%, MSE=0.19
+\item $(N_* n_e \leq 20.0 * 10^{10}) \land (f_{pm} > 10.0~\%) \Rightarrow P(1 000 < L < 10 000) = 22.0~\%$,\hfill Size=10 \%, MSE=0.172
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 3.0~\%$,\hfill Size=56 \%, MSE=0.029
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_{pm} \leq 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 18.0~\%$,\hfill Size=15 \%, MSE=0.149
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_m \leq 0.6~\%) \Rightarrow P(1 000 < L < 10 000) = 18.0~\%$,\hfill Size=16 \%, MSE=0.15
+\item $(N_* n_e > 25.1 * 10^{10}) \land (f_m > 0.6~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=58 \%, MSE=0.035
+\item $(N_* n_e > 20.0 * 10^{10}) \land (f_m \leq 0.6~\%) \Rightarrow P(1 000 < L < 10 000) = 20.0~\%$,\hfill Size=17 \%, MSE=0.162
+\item $(N_* n_e > 31.6 * 10^{10}) \land (f_{pm} \leq 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 17.0~\%$,\hfill Size=15 \%, MSE=0.139
+\item $(N_* n_e \leq 25.1 * 10^{10}) \land (f_m > 0.6~\%) \land (f_{pm} > 6.0~\%) \Rightarrow P(1 000 < L < 10 000) = 16.0~\%$,\hfill Size=14 \%, MSE=0.135
+\item $(N_* n_e > 20.0 * 10^{10}) \land (f_m > 0.6~\%) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=62 \%, MSE=0.043
+\end{itemize}
+
+\subsection{Model IV}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(N_* n_e > 125.9 * 10^{10}) \Rightarrow P(10 000 < L < 100 000) = 27.0~\%$,\hfill Size=20 \%, MSE=0.197
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 14.0~\%$,\hfill Size=12 \%, MSE=0.123
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 5.0~\%$,\hfill Size=7 \%, MSE=0.045
+\item $(N_* n_e > 100.0 * 10^{10}) \Rightarrow P(10 000 < L < 100 000) = 27.0~\%$,\hfill Size=20 \%, MSE=0.198
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{me} > 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 15.0~\%$,\hfill Size=11 \%, MSE=0.125
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_m > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 14.0~\%$,\hfill Size=10 \%, MSE=0.117
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 11.0~\%$,\hfill Size=9 \%, MSE=0.094
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{me} > 0.8~\%) \land (f_{pm} > 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=6 \%, MSE=0.039
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_{pm} > 8.0~\%) \Rightarrow P(10 000 < L < 100 000) = 14.0~\%$,\hfill Size=11 \%, MSE=0.121
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 19.0~\%$,\hfill Size=15 \%, MSE=0.152
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_{pm} > 5.0~\%) \Rightarrow P(10 000 < L < 100 000) = 20.0~\%$,\hfill Size=16 \%, MSE=0.159
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_{pm} > 6.0~\%) \Rightarrow P(10 000 < L < 100 000) = 18.0~\%$,\hfill Size=15 \%, MSE=0.149
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_{me} > 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 20.0~\%$,\hfill Size=16 \%, MSE=0.161
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_m > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 16.0~\%$,\hfill Size=12 \%, MSE=0.137
+\item $(N_* n_e > 158.5 * 10^{10}) \Rightarrow P(10 000 < L < 100 000) = 21.0~\%$,\hfill Size=13 \%, MSE=0.167
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 5.0~\%) \land (f_{me} > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 8.0~\%$,\hfill Size=9 \%, MSE=0.076
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_{pm} > 5.0~\%) \land (f_{me} > 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 10.0~\%$,\hfill Size=11 \%, MSE=0.089
+\item $(N_* n_e > 100.0 * 10^{10}) \land (f_m > 1.0~\%) \land (f_{me} > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 7.0~\%$,\hfill Size=7 \%, MSE=0.067
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_m > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=6 \%, MSE=0.06
+\item $(N_* n_e > 125.9 * 10^{10}) \land (f_m > 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 15.0~\%$,\hfill Size=11 \%, MSE=0.129
+\end{itemize}
+
+\subsection{Model IV}
+P(L > 100 000):
+\begin{itemize}
+\item $(N_* n_e \leq 50.1 * 10^{10}) \Rightarrow P(L > 100 000) = 16.0~\%$,\hfill Size=53 \%, MSE=0.135
+\item $(N_* n_e \leq 63.1 * 10^{10}) \Rightarrow P(L > 100 000) = 17.0~\%$,\hfill Size=56 \%, MSE=0.143
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_m \leq 1.6~\%) \Rightarrow P(L > 100 000) = 9.0~\%$,\hfill Size=36 \%, MSE=0.083
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 0.6~\%) \Rightarrow P(L > 100 000) = 77.0~\%$,\hfill Size=24 \%, MSE=0.175
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} \leq 6.0~\%) \land (f_m \leq 1.0~\%) \Rightarrow P(L > 100 000) = 17.0~\%$,\hfill Size=9 \%, MSE=0.143
+\item $(N_* n_e \leq 63.1 * 10^{10}) \land (N_* n_e \leq 31.6 * 10^{10}) \Rightarrow P(L > 100 000) = 9.0~\%$,\hfill Size=33 \%, MSE=0.082
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_m > 1.6~\%) \land (f_{pm} \leq 6.0~\%) \Rightarrow P(L > 100 000) = 10.0~\%$,\hfill Size=7 \%, MSE=0.091
+\item $(N_* n_e > 63.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 0.6~\%) \Rightarrow P(L > 100 000) = 81.0~\%$,\hfill Size=21 \%, MSE=0.156
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_m \leq 1.6~\%) \land (f_{me} \leq 2.0~\%) \Rightarrow P(L > 100 000) = 6.0~\%$,\hfill Size=31 \%, MSE=0.057
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} \leq 6.0~\%) \land (f_m \leq 1.3~\%) \Rightarrow P(L > 100 000) = 18.0~\%$,\hfill Size=8 \%, MSE=0.145
+\item $(N_* n_e > 63.1 * 10^{10}) \land (f_{pm} \leq 6.0~\%) \land (f_m \leq 1.0~\%) \Rightarrow P(L > 100 000) = 20.0~\%$,\hfill Size=7 \%, MSE=0.159
+\item $(N_* n_e > 63.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 0.8~\%) \Rightarrow P(L > 100 000) = 84.0~\%$,\hfill Size=16 \%, MSE=0.134
+\item $(N_* n_e > 63.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \Rightarrow P(L > 100 000) = 73.0~\%$,\hfill Size=25 \%, MSE=0.196
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e \leq 31.6 * 10^{10}) \Rightarrow P(L > 100 000) = 8.0~\%$,\hfill Size=31 \%, MSE=0.072
+\item $(N_* n_e \leq 79.4 * 10^{10}) \Rightarrow P(L > 100 000) = 21.0~\%$,\hfill Size=66 \%, MSE=0.166
+\item $(N_* n_e \leq 63.1 * 10^{10}) \land (f_{pm} \leq 8.0~\%) \Rightarrow P(L > 100 000) = 8.0~\%$,\hfill Size=30 \%, MSE=0.075
+\item $(N_* n_e > 50.1 * 10^{10}) \land (f_{pm} > 6.0~\%) \land (f_{me} > 0.6~\%) \land (f_m > 0.8~\%) \Rightarrow P(L > 100 000) = 85.0~\%$,\hfill Size=18 \%, MSE=0.131
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_{pm} \leq 8.0~\%) \Rightarrow P(L > 100 000) = 7.0~\%$,\hfill Size=27 \%, MSE=0.064
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (f_{pm} > 8.0~\%) \Rightarrow P(L > 100 000) = 25.0~\%$,\hfill Size=26 \%, MSE=0.189
+\item $(N_* n_e \leq 63.1 * 10^{10}) \land (N_* n_e \leq 31.6 * 10^{10}) \land (f_m \leq 1.6~\%) \Rightarrow P(L > 100 000) = 5.0~\%$,\hfill Size=25 \%, MSE=0.044
+\end{itemize}
+
+\subsection{Supermodel}
+L:
+\begin{itemize}
+\item $(N_* n_e > 5.0 * 10^{10}) \Rightarrow L = 52378.9$,\hfill Size=25 \%, MSE=0.481
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \Rightarrow L = 29.1$,\hfill Size=68 \%, MSE=0.874
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 39.8 * 10^{10}) \Rightarrow L = 99896.0$,\hfill Size=15 \%, MSE=0.355
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e \leq 39.8 * 10^{10}) \Rightarrow L = 18875.9$,\hfill Size=10 \%, MSE=0.359
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 39.8 * 10^{10}) \land (f_{pm} > 6.0~\%) \Rightarrow L = 165337.0$,\hfill Size=9 \%, MSE=0.283
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e \leq 50.1 * 10^{10}) \Rightarrow L = 24061.8$,\hfill Size=13 \%, MSE=0.378
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 50.1 * 10^{10}) \Rightarrow L = 120753.3$,\hfill Size=12 \%, MSE=0.337
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 31.6 * 10^{10}) \Rightarrow L = 95757.1$,\hfill Size=16 \%, MSE=0.357
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e \leq 31.6 * 10^{10}) \Rightarrow L = 17176.5$,\hfill Size=9 \%, MSE=0.35
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 2.5~\%) \Rightarrow L = 28.1$,\hfill Size=67 \%, MSE=0.86
+\item $(N_* n_e > 0.0 * 10^{10}) \Rightarrow L = 52258.2$,\hfill Size=25 \%, MSE=0.483
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e \leq 39.8 * 10^{10}) \land (f_{pm} > 8.0~\%) \Rightarrow L = 35562.4$,\hfill Size=6 \%, MSE=0.296
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e \leq 50.1 * 10^{10}) \land (f_{pm} > 8.0~\%) \Rightarrow L = 40664.5$,\hfill Size=7 \%, MSE=0.307
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 8.0) \Rightarrow L = 15.3$,\hfill Size=49 \%, MSE=0.639
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N > 8.0) \Rightarrow L = 140.0$,\hfill Size=20 \%, MSE=0.798
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 10.0) \land (f_c > 10.0~\%) \Rightarrow L = 9.8$,\hfill Size=36 \%, MSE=0.597
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 10.0) \Rightarrow L = 16.1$,\hfill Size=51 \%, MSE=0.643
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 10.0) \land (f_c \leq 10.0~\%) \Rightarrow L = 52.9$,\hfill Size=15 \%, MSE=0.371
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N > 10.0) \Rightarrow L = 160.8$,\hfill Size=18 \%, MSE=0.797
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 8.0) \land (f_c \leq 10.0~\%) \Rightarrow L = 50.7$,\hfill Size=14 \%, MSE=0.363
+\end{itemize}
+
+\subsection{Supermodel}
+P(L < 1 000):
+\begin{itemize}
+\item $(N_* n_e \leq 5.0 * 10^{10}) \Rightarrow P(L < 1 000) = 89.0~\%$,\hfill Size=75 \%, MSE=0.096
+\item $(N_* n_e > 5.0 * 10^{10}) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=25 \%, MSE=0.008
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=20 \%, MSE=0.002
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \Rightarrow P(L < 1 000) = 94.0~\%$,\hfill Size=69 \%, MSE=0.06
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.0~\%) \Rightarrow P(L < 1 000) = 93.0~\%$,\hfill Size=70 \%, MSE=0.064
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 60.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=64 \%, MSE=0.036
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 50.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=63 \%, MSE=0.035
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 60.0) \land (f_p > 13.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=59 \%, MSE=0.023
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (N_* n_e > 39.8 * 10^{10}) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=15 \%, MSE=0.0
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (f_j > 50.0~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=15 \%, MSE=0.0
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 40.0) \Rightarrow P(L < 1 000) = 97.0~\%$,\hfill Size=63 \%, MSE=0.033
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 50.0) \land (f_p > 13.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=58 \%, MSE=0.022
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.6~\%) \land (N \leq 40.0) \land (f_p > 13.0~\%) \Rightarrow P(L < 1 000) = 98.0~\%$,\hfill Size=57 \%, MSE=0.019
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (R_* \leq 3.2) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=15 \%, MSE=0.0
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (f_{me} > 0.6~\%) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=15 \%, MSE=0.001
+\item $(N_* n_e \leq 5.0 * 10^{10}) \land (f_b > 1.0~\%) \land (N \leq 60.0) \Rightarrow P(L < 1 000) = 96.0~\%$,\hfill Size=65 \%, MSE=0.04
+\item $(f_g \leq 40.0~\%) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=25 \%, MSE=0.008
+\item $(f_g > 40.0~\%) \Rightarrow P(L < 1 000) = 89.0~\%$,\hfill Size=75 \%, MSE=0.096
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (N_* n_e \leq 39.8 * 10^{10}) \Rightarrow P(L < 1 000) = 1.0~\%$,\hfill Size=6 \%, MSE=0.007
+\item $(N_* n_e > 5.0 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \land (n_e \leq 3.2) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=15 \%, MSE=0.001
+\end{itemize}
+
+\subsection{Supermodel}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 10.0~\%$,\hfill Size=100 \%, MSE=0.086
+\item $(f_b > 1.6~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=93 \%, MSE=0.074
+\item $(f_{pm} > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=95 \%, MSE=0.075
+\item $(f_{pm} > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=95 \%, MSE=0.076
+\item $(f_b > 2.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=93 \%, MSE=0.073
+\item $(f_b > 2.5~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=92 \%, MSE=0.073
+\item $(f_m > 0.6~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=94 \%, MSE=0.076
+\item $(f_b > 2.0~\%) \land (f_{pm} > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=87 \%, MSE=0.06
+\item $(N > 40.0) \Rightarrow P(1 000 < L < 10 000) = 25.0~\%$,\hfill Size=10 \%, MSE=0.189
+\item $(N \leq 40.0) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=90 \%, MSE=0.072
+\item $(f_{pm} > 4.0~\%) \land (f_b > 1.6~\%) \Rightarrow P(1 000 < L < 10 000) = 7.0~\%$,\hfill Size=88 \%, MSE=0.062
+\item $(f_{pm} > 5.0~\%) \land (f_b > 1.6~\%) \Rightarrow P(1 000 < L < 10 000) = 7.0~\%$,\hfill Size=88 \%, MSE=0.061
+\item $(f_b > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=91 \%, MSE=0.072
+\item $(f_b \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 26.0~\%$,\hfill Size=9 \%, MSE=0.193
+\item $(f_{pm} > 5.0~\%) \land (f_b > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=85 \%, MSE=0.058
+\item $(f_b > 1.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=95 \%, MSE=0.076
+\item $(f_b > 1.6~\%) \land (f_{pm} > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 7.0~\%$,\hfill Size=88 \%, MSE=0.062
+\item $(f_{pm} > 5.0~\%) \land (f_b \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 26.0~\%$,\hfill Size=9 \%, MSE=0.193
+\item $(f_b > 1.6~\%) \land (f_m > 0.8~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=86 \%, MSE=0.06
+\item $(f_b > 2.5~\%) \land (f_{pm} > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 6.0~\%$,\hfill Size=87 \%, MSE=0.06
+\end{itemize}
+
+\subsection{Supermodel}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(10 000 < L < 100 000) = 14.0~\%$,\hfill Size=100 \%, MSE=0.12
+\item $(f_m > 3.2~\%) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=75 \%, MSE=0.023
+\item $(f_m > 3.2~\%) \land (f_b \leq 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 18.0~\%$,\hfill Size=7 \%, MSE=0.144
+\item $(f_m > 3.2~\%) \land (f_b > 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=69 \%, MSE=0.008
+\item $(f_m > 3.2~\%) \land (f_b > 1.6~\%) \land (N \leq 60.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=64 \%, MSE=0.004
+\item $(N_* n_e \leq 6.3 * 10^{10}) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=76 \%, MSE=0.023
+\item $(f_m > 3.2~\%) \land (f_b > 1.6~\%) \land (N \leq 50.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=63 \%, MSE=0.003
+\item $(f_{pm} > 20.0~\%) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=75 \%, MSE=0.022
+\item $(f_m > 3.2~\%) \land (f_b > 1.0~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=70 \%, MSE=0.009
+\item $(f_m > 3.2~\%) \land (f_b > 1.6~\%) \land (N > 50.0) \Rightarrow P(10 000 < L < 100 000) = 7.0~\%$,\hfill Size=6 \%, MSE=0.063
+\item $(f_m > 3.2~\%) \land (f_b > 0.8~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=70 \%, MSE=0.011
+\item $(f_{pm} > 20.0~\%) \land (f_b \leq 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 18.0~\%$,\hfill Size=7 \%, MSE=0.144
+\item $(f_m > 3.2~\%) \land (f_b > 1.0~\%) \land (N \leq 60.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=65 \%, MSE=0.004
+\item $(f_{pm} > 20.0~\%) \land (f_b > 1.6~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=68 \%, MSE=0.007
+\item $(f_m > 3.2~\%) \land (f_b > 0.8~\%) \land (N \leq 60.0) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=66 \%, MSE=0.006
+\item $(N_* n_e \leq 5.0 * 10^{10}) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=75 \%, MSE=0.022
+\item $(f_m > 3.2~\%) \land (f_b > 1.3~\%) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=70 \%, MSE=0.01
+\item $(f_m > 3.2~\%) \land (f_b \leq 1.3~\%) \Rightarrow P(10 000 < L < 100 000) = 19.0~\%$,\hfill Size=6 \%, MSE=0.151
+\item $(f_m > 3.2~\%) \land (f_b > 1.0~\%) \land (N \leq 60.0) \land (f_a > 0.5) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=60 \%, MSE=0.002
+\item $(f_m > 3.2~\%) \land (f_b > 0.8~\%) \land (N \leq 60.0) \land (f_a > 0.4) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=61 \%, MSE=0.003
+\end{itemize}
+
+\subsection{Supermodel}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 9.0~\%$,\hfill Size=100 \%, MSE=0.085
+\item $(N_* n_e \leq 31.6 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=83 \%, MSE=0.015
+\item $(N_* n_e \leq 50.1 * 10^{10}) \Rightarrow P(L > 100 000) = 3.0~\%$,\hfill Size=88 \%, MSE=0.03
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=78 \%, MSE=0.009
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \land (f_b > 0.8~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=73 \%, MSE=0.002
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \land (f_b > 0.8~\%) \land (N \leq 60.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=69 \%, MSE=0.001
+\item $(N_* n_e \leq 39.8 * 10^{10}) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=85 \%, MSE=0.021
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e > 20.0 * 10^{10}) \Rightarrow P(L > 100 000) = 23.0~\%$,\hfill Size=8 \%, MSE=0.178
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e \leq 20.0 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=81 \%, MSE=0.011
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e \leq 20.0 * 10^{10}) \land (f_b > 0.8~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=76 \%, MSE=0.005
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e > 12.6 * 10^{10}) \Rightarrow P(L > 100 000) = 14.0~\%$,\hfill Size=6 \%, MSE=0.121
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=78 \%, MSE=0.009
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (N_* n_e > 12.6 * 10^{10}) \Rightarrow P(L > 100 000) = 16.0~\%$,\hfill Size=7 \%, MSE=0.136
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e \leq 15.8 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=79 \%, MSE=0.009
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e \leq 20.0 * 10^{10}) \land (f_b > 0.8~\%) \land (N_* n_e \leq 6.3 * 10^{10}) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=71 \%, MSE=0.001
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \land (f_b > 0.8~\%) \land (N \leq 60.0) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=68 \%, MSE=0.001
+\item $(N_* n_e \leq 39.8 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \land (f_b > 0.8~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=73 \%, MSE=0.002
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (f_b > 0.8~\%) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=78 \%, MSE=0.009
+\item $(N_* n_e \leq 31.6 * 10^{10}) \land (N_* n_e \leq 15.8 * 10^{10}) \land (f_b > 0.8~\%) \Rightarrow P(L > 100 000) = 0.0~\%$,\hfill Size=74 \%, MSE=0.003
+\item $(N_* n_e \leq 50.1 * 10^{10}) \land (N_* n_e \leq 12.6 * 10^{10}) \Rightarrow P(L > 100 000) = 1.0~\%$,\hfill Size=78 \%, MSE=0.009
+\end{itemize}
+
+\subsection{Supermodel 2}
+L:
+\begin{itemize}
+\item $(N > 250.0) \Rightarrow L = 36913.8$,\hfill Size=29 \%, MSE=0.507
+\item $(N > 200.0) \Rightarrow L = 34388.6$,\hfill Size=30 \%, MSE=0.561
+\item $(N > 160.0) \Rightarrow L = 33097.8$,\hfill Size=30 \%, MSE=0.587
+\item $(N > 200.0) \land (N > 16000.0) \Rightarrow L = 65507.4$,\hfill Size=22 \%, MSE=0.23
+\item $(N > 200.0) \land (N \leq 16000.0) \Rightarrow L = 4477.0$,\hfill Size=7 \%, MSE=0.576
+\item $(N > 160.0) \land (N \leq 16000.0) \Rightarrow L = 4131.3$,\hfill Size=8 \%, MSE=0.615
+\item $(N > 160.0) \land (N > 16000.0) \Rightarrow L = 65680.3$,\hfill Size=22 \%, MSE=0.23
+\item $(N > 250.0) \land (N > 16000.0) \Rightarrow L = 65274.8$,\hfill Size=23 \%, MSE=0.231
+\item $(N > 250.0) \land (N \leq 16000.0) \Rightarrow L = 4797.6$,\hfill Size=7 \%, MSE=0.522
+\item $(N > 200.0) \land (N > 20000.0) \Rightarrow L = 67218.7$,\hfill Size=22 \%, MSE=0.225
+\item $(N > 200.0) \land (N \leq 20000.0) \Rightarrow L = 4884.0$,\hfill Size=8 \%, MSE=0.576
+\item $(N > 250.0) \land (N \leq 20000.0) \Rightarrow L = 5534.9$,\hfill Size=7 \%, MSE=0.501
+\item $(N > 250.0) \land (N > 20000.0) \Rightarrow L = 67560.0$,\hfill Size=22 \%, MSE=0.224
+\item $(N > 160.0) \land (N \leq 20000.0) \Rightarrow L = 4537.0$,\hfill Size=8 \%, MSE=0.6
+\item $(N > 160.0) \land (N > 20000.0) \Rightarrow L = 66863.9$,\hfill Size=22 \%, MSE=0.226
+\item $(N > 200.0) \land (N > 16000.0) \land (N \leq 1000000.0) \Rightarrow L = 36242.3$,\hfill Size=12 \%, MSE=0.146
+\item $(N > 200.0) \land (N > 16000.0) \land (N \leq 1000000.0) \land (f_p > 80.0~\%) \Rightarrow L = 26265.2$,\hfill Size=7 \%, MSE=0.084
+\item $(N > 200.0) \land (N > 16000.0) \land (N > 1000000.0) \Rightarrow L = 131898.3$,\hfill Size=10 \%, MSE=0.158
+\item $(N > 250.0) \land (N > 40000.0) \Rightarrow L = 72051.3$,\hfill Size=21 \%, MSE=0.214
+\item $(N > 250.0) \land (N \leq 40000.0) \Rightarrow L = 6629.1$,\hfill Size=8 \%, MSE=0.488
+\end{itemize}
+
+\subsection{Supermodel 2}
+P(L < 1 000):
+\begin{itemize}
+\item $(N > 250.0) \Rightarrow P(L < 1 000) = 3.0~\%$,\hfill Size=29 \%, MSE=0.032
+\item $(N \leq 250.0) \Rightarrow P(L < 1 000) = 83.0~\%$,\hfill Size=71 \%, MSE=0.14
+\item $(N > 250.0) \land (N > 5000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=24 \%, MSE=0.0
+\item $(N \leq 250.0) \land (f_b > 0.5~\%) \Rightarrow P(L < 1 000) = 87.0~\%$,\hfill Size=66 \%, MSE=0.111
+\item $(N > 320.0) \Rightarrow P(L < 1 000) = 3.0~\%$,\hfill Size=28 \%, MSE=0.027
+\item $(N \leq 320.0) \Rightarrow P(L < 1 000) = 83.0~\%$,\hfill Size=72 \%, MSE=0.142
+\item $(N \leq 250.0) \land (f_b > 0.8~\%) \Rightarrow P(L < 1 000) = 88.0~\%$,\hfill Size=65 \%, MSE=0.107
+\item $(N > 250.0) \land (N > 4000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=24 \%, MSE=0.0
+\item $(N > 250.0) \land (N > 6000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=24 \%, MSE=0.0
+\item $(N > 320.0) \land (N > 8000.0) \Rightarrow P(L < 1 000) = 0.0~\%$,\hfill Size=24 \%, MSE=0.0
+\item $(N \leq 250.0) \land (f_b > 0.5~\%) \land (f_a > 0.25) \Rightarrow P(L < 1 000) = 90.0~\%$,\hfill Size=61 \%, MSE=0.09
+\item $(N \leq 250.0) \land (f_b > 0.6~\%) \Rightarrow P(L < 1 000) = 88.0~\%$,\hfill Size=65 \%, MSE=0.106
+\item $(N \leq 250.0) \land (f_b > 0.5~\%) \land (f_a > 0.2) \Rightarrow P(L < 1 000) = 90.0~\%$,\hfill Size=61 \%, MSE=0.091
+\item $(N \leq 130.0) \Rightarrow P(L < 1 000) = 84.0~\%$,\hfill Size=69 \%, MSE=0.133
+\item $(N > 130.0) \Rightarrow P(L < 1 000) = 6.0~\%$,\hfill Size=31 \%, MSE=0.058
+\item $(N \leq 320.0) \land (f_b > 0.5~\%) \Rightarrow P(L < 1 000) = 87.0~\%$,\hfill Size=66 \%, MSE=0.112
+\item $(N \leq 200.0) \Rightarrow P(L < 1 000) = 84.0~\%$,\hfill Size=71 \%, MSE=0.138
+\item $(N > 200.0) \Rightarrow P(L < 1 000) = 4.0~\%$,\hfill Size=29 \%, MSE=0.042
+\item $(N \leq 250.0) \land (f_b > 1.0~\%) \Rightarrow P(L < 1 000) = 88.0~\%$,\hfill Size=64 \%, MSE=0.104
+\item $(N \leq 250.0) \land (f_b > 0.8~\%) \land (f_a > 0.25) \Rightarrow P(L < 1 000) = 90.0~\%$,\hfill Size=59 \%, MSE=0.088
+\end{itemize}
+
+\subsection{Supermodel 2}
+P(1 000 < L < 10 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(1 000 < L < 10 000) = 11.0~\%$,\hfill Size=100 \%, MSE=0.095
+\item $(f_b > 2.0~\%) \Rightarrow P(1 000 < L < 10 000) = 9.0~\%$,\hfill Size=90 \%, MSE=0.08
+\item $(f_b > 1.3~\%) \Rightarrow P(1 000 < L < 10 000) = 9.0~\%$,\hfill Size=92 \%, MSE=0.081
+\item $(f_b > 1.0~\%) \Rightarrow P(1 000 < L < 10 000) = 9.0~\%$,\hfill Size=92 \%, MSE=0.082
+\item $(f_b > 2.0~\%) \land (N > 20.0) \Rightarrow P(1 000 < L < 10 000) = 15.0~\%$,\hfill Size=38 \%, MSE=0.13
+\item $(f_b > 2.0~\%) \land (N \leq 20.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=52 \%, MSE=0.036
+\item $(f_b \leq 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 25.0~\%$,\hfill Size=13 \%, MSE=0.19
+\item $(f_b > 5.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=87 \%, MSE=0.077
+\item $(f_b > 1.3~\%) \land (N \leq 20.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=53 \%, MSE=0.039
+\item $(f_b > 1.3~\%) \land (N > 20.0) \Rightarrow P(1 000 < L < 10 000) = 16.0~\%$,\hfill Size=39 \%, MSE=0.131
+\item $(f_b > 2.0~\%) \land (N > 25.0) \Rightarrow P(1 000 < L < 10 000) = 16.0~\%$,\hfill Size=38 \%, MSE=0.132
+\item $(f_b > 2.0~\%) \land (N \leq 25.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=53 \%, MSE=0.038
+\item $(f_b > 1.0~\%) \land (N > 20.0) \Rightarrow P(1 000 < L < 10 000) = 16.0~\%$,\hfill Size=39 \%, MSE=0.132
+\item $(f_b > 1.0~\%) \land (N \leq 20.0) \Rightarrow P(1 000 < L < 10 000) = 4.0~\%$,\hfill Size=54 \%, MSE=0.04
+\item $(f_b > 2.0~\%) \land (N \leq 20.0) \land (f_a > 0.3) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=47 \%, MSE=0.02
+\item $(f_b > 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 8.0~\%$,\hfill Size=88 \%, MSE=0.078
+\item $(f_b \leq 4.0~\%) \Rightarrow P(1 000 < L < 10 000) = 26.0~\%$,\hfill Size=12 \%, MSE=0.192
+\item $(f_b > 2.0~\%) \land (N \leq 20.0) \land (f_a > 0.4) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=47 \%, MSE=0.021
+\item $(f_b \leq 5.0~\%) \land (f_a > 1.3) \Rightarrow P(1 000 < L < 10 000) = 19.0~\%$,\hfill Size=8 \%, MSE=0.156
+\item $(f_b > 1.3~\%) \land (N \leq 20.0) \land (f_a > 0.3) \Rightarrow P(1 000 < L < 10 000) = 2.0~\%$,\hfill Size=48 \%, MSE=0.02
+\end{itemize}
+
+\subsection{Supermodel 2}
+P(10 000 < L < 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(10 000 < L < 100 000) = 20.0~\%$,\hfill Size=100 \%, MSE=0.16
+\item $(N \leq 2000.0) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=75 \%, MSE=0.054
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=69 \%, MSE=0.039
+\item $(N \leq 2000.0) \land (f_b \leq 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 24.0~\%$,\hfill Size=6 \%, MSE=0.183
+\item $(N \leq 2500.0) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=75 \%, MSE=0.055
+\item $(N > 2000.0) \land (N > 4000000.0) \Rightarrow P(10 000 < L < 100 000) = 26.0~\%$,\hfill Size=6 \%, MSE=0.191
+\item $(N \leq 2500.0) \land (f_b \leq 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 24.0~\%$,\hfill Size=6 \%, MSE=0.183
+\item $(N \leq 4000.0) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=75 \%, MSE=0.057
+\item $(N \leq 2500.0) \land (f_b > 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=69 \%, MSE=0.04
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \land (Model~I) \Rightarrow P(10 000 < L < 100 000) = 1.0~\%$,\hfill Size=32 \%, MSE=0.008
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \land (not~Model~I) \Rightarrow P(10 000 < L < 100 000) = 7.0~\%$,\hfill Size=37 \%, MSE=0.064
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \land (Model~I) \land (N \leq 20.0) \Rightarrow P(10 000 < L < 100 000) = 0.0~\%$,\hfill Size=27 \%, MSE=0.0
+\item $(N > 2000.0) \land (N \leq 4000000.0) \Rightarrow P(10 000 < L < 100 000) = 73.0~\%$,\hfill Size=20 \%, MSE=0.198
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \land (not~Model~I) \land (R_* \leq 1.0) \Rightarrow P(10 000 < L < 100 000) = 2.0~\%$,\hfill Size=27 \%, MSE=0.02
+\item $(N \leq 2000.0) \land (f_b > 0.6~\%) \land (not~Model~I) \land (R_* > 1.0) \Rightarrow P(10 000 < L < 100 000) = 19.0~\%$,\hfill Size=10 \%, MSE=0.156
+\item $(N \leq 4000.0) \land (f_b \leq 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 24.0~\%$,\hfill Size=6 \%, MSE=0.183
+\item $(N \leq 4000.0) \land (f_b > 0.6~\%) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=69 \%, MSE=0.043
+\item $(N \leq 2000.0) \land (f_b > 0.5~\%) \Rightarrow P(10 000 < L < 100 000) = 4.0~\%$,\hfill Size=69 \%, MSE=0.041
+\item $(N > 2000.0) \land (N \leq 4000000.0) \land (f_p > 40.0~\%) \Rightarrow P(10 000 < L < 100 000) = 79.0~\%$,\hfill Size=15 \%, MSE=0.165
+\item $(N \leq 3000.0) \Rightarrow P(10 000 < L < 100 000) = 6.0~\%$,\hfill Size=75 \%, MSE=0.056
+\end{itemize}
+
+\subsection{Supermodel 2}
+P(L > 100 000):
+\begin{itemize}
+\item $(T) \Rightarrow P(L > 100 000) = 9.0~\%$,\hfill Size=100 \%, MSE=0.083
+\item $(N \leq 1300000.0) \Rightarrow P(L > 100 000) = 4.0~\%$,\hfill Size=90 \%, MSE=0.034
+\item $(N \leq 1600000.0) \Rightarrow P(L > 100 000) = 4.0~\%$,\hfill Size=91 \%, MSE=0.037
+\item $(N \leq 2000000.0) \Rightarrow P(L > 100 000) = 4.0~\%$,\hfill Size=92 \%, MSE=0.039
+\item $(N \leq 1300000.0) \land (N \leq 200000.0) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=84 \%, MSE=0.024
+\item $(N \leq 1300000.0) \land (N > 200000.0) \Rightarrow P(L > 100 000) = 19.0~\%$,\hfill Size=7 \%, MSE=0.156
+\item $(N \leq 1600000.0) \land (N > 200000.0) \Rightarrow P(L > 100 000) = 21.0~\%$,\hfill Size=7 \%, MSE=0.163
+\item $(N \leq 1600000.0) \land (N \leq 200000.0) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=84 \%, MSE=0.024
+\item $(N \leq 1300000.0) \land (N \leq 130000.0) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=82 \%, MSE=0.022
+\item $(N \leq 1300000.0) \land (N > 130000.0) \Rightarrow P(L > 100 000) = 16.0~\%$,\hfill Size=8 \%, MSE=0.138
+\item $(N \leq 800000.0) \Rightarrow P(L > 100 000) = 3.0~\%$,\hfill Size=89 \%, MSE=0.03
+\item $(N \leq 2000000.0) \land (N \leq 200000.0) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=84 \%, MSE=0.024
+\item $(N \leq 1300000.0) \land (N \leq 300000.0) \Rightarrow P(L > 100 000) = 3.0~\%$,\hfill Size=85 \%, MSE=0.026
+\item $(N \leq 2000000.0) \land (N > 200000.0) \Rightarrow P(L > 100 000) = 21.0~\%$,\hfill Size=8 \%, MSE=0.168
+\item $(N \leq 1300000.0) \land (N \leq 200000.0) \land (f_b > 0.4~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=79 \%, MSE=0.018
+\item $(N \leq 1300000.0) \land (N \leq 200000.0) \land (f_b > 0.5~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=79 \%, MSE=0.018
+\item $(N \leq 2000000.0) \land (N \leq 400000.0) \Rightarrow P(L > 100 000) = 3.0~\%$,\hfill Size=86 \%, MSE=0.026
+\item $(N \leq 1600000.0) \land (N > 130000.0) \Rightarrow P(L > 100 000) = 18.0~\%$,\hfill Size=9 \%, MSE=0.151
+\item $(N \leq 1600000.0) \land (N \leq 200000.0) \land (f_b > 0.4~\%) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=79 \%, MSE=0.018
+\item $(N \leq 1600000.0) \land (N \leq 130000.0) \Rightarrow P(L > 100 000) = 2.0~\%$,\hfill Size=82 \%, MSE=0.022
+\end{itemize}
+
+\end{document}
