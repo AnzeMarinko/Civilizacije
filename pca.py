@@ -27,12 +27,11 @@ for mu, minB, maxB in [(0.5, 0, 3), (-0.5, -2, 0)]:
     plt.legend()
     plt.xlabel("x")
     plt.title("Linear scale")
-    plt.savefig(f"slike/distributions_{minB}-{mu}-{maxB}.png")
+    plt.savefig(f"out/distributions_{minB}-{mu}-{maxB}.png")
     plt.show()
 
 plt.figure(figsize=(3, 3), dpi=200, tight_layout=True)
-plt.suptitle(f"Distributions of x from 1 to 1e8"
-             f" with mean (peak) at 1e6")
+plt.suptitle(f"Distributions of x from 1 to 1e8\nwith mean (peak) at 1e6")
 for d in ["loglinear", "uniform", "loguniform"]:
     p = sample_value(6, np.log10(np.min(nrange2)), np.log10(np.max(nrange2)), d, noIterations)
     h, b = np.histogram(p, 32, (np.log10(np.min(nrange2)), np.log10(np.max(nrange2))))
@@ -41,7 +40,7 @@ plt.legend()
 plt.ylabel("Density")
 plt.xlabel("log(x)")
 plt.title("Logarithmic scale")
-plt.savefig(f"slike/distributions_bigger-N.png")
+plt.savefig(f"out/distributions_bigger-N.png")
 plt.show()
 
 
@@ -78,7 +77,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
     hists = np.load(f"{collected_folder}/pca_histograms{'' if supermodel == 1 else '_supermodel2'}.npy")
     parameters = np.array([list(m) for m in p])
     if supermodel == 2:
-        selected = np.logical_not((parameters[:, 0] == 4) * (np.random.random(parameters.shape[0]) < 0.5))   # delete 50 % of 4. model
+        selected = np.logical_not((parameters[:, 0] == 4) * (np.random.random(parameters.shape[0]) < 0.9))   # delete 90 % of 4. model
         hists = hists[selected, :]
         parameters = parameters[selected, :]
 
@@ -103,18 +102,17 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         plt.ylabel("log(N)")
         plt.suptitle(title, size=20)
         plt.title("Mean density")
-        plt.savefig(f"slike/{title.replace(' ', '-')}_mean-3D.png")
+        plt.savefig(f"out/{title.replace(' ', '-')}_mean-3D.png")
         plt.show()
 
         plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)
         plt.imshow(super_model[::-1, :], cmap=plt.get_cmap("jet"),
                    extent=[xLogL.min(), xLogL.max(), (xLogN if supermodel == 1 else xLogN2).min(),
                            (xLogN if supermodel == 1 else xLogN2).max()])
-        plt.colorbar(label="density", orientation="horizontal")
         plt.xlabel("log(L)")
         plt.ylabel("log(N)")
         plt.title("Mean density - heatmap")
-        plt.savefig(f"slike/{title.replace(' ', '-')}_mean_heatmap.png")
+        plt.savefig(f"out/{title.replace(' ', '-')}_mean_heatmap.png")
         plt.show()
 
         plt.figure(figsize=(10, 4), dpi=300, tight_layout=True)
@@ -134,7 +132,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         plt.title("Mean density function by N")
         plt.xlabel("log(N)")
         plt.ylabel("Density")
-        plt.savefig(f"slike/{title.replace(' ', '-')}_mean-properties.png")
+        plt.savefig(f"out/{title.replace(' ', '-')}_mean-properties.png")
         plt.show()
 
     colors = ["tab:" + c for c in
@@ -221,7 +219,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
             plt.legend(loc="best")
             plt.grid(alpha=0.4)
 
-            plt.savefig(f"slike/{title.replace(' ', '-')}_mean-cluster-properties_{k}-clusters.png")
+            plt.savefig(f"out/{title.replace(' ', '-')}_mean-cluster-properties_{k}-clusters.png")
             plt.show()
             # list of 10
             # colors for at most 10 clusters and models
@@ -281,7 +279,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         ax.set_zlabel("x3")
         plt.legend(loc="best")
         plt.title(f"Coloured by cluster ({k} clusters)")
-        plt.savefig(f"slike/{title.replace(' ', '-')}_PCA_{k}-clusters.png")
+        plt.savefig(f"out/{title.replace(' ', '-')}_PCA_{k}-clusters.png")
         plt.show()
         if supermodel == 1 and model != 0:
             parameter_list = (["log(N)", "log(f_a)", "log(f_b)"] if model == 2 else
@@ -313,7 +311,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
                 plt.xlabel("Distribution")
                 plt.title(f"cluster {i + 1}, size={cluster_parameters.shape[1]}")
 
-            plt.savefig(f"slike/{title.replace(' ', '-')}_importance_{k}-clusters.png")
+            plt.savefig(f"out/{title.replace(' ', '-')}_importance_{k}-clusters.png")
             plt.show()
 
             means = [tuple(p) for p in pca_means[:, :3]]
@@ -338,7 +336,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
             plt.title(f"Percentage of distributions\n(${'$, $'.join(parameter_list)}$) by ({', '.join(distributions)})"
                       f"\ncoloured by cluster")
 
-            plt.savefig(f"slike/{title.replace(' ', '-')}_cluster-distributions_{k}-clusters.png")
+            plt.savefig(f"out/{title.replace(' ', '-')}_cluster-distributions_{k}-clusters.png")
             plt.show()
 
 

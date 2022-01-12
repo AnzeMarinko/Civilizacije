@@ -7,34 +7,43 @@ plt.rcParams['figure.facecolor'] = 'white'
 printing_trees = False
 
 data = pd.read_csv(f'{collected_folder}/meti_tabela_csv.csv', index_col=0)
-parameters = list(data.columns)[1:-4]
-parameters_nomath = [p.replace("_pm", "_{pm}").replace("_me", "_{me}") if "(" in p else p.replace("_", " ") for p in parameters]
-label_columns = [("L", 'logL'), ("P(L < 1000)", 'L-1e3'), ("P(L < 10 000)", 'L-1e4'), ("P(L < 100 000)", 'L-1e5')]
-
+parameters = list(data.columns)[1:-1]
+parameters = [p.replace("_pm", "_{pm}").replace("_me", "_{me}").replace("log(", "").replace(")", "") for p in parameters]
+parameters = [p.replace("_Expand", " III").replace("_Drake", " I").replace("_Rare_Earth", " IV").replace("_Simplified", " II") for p in parameters]
+label_columns = [("L", lambda x: x),
+                 ("P(L < 1 000)", lambda x: np.where(x < 3, 1, 0)),
+                 ("P(1 000 < L < 10 000)", lambda x: np.where(x < 4, np.where(x > 3, 1, 0), 0)),
+                 ("P(10 000 < L < 100 000)", lambda x: np.where(x < 5, np.where(x > 4, 1, 0), 0)),
+                 ('P(L > 100 000)', lambda x: np.where(x > 5, 1, 0))]
+labels_list = [l[0] for l in label_columns]
 dataTotal = np.load(f'{collected_folder}/meti_parameters.npy')
 labelsTotal = np.load(f'{collected_folder}/meti_labels.npy')
-columns = [[4, 6, 7, 9, 10, 11, 12], [4, 5, 8], [4, 6, 7, 9, 10, 11, 12], [6, 9, 13, 14, 15, 16, 17, 18]]
+labelsTotal = np.concatenate([l[1](labelsTotal) for l in label_columns], 1)
+columns_id = [[4, 6, 7, 9, 10, 11, 12], [4, 5, 8], [4, 6, 7, 9, 10, 11, 12], [6, 9, 13, 14, 15, 16, 17, 18]]
 
 data = dataTotal[dataTotal[:, 0] == 1, 1:]
-labels = labelsTotal[dataTotal[:, 0] == 1]
+labels = labelsTotal[dataTotal[:, 0] == 1, :]
 model1 = data[:, 0] == 1
 model2 = data[:, 1] == 1
 model3 = data[:, 2] == 1
 model4 = data[:, 3] == 1
 data2 = dataTotal[dataTotal[:, 0] == 2, 1:]
-labels2 = labelsTotal[dataTotal[:, 0] == 2]
+labels2 = labelsTotal[dataTotal[:, 0] == 2, :]
+selected = np.logical_not((data2[:, 3] == 1) * (np.random.random(data2.shape[0]) < 0.9))  # delete 90 % of 4. model
+data2 = data2[selected, :]
+labels2 = labels2[selected, :]
 model3_2 = data2[:, 2] == 1
 podatki = [[], [], [], [], [], [], []]
-for stolpec in range(4):
-    podatki[0] += [(data[model1, :][:, columns[0]], [parameters[c] for c in columns[0]],
+for stolpec in range(len(label_columns)):
+    podatki[0] += [(data[model1, :][:, columns_id[0]], [parameters[c] for c in columns_id[0]],
                     labels[:, stolpec][model1], label_columns[stolpec], 'Model I')]
-    podatki[1] += [(data[model2, :][:, columns[1]], [parameters[c] for c in columns[1]],
+    podatki[1] += [(data[model2, :][:, columns_id[1]], [parameters[c] for c in columns_id[1]],
                     labels[:, stolpec][model2], label_columns[stolpec], 'Model II')]
-    podatki[2] += [(data[model3, :][:, columns[2]], [parameters[c] for c in columns[2]],
+    podatki[2] += [(data[model3, :][:, columns_id[2]], [parameters[c] for c in columns_id[2]],
                     labels[:, stolpec][model3], label_columns[stolpec], 'Model III')]
-    podatki[3] += [(data2[model3_2, :][:, columns[2]], [parameters[c] for c in columns[2]],
+    podatki[3] += [(data2[model3_2, :][:, columns_id[2]], [parameters[c] for c in columns_id[2]],
                     labels2[:, stolpec][model3_2], label_columns[stolpec], 'Model III - 2')]
-    podatki[4] += [(data[model4, :][:, columns[3]], [parameters[c] for c in columns[3]],
+    podatki[4] += [(data[model4, :][:, columns_id[3]], [parameters[c] for c in columns_id[3]],
                     labels[:, stolpec][model4], label_columns[stolpec], 'Model IV')]
     podatki[5] += [(data, parameters, labels[:, stolpec], label_columns[stolpec], 'Supermodel')]
     podatki[6] += [(data2, parameters, labels2[:, stolpec], label_columns[stolpec], 'Supermodel 2')]
@@ -80,86 +89,83 @@ def rules_from_tree(tree, columns, printing_trees=printing_trees):
 
     def recursive_rule(i=0):
         if is_leaves[i]:
-            return [[value[i]] + [n_node_samples[i] / n_node_samples[0] * 100, impurity[i]]]
-        else:
-            col = columns[feature[i]].replace("log(", "").replace(")", "")
-            tresh = 10 ** round(threshold[i], 1) if "log" in columns[feature[i]] else round(threshold[i], 1)
-            tresh = round(tresh * (100 if "f_" in col else 1), round(1 - threshold[i]) - (2 if "f_" in col else 0)) \
-                if threshold[i] < 4 else f"{round(tresh / 1e10, 1)} * " + "10^{10}"
-            tresh = f"{tresh}~\\%" if "f_" in col else tresh
-            if "Model_Rare_Earth" in col:
-                return [[("not Model IV", "Model IV", "Y", 0)] + r for r in recursive_rule(children_left[i])] + \
-                       [[("Model IV", "Model IV", "N", 0)] + r for r in recursive_rule(children_right[i])]
-            if "Model_Simplified" in col:
-                return [[("not Model II", "Model II", "Y", 0)] + r for r in recursive_rule(children_left[i])] + \
-                       [[("Model II", "Model II", "N", 0)] + r for r in recursive_rule(children_right[i])]
-            return [[(f"{col} \\leq {tresh}", col, "<=", threshold[i])] + r for r in recursive_rule(children_left[i])] +\
-                   [[(f"{col} > {tresh}", col, ">", threshold[i])] + r for r in recursive_rule(children_right[i])] + \
-                   [[value[i]] + [n_node_samples[i] / n_node_samples[0] * 100, impurity[i]]]
+            return [[]]
+        col = columns[feature[i]]
+        if "Model" in col:
+            return [[(f"not~{col.replace(' ', '~')}", col, "<=", 0.5)] + r for r in recursive_rule(children_left[i])] + \
+                   [[(col.replace(' ', '~'), col, ">", 0.5)] + r for r in recursive_rule(children_right[i])] + \
+                    [[]]
+        tresh = 10 ** round(threshold[i], 1)
+        prob = "f_" in col and "f_a" not in col
+        tresh = round(tresh * (100 if prob else 1), round(1 - threshold[i]) - (2 if prob else 0)) \
+            if "N_*" not in col else f"{round(tresh / 1e10, 1)} * " + "10^{10}"
+        tresh = f"{tresh}~\\%" if prob else tresh
+        return [[(f"{col} \\leq {tresh}", col, "<=", threshold[i])] + r for r in recursive_rule(children_left[i])] +\
+               [[(f"{col} > {tresh}", col, ">", threshold[i])] + r for r in recursive_rule(children_right[i])] + \
+               [[]]
 
     return [tuple(r) for r in recursive_rule()]
 
 
-def modeli_napake(printing=False):
-    size = 4
-    plt.figure(figsize=(6 * size, 2 * size), dpi=300, tight_layout=True)
+def check_rule(rule, X, Y, columns, prob):
+    trues = Y > -10
+    for _, col, side, thresh in rule:
+        if ">" in side:
+            trues = (X[:, columns.index(col)] > thresh) * trues
+        else:
+            trues = (X[:, columns.index(col)] <= thresh) * trues
+    if np.sum(trues) == 0:
+        return 0, 0, 0
+    return round(np.mean(Y[trues]) * 100 if prob else 10 ** np.mean(Y[trues]), 0 if prob else 1), round(
+        np.mean(trues) * 100), round(np.std(Y[trues]) ** 2, 3)
+
+
+def modeli_napake():
+    size = 2
+    plt.figure(figsize=(12 * size, len(label_columns) * size), dpi=300, tight_layout=True)
     pr = ""
-    rules_exact0 = []
     for k, (X, columns, Y, label, subdata) in enumerate(podatki):
         # print(f"\r {round((j + 1)/20 * 100)}%", end=" ", flush=True)
-        j = k // 4 + (k % 4) * 7
-        plt.subplot(4, 7, j + 1)
+        j = k // len(label_columns) + (k % len(label_columns)) * 7
         criterion = [("squared_error", "MSE"), ("absolute_error", "MAE")][0]
-        model = RandomForestRegressor(criterion=criterion[0], n_estimators=300 if printing else 50,
-                                      max_depth=4, random_state=1, min_samples_leaf=0.01)  # regresor
+        model = RandomForestRegressor(criterion=criterion[0], n_estimators=300,
+                                      max_depth=4, random_state=1, min_samples_leaf=0.03)  # regresor
         model = model.fit(X, Y)
         feat_importances = pd.Series(model.feature_importances_,
                                      [f"${p}$" if "(" in p else p for p in columns])
+        plt.subplot(len(label_columns), 7, j + 1)
         feat_importances.plot(kind='bar')
         if j // 7 == 0:
             plt.title(f"{subdata}")
         if j % 7 == 0:
             plt.ylabel(f"{label[0]}\nParameter importance")
-        if j // 7 < 3:
+        if j // 7 < len(label_columns) - 1:
             plt.xticks([])
-        if printing:
-            rules = []
-            for i, tree in enumerate(model.estimators_):  # sestavi slovar in vrni nekaj pogostejših in njihovo pojavnost
-                rules += rules_from_tree(tree, columns, printing_trees and i < 3)
-            # print(len(rules), len(set(rules)))
-            rules_raw = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)]) for rule in rules]
-            rules_text = [tuple([r for r, _, _, _ in rule[:-3]] + [round(rule[-3], 1)] + list(rule[-2:])) for rule in rules]
-            rules_exact = [[(r1, r2, r3) for _, r1, r2, r3 in rule[:-3]] + [rule[-3:]] for rule in rules if rule[-1] < 0.2]
-            # print(rules_exact)
-            rules_raw = sorted([rule for rule in set(rules_raw)], key=lambda x: -rules_raw.count(x) / len(rules) * 100)
-            ind_rules = np.array([[rules_raw.index(rule[:-2]), rule[-2], rule[-1]] for rule in rules_text])
-            rules = [(rule, np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 1]), 1),
-                      np.round(np.mean(ind_rules[ind_rules[:, 0] == i, 2]), 3)) for i, rule in enumerate(rules_raw)]
-            rules = [(rule, samples, gini_impurity) for rule, samples, gini_impurity in rules if gini_impurity < 0.2]
-            # print(len(rules))
-            land = "\\land"
-            proc = '~\\%'
-            if len(rules) > 0:
-                pra = "\n\\subsection{" + f"{subdata}" + "}" + f"\n{label[0]}:\n" + "\\begin{itemize}\n"
-                pra += "\n".join([f"\\item $({(') ' + land + ' (').join(r[0][:-1]) if len(r[0]) > 1 else 'T'}) \\Rightarrow "
-                                 f"{label[0]} = {r[0][-1] * 100 if 'P' in label[0] else 10 ** r[0][-1]:.1f}"
-                                 f"{proc if 'P' in label[0] else ''}$,\\hfill Size={round(r[1])} \\%, {criterion[1]}={r[2]}"
-                                  for r in rules[:25]])
-                pra += "\n\\end{itemize}\n"
-                # print(pra, end="")
-                pr += pra
-            rules_exact0.append((subdata, label[0], rules_exact))
-    if printing:
-        with open("rules.txt", "w") as f:
-            f.write(pr)
-        plt.close()
-        with open("rules_exact.txt", "w") as f:
-            f.write(str(rules_exact0))
-    else:
-        plt.savefig(f'slike/importance-random_forest_model.png')
-        plt.show()
-    return pr
+        rules = []
+        for i, tree in enumerate(model.estimators_):  # sestavi slovar in vrni nekaj pogostejših in njihovo pojavnost
+            rules += rules_from_tree(tree, columns, printing_trees and i < 3)
+        # print(len(rules), len(set(rules)))
 
+        b = 0.2 if "P" in label[0] or "Super" not in subdata else 1
+        land = "\\land"
+        rules = [(f"({(') ' + land + ' (').join([r for r, _, _, _ in rule]) if len(rule) > 0 else 'T'})",
+                  check_rule(rule, X, Y, columns, "P" in label[0])) for rule in rules]
+        rules = [rule for rule in rules if rule[1][-1] < b and rule[1][-2] > 5]
+        aux_raw = [rule for rule, _ in rules]
+        rules_raw = sorted([rule for rule in set(aux_raw)], key=lambda x: - aux_raw.count(x))
+        rules_raw = [rules[aux_raw.index(rule)] for rule in rules_raw]
+        rules = [(rule, stat[0], stat[1], stat[2]) for rule, stat in rules_raw]
 
-if __name__ == "__main__":
-    print(modeli_napake(True))
+        proc = '~\\%'
+        if len(rules) > 0:
+            pra = "\n\\subsection{" + f"{subdata}" + "}" + f"\n{label[0]}:\n" + "\\begin{itemize}\n"
+            pra += "\n".join([f"\\item ${r[0]} \\Rightarrow {label[0]} = {r[1]}{proc if 'P' in label[0] else ''}$,"
+                              f"\\hfill Size={r[2]} \\%, MSE={r[3]}" for r in rules[:20]])
+            pra += "\n\\end{itemize}\n"
+            # print(pra, end="")
+            pr += pra
+    pr = "\\documentclass[numbered]{CSL}\n\\usepackage[utf8]{inputenc}\n\\begin{document}\n" + pr + "\n\\end{document}"
+    with open("out/rules.tex", "w") as f:
+        f.write(pr)
+    plt.savefig(f'out/importance-random_forest_model.png')
+    plt.show()

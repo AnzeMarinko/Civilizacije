@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-if not os.path.exists("slike"):
-    os.mkdir("slike")
+if not os.path.exists("out"):
+    os.mkdir("out")
 plt.rcParams['figure.facecolor'] = 'white'
 
 noIterations = int(2e5)  # number of generated points for each histogram

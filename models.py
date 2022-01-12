@@ -138,13 +138,13 @@ def random_point(supermodel_1=True):
     n2 = 10 ** sample_value(6, 0, 8, ["loglinear", "uniform", "loguniform"][np.random.randint(0, 3, 1)[0]], 1)[0]
     n = n1 if supermodel_1 else n2
     if j == 0:
-        return get_point_model_1(n, np.random.randint(0, len(distributions), 6), 1)
+        return get_point_model_1(n1, np.random.randint(0, len(distributions), 6), 1)
     elif j == 1:
-        return get_point_model_2(n, np.random.randint(0, len(distributions), 2), 1)
+        return get_point_model_2(n1, np.random.randint(0, len(distributions), 2), 1)
     elif j == 2:
         return get_point_model_3([n], np.random.randint(0, len(distributions), 6), 1)
     else:
-        return get_point_model_4(n, np.random.randint(0, len(distributions), 8), 1)
+        return get_point_model_4(n1, np.random.randint(0, len(distributions), 8), 1)
 
 
 if __name__ == "__main__":

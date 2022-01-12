@@ -1,0 +1,9 @@
+bokeh
+jupyter
+matplotlib
+nbconvert
+numba
+numpy
+pandas
+scikit-learn
+scipy

@@ -23,16 +23,15 @@ def draw_histograms3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
     ax.set_ylabel("log(N)")
     ax.set_zlabel("density")
     plt.title(f"{title} distributed by {distributions[d]}")
-    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_3D.png")
+    plt.savefig(f"out/{title.replace(' ', '-')}_{distributions[d]}_3D.png")
 
     plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)
     plt.imshow(weight_dist(data, d, supermodel, model)[::-1, :], cmap=plt.get_cmap("jet"),
                extent=[xLogL.min(), xLogL.max(), xLogN.min(), xLogN.max()])
-    plt.colorbar(label="density", orientation="horizontal")
     plt.xlabel("log(L)")
     plt.ylabel("log(N)")
     plt.title(f"{title} distributed by {distributions[d]}")
-    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_heatmap.png")
+    plt.savefig(f"out/{title.replace(' ', '-')}_{distributions[d]}_heatmap.png")
 
     plt.figure(figsize=(10, 4), dpi=300, tight_layout=True)
     plt.suptitle(f"{title} distributed by {distributions[d]}")
@@ -52,7 +51,7 @@ def draw_histograms3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
     plt.title("Density function by N")
     plt.xlabel("log(N)")
     plt.ylabel("Density")
-    plt.savefig(f"slike/{title.replace(' ', '-')}_{distributions[d]}_properties.png")
+    plt.savefig(f"out/{title.replace(' ', '-')}_{distributions[d]}_properties.png")
 
 
 def draw_histograms_N3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
@@ -73,7 +72,7 @@ def draw_histograms_N3D(model=1, distribution=(0, 0, 0, 0, 0, 0), supermodel=1):
         ax.set_ylabel("log(N)")
         ax.set_zlabel("density")
         plt.title(f"N distributed by {distributions[d]}")
-    plt.savefig(f"slike/distribute-N_3D.png")
+    plt.savefig(f"out/distribute-N_3D.png")
 
 
 if __name__ == "__main__":

@@ -128,4 +128,4 @@ dmypy.json
 
 collectedData/
 data/
-slike/
+out/

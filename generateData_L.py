@@ -3,6 +3,9 @@ from os import listdir, mkdir, path  # to get list of files in directory
 from models import *
 from multiprocessing import Pool, freeze_support  # multi-threading
 import pandas as pd
+import nbformat
+from nbconvert.preprocessors import ExecutePreprocessor
+from nbconvert.preprocessors.execute import CellExecutionError
 
 d = len(distributions)
 parameters = list(
@@ -66,28 +69,31 @@ def generate():
 
 def collect():
     t0 = time()
-    files = [(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy"
-              if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy") else
-              f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy"
-              if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy") else
-              f"{data_folder}/hists-{m}_{p1}_{p2}.npy", dn, m,
-              [m, p1, p2, p3, p4, p5, p6, p7, p8, dn])
-             for m in models
-             for p1 in range(len(distributions))
-             for p2 in range(len(distributions))
-             for p3 in range(len(distributions))
-             for p4 in range(len(distributions))
-             for p5 in range(len(distributions))
-             for p6 in range(len(distributions))
-             for p7 in range(len(distributions))
-             for p8 in range(len(distributions))
-             for dn in range(len(distributions))]
-    hists = np.array([weight_dist(np.load(file), dn) for file, dn, m, _ in files if path.exists(file)])
-    hists2 = np.array([weight_dist(np.load(file), dn, 2, m) for file, dn, m, _ in files if path.exists(file)])
-    param = np.array([ps for file, _, _, ps in files if path.exists(file)])
-    np.save(f"{collected_folder}/pca_histograms.npy", hists)
-    np.save(f"{collected_folder}/pca_histograms_supermodel2.npy", hists2)
-    np.save(f"{collected_folder}/pca_parameters.npy", param)
+    if (not os.path.exists(f"{collected_folder}/pca_histograms.npy") or
+            not os.path.exists(f"{collected_folder}/pca_histograms_supermodel2.npy") or
+            not os.path.exists(f"{collected_folder}/pca_parameters.npy")):
+        files = [(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy"
+                  if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy") else
+                  f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy"
+                  if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy") else
+                  f"{data_folder}/hists-{m}_{p1}_{p2}.npy", dn, m,
+                  [m, p1, p2, p3, p4, p5, p6, p7, p8, dn])
+                 for m in models
+                 for p1 in range(len(distributions))
+                 for p2 in range(len(distributions))
+                 for p3 in range(len(distributions))
+                 for p4 in range(len(distributions))
+                 for p5 in range(len(distributions))
+                 for p6 in range(len(distributions))
+                 for p7 in range(len(distributions))
+                 for p8 in range(len(distributions))
+                 for dn in range(len(distributions))]
+        hists = np.array([weight_dist(np.load(file), dn) for file, dn, m, _ in files if path.exists(file)])
+        hists2 = np.array([weight_dist(np.load(file), dn, 2, m) for file, dn, m, _ in files if path.exists(file)])
+        param = np.array([ps for file, _, _, ps in files if path.exists(file)])
+        np.save(f"{collected_folder}/pca_histograms.npy", hists)
+        np.save(f"{collected_folder}/pca_histograms_supermodel2.npy", hists2)
+        np.save(f"{collected_folder}/pca_parameters.npy", param)
     tend = time() - t0  # runtime used after multi-threading
     print(f"\tTime used: {tend:.2f}s")
     print("Collecting PCA data is done.")
@@ -95,27 +101,30 @@ def collect():
 
 def meti(n):
     t0 = time()
-    parameters = ["log(f_a)", "log(R_*)", "log(f_p)", "log(f_b)", "log(n_e)", "log(f_l)", "log(f_i)", "log(f_c)",
-                  "log(N_* n_e)", "log(f_g)", "log(f_pm)", "log(f_m)", "log(f_j)", "log(f_me)"]
-    columns = ["Supermodel", "Model"] + parameters + ['log(N)', 'log(L)', 'L < 1000', 'L < 10 000', 'L < 100 000']
-    frames = []
-    for _ in range(n):
-        sm = np.random.randint(1, 3, 1)[0]
-        point = random_point(sm == 1)
-        frames.append([sm] + point[0] + [point[1], 1 if point[1] < 3 else 0,
-                                         1 if point[1] < 4 else 0, 1 if point[1] < 5 else 0])
-    df = pd.DataFrame(frames, columns=columns)
-    result = pd.get_dummies(df, columns=['Model'])
-    result.index = list(range(1, n + 1))
-    result = result.fillna(0)
-    columns = ['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth',
-               'log(N)'] + parameters + ['log(L)', 'L < 1000', 'L < 10 000', 'L < 100 000']
-    result = result[columns]
-    result.to_csv(f'{collected_folder}/meti_tabela_csv.csv')
-    parameters = result[['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth', 'log(N)'] + parameters]
-    labels = result[['log(L)', 'L < 1000', 'L < 10 000', 'L < 100 000']]
-    np.save(f'{collected_folder}/meti_parameters.npy', parameters)
-    np.save(f'{collected_folder}/meti_labels.npy', labels)
+    if (not os.path.exists(f"{collected_folder}/meti_parameters.npy") or
+            not os.path.exists(f"{collected_folder}/meti_labels.npy") or
+            not os.path.exists(f"{collected_folder}/meti_tabela_csv.csv")):
+        parameters = ["log(f_a)", "log(R_*)", "log(f_p)", "log(f_b)", "log(n_e)", "log(f_l)", "log(f_i)", "log(f_c)",
+                      "log(N_* n_e)", "log(f_g)", "log(f_pm)", "log(f_m)", "log(f_j)", "log(f_me)"]
+        labels = ['log(L)']
+        columns = ["Supermodel", "Model"] + parameters + ['log(N)'] + labels
+        frames = []
+        for _ in range(n):
+            sm = np.random.randint(1, 3, 1)[0]
+            point = random_point(sm == 1)
+            frames.append([sm] + point[0] + [point[1]])
+        df = pd.DataFrame(frames, columns=columns)
+        result = pd.get_dummies(df, columns=['Model'])
+        result.index = list(range(1, n + 1))
+        result = result.fillna(0)
+        columns = ['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth',
+                   'log(N)'] + parameters + labels
+        result = result[columns]
+        result.to_csv(f'{collected_folder}/meti_tabela_csv.csv')
+        parameters = result[['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth', 'log(N)'] + parameters]
+        labels = result[labels]
+        np.save(f'{collected_folder}/meti_parameters.npy', parameters)
+        np.save(f'{collected_folder}/meti_labels.npy', labels)
     tend = time() - t0  # runtime used after multi-threading
     print(f"\tTime used: {tend:.2f}s")
     print("Generating ML data (shots) is done.\n")
