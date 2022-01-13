@@ -1,10 +1,11 @@
 # CIVILISATIONS
 
 * Author of code: Anže Marinko
-* Date: February 2020 - January 2022
+* Coauthors of idea: dr. Matjaž Gams, David Susič
+* Date: January 2022
 * Department of intelligent systems - Jožef Stefan Institute (E9 JSI)
 
-## Instalation
+## Installation
 
 Python 3 is needed for running. We recommend
 using virtual environment.
@@ -41,4 +42,9 @@ bokeh serve interactive_graphs.py
 and open URL address printed in terminal
 to open program for rule visualisation.
 Abort server when finished using program
-pressing Ctrl+C.
+pressing `Ctrl+C`.
+
+## TODO:
+* uredi in komentiraj kodo
+* obreži slike za v članek
+* dodaj končno verzijo članka
