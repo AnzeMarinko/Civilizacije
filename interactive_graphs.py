@@ -3,6 +3,7 @@ Anže Marinko, januar 2022
 
 Run:  bokeh serve interactive_graphs.py
 """
+import time
 from bokeh.io import curdoc
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, Slider, Select, Div, Band, RadioGroup
@@ -35,8 +36,6 @@ points = ColumnDataSource(data=dict(x=[], y=[], color=[]))
 # območje, med skrajnimi točkami preslikanimi s PCA (konveksna ovojnica teh)
 areaUp = ColumnDataSource(data=dict(x=[], lower=[], upper=[]))
 areaDown = ColumnDataSource(data=dict(x=[], lower=[], upper=[]))
-colors = Turbo256[10:-10]
-n_colors = len(colors)
 plot = figure(height=600, width=700, title="Rule visualization",
               tools="crosshair,pan,reset,save,wheel_zoom,box_select,lasso_select,poly_select,tap",
               x_range=[0, 1], y_range=[0, 1])
@@ -52,7 +51,7 @@ class Properties:
     def __init__(self):
         self.label, self.model, self.X, self.columns, self.Y, self.minimal, self.mean, self.maximal = (None,) * 8
         self.bounds_all, self.selection, self.inds, self.not_inds, self.pca, self.data, self.color = (None,) * 7
-        self.mx, self.dx, self.my, self.dy = (None,) * 4
+        self.mx, self.dx, self.my, self.dy, self.std, self.bound_all = (None,) * 6
 
     def rule_values(self, rule, prob):
         trues = self.Y > -10
@@ -62,7 +61,7 @@ class Properties:
             else:
                 trues = (self.X[:, self.columns.index(col)] <= thresh) * trues
         if np.sum(trues) == 0:
-            return 0, 0, 0, trues
+            return 0, 0, 0
         return round(np.mean(self.Y[trues]) * 100 if prob else 10 ** np.mean(self.Y[trues]), 0 if prob else 1), round(
             np.mean(trues) * 100), round(np.std(self.Y[trues]) ** 2, 3)
 
@@ -96,11 +95,14 @@ class Properties:
         self.maximal = np.round(np.max(self.X, 0) + 0.05, 1)
         self.bounds_all = np.array([[[self.minimal[i], self.maximal[i]][c] for i, c in enumerate(comb)]
                                     for comb in itertools.product([0, 1], repeat=len(self.columns))])
+        colors = Turbo256[25:-25] if "P" in self.label else Turbo256
+        n_colors = len(colors)
         self.color = [colors[int(i)] for i in np.round((self.Y - np.min(self.Y)) / (np.max(self.Y) - np.min(self.Y)) * (n_colors - 1))]
         rule_len.value = "0"
         self.selection = []
+        self.std = sorted([(-s, i) for i, s in enumerate(np.std(self.X, 0))])
         for i, (r0, r1, r2) in enumerate(rule_parts):
-            j = min(i + 1 if "Super" in self.model else i, len(self.columns) - 1)
+            j = self.std[i if i < len(self.columns) else 0][1]
             r0.value = self.columns[j]
             r0.options = self.columns
             r0.visible = False
@@ -123,20 +125,20 @@ class Properties:
             self.pca = PCA(n_components=2)
             self.pca.fit(self.X[:, self.not_inds])
             self.data = self.pca.transform(self.X[:, self.not_inds])
-            bound_all = self.pca.transform(self.bounds_all[:, self.not_inds])
+            self.bound_all = self.pca.transform(self.bounds_all[:, self.not_inds])
         elif len(self.inds) >= 2:
             self.pca = PCA(n_components=2)
             self.pca.fit(self.X[:, self.inds])
             self.data = self.pca.transform(self.X[:, self.inds])
-            bound_all = self.pca.transform(self.bounds_all[:, self.inds])
+            self.bound_all = self.pca.transform(self.bounds_all[:, self.inds])
         else:
             self.pca = PCA(n_components=1)
             self.pca.fit(self.X[:, self.not_inds])
             self.data = np.concatenate([self.X[:, self.inds], self.pca.transform(self.X[:, self.not_inds])], 1)
-            bound_all = np.concatenate([self.bounds_all[:, self.inds],
+            self.bound_all = np.concatenate([self.bounds_all[:, self.inds],
                                         self.pca.transform(self.bounds_all[:, self.not_inds])], 1)
-        self.mx, self.dx = np.min(bound_all[:, 0]), np.max(bound_all[:, 0]) - np.min(bound_all[:, 0])
-        self.my, self.dy = np.min(bound_all[:, 1]), np.max(bound_all[:, 1]) - np.min(bound_all[:, 1])
+        self.mx, self.dx = np.min(self.bound_all[:, 0]), np.max(self.bound_all[:, 0]) - np.min(self.bound_all[:, 0])
+        self.my, self.dy = np.min(self.bound_all[:, 1]), np.max(self.bound_all[:, 1]) - np.min(self.bound_all[:, 1])
         points.data = dict(x=(self.data[:, 0] - self.mx) / self.dx,
                            y=(self.data[:, 1] - self.my) / self.dy, color=self.color)
         for i in range(5):
@@ -157,17 +159,21 @@ class Properties:
         latex_rule.text = self.process_rule(rule)
         rule = [(self.columns.index(c), sides.index(s), t) for _, c, s, t in rule]
         # pca točk v opazovanih dimenzijah, če je teh dimenzij dovolj, sicer še PCA iz ostalih dimenzij
-        cube = [[self.minimal[i], self.maximal[i]] for i in range(len(self.columns))]
-        for c, s, t in rule:
-            cube[c] = [cube[c][0], max(t, cube[c][0])] if s == 0 else [min(t, cube[c][1]), cube[c][1]]
-        bounds = np.array([[i[c] for i, c in zip(cube, comb)]
-                           for comb in itertools.product([0, 1], repeat=len(self.columns))])
         if len(self.inds) == 0:
-            bound = self.pca.transform(bounds[:, self.not_inds])
-        elif len(self.inds) >= 2:
-            bound = self.pca.transform(bounds[:, self.inds])
+            bound = self.bound_all
+        elif len(self.inds) == 1:
+            cube = [self.minimal[self.inds[0]], self.maximal[self.inds[0]]]
+            for c, s, t in rule:
+                cube = [cube[0], max(min(t, cube[1]), cube[0])] if s == 0 else [min(max(t, cube[0]), cube[1]), cube[1]]
+            bounds = np.where(self.bound_all[:, :1] > np.mean(self.bound_all[:, 1:]), cube[1], cube[0])
+            bound = np.concatenate([bounds, self.bound_all[:, 1:]], 1)
         else:
-            bound = np.concatenate([bounds[:, self.inds], self.pca.transform(bounds[:, self.not_inds])], 1)
+            cube = [[self.minimal[i], self.maximal[i]] for i in range(len(self.columns)) if i in self.inds]
+            for c0, s, t in rule:
+                c = list(self.inds).index(c0)
+                cube[c] = [cube[c][0], max(min(t, cube[c][1]), cube[c][0])] if s == 0 else [min(max(t, cube[c][0]), cube[c][1]), cube[c][1]]
+            bounds = np.array([[c[comb[i]] for i, c in enumerate(cube)] for comb in itertools.product([0, 1], repeat=len(self.inds))])
+            bound = self.pca.transform(bounds)
         bound = np.array(bound)
 
         # območje, med skrajnimi točkami preslikanimi s PCA (konveksna ovojnica teh)
