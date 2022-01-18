@@ -1,32 +1,55 @@
 # generate points distributed by model to draw distribution of L(N)
 from config import *
 import numba as nb
+from scipy import interpolate
 
 
-# get log(L) for max_n at random other parameters
-# ============ Models ====================
+def polyDeltaL(logL1):
+    minP, meanP, maxP = -2, np.log10(1.8), np.log10(5)
+    L1 = 10 ** logL1
+    a1 = 1e-6 * 10 ** np.array([minP, meanP, maxP]) * np.pi * 0.004
+    a1 = [np.roots([a, 0, 1, -L1]) for a in a1]
+    return np.log10(np.abs([- min(a, key=lambda x: np.abs(x.imag)).real for a in a1]))
 
-# model 1
-def get_point_model_1(N=nrange, distribution=(0, 1, 0, 0, 0, 0), size=noIterations):
-    # sample parameters in logarithmic scale
-    RStarSample = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[0]], size)  # rate of new star born
-    fPlanets = sample_value(np.log10(0.9), -2, 0, distributions[distribution[1]], size)  # probability that star has planets
-    nEnvironment = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[2]], size)  # number of potentialy eart-like planets per star
-    fIntelligence = sample_value(np.log10(0.9), np.log10(0.2), 0, distributions[distribution[3]], size)  # prob. some intelligent beings start to exist
-    fCivilization = sample_value(-1, -2, 0, distributions[distribution[4]], size)  # prob. this beings are possible to communicate
-    fLifeEks = sample_value(np.log10(0.9), np.log10(0.2), 0, distributions[distribution[5]], size)  # probability that life begins
 
-    #       with other planets
-    # N = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-    paramDist = RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization
+def L1toL3():
+    xi = np.linspace(1, 10, 100)
+    h = np.array([polyDeltaL(x) for x in xi])
+    ca = [("tab:orange", 0.3), ("tab:red", 1), ("tab:orange", 0.3)]
 
-    if size == 1:
-        return ["Drake", 0, RStarSample[0], fPlanets[0], 0, nEnvironment[0], fLifeEks[0],
-                fIntelligence[0], fCivilization[0], 0, 0, 0, 0, 0, 0,
-                np.log10(N)], (np.log10(N) - paramDist)[0]
+    for ylab, ydat in [("L_3", h)]:
+        plt.figure(figsize=(6, 4), dpi=200, tight_layout=True)
+        plt.fill_between(xi, ydat[:, 0], ydat[:, 2],
+                         color=ca[0][0], alpha=ca[0][1] / 2)
+        for i in range(3):
+            plt.plot(xi, ydat[:, i], color=ca[i][0], alpha=ca[i][1])
+        if "L_1" not in ylab:
+            plt.plot(xi, xi, "--", alpha=0.7)
+        plt.title(f"${ylab}(L_1)$")
+        plt.xlabel("$L_1$")
+        plt.ylabel(f"${ylab}$")
+        plt.grid()
+        plt.savefig(f"out/model3-model1.png")
+        plt.show()
 
-    logL1 = [np.log10(n) - paramDist for n in N]
-    return [logL1]
+
+# interpolate value of L3 from value of L1 and f_p + n_e
+interp_logL1 = np.linspace(-3, 12, 15 * 128)
+interp_inva4 = np.linspace(bounds["f_p"][1] + bounds["n_e"][1] - 0.1,
+                           bounds["f_p"][2] + bounds["n_e"][2] + 0.1, 128)
+interp_file = f"{collected_folder}/arrayL3.npy"
+if os.path.exists(interp_file):
+    array = np.load(interp_file)
+else:
+    array = np.log10(np.abs(np.array([[- min(np.roots([a4, 0, 1, -l1]),
+                                             key=lambda x: np.abs(x.imag)).real for l1 in 10 ** interp_logL1]
+                                      for a4 in 1e-6 * 0.004 * np.pi * 10 ** interp_inva4])))
+    np.save(interp_file, array)
+interpolator = interpolate.interp2d(interp_logL1, interp_inva4, array, kind='linear')
+
+
+def findElementsL3(distL1, inva4, N):
+    return np.array([interpolator(N - l1, a4) for a4, l1 in zip(inva4, distL1)]).T
 
 
 @nb.jit(nopython=True)
@@ -45,122 +68,79 @@ def solveL3(f, a4, N):
     return np.array(l3).astype(np.float64)
 
 
-# model 3, adds expanding in universe to model 1
-def get_point_model_3(N=nrange, distribution=(0, 1, 0, 0, 0), size=noIterations):
-    # sample parameters in logarithmic scale
-    RStarSample = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[0]], size)  # rate of new star born
-    fPlanets = sample_value(np.log10(0.9), -2, 0, distributions[distribution[1]], size)  # probability that star has planets
-    nEnvironment = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[2]], size)  # number of potentialy eart-like planets per star
-    fIntelligence = sample_value(np.log10(0.9), np.log10(0.2), 0, distributions[distribution[3]], size)  # prob. some intelligent beings start to exist
-    fCivilization = sample_value(-1, -2, 0, distributions[distribution[4]], size)  # prob. this beings are possible to communicate
-    fLifeEks = sample_value(np.log10(0.9), np.log10(0.2), 0, distributions[distribution[5]], size)  # probability that life begins
+# Model I
+# Model II, simplified Model I
+# Model III, adds expanding in universe to Model I
+# Model IV, rare Earth theory
+def get_point_models(N=nrange2, distribution=(0, 0, 0, 0, 0, 0, 0, 0), size=noIterations):
+    # Model I and III parameters
+    R_star = sample_value(bounds["R_*"], distributions[distribution[0]], size)  # rate of new star born
+    f_p = sample_value(bounds["f_p"], distributions[distribution[1]], size)  # probability that star has planets
+    n_e = sample_value(bounds["n_e"], distributions[distribution[2]], size)  # number of potentialy eart-like planets per star
+    f_l = sample_value(bounds["f_l"], distributions[distribution[3]], size)  # probability that life begins
+    f_i = sample_value(bounds["f_i"], distributions[distribution[4]], size)  # prob. some intelligent beings start to exist
+    f_c = sample_value(bounds["f_c"], distributions[distribution[5]], size)  # prob. this beings are possible to communicate
+    # Model II parameters
+    f_a = sample_value(bounds["f_a"], distributions[distribution[1]], size)
+    f_b = sample_value(bounds["f_b"], distributions[distribution[5]], size)
+    # Model IV parameters (f_l * f_i * f_c from Model I is equal to f_i * f_c * f_l from Model IV)
+    Nzvezdica_ne = sample_value(bounds["N_* n_e"], distributions[distribution[1]], size)
+    f_g = sample_value(bounds["f_g"], distributions[distribution[3]], size)
+    f_pm = sample_value(bounds["f_{pm}"], distributions[distribution[4]], size)
+    f_m = sample_value(bounds["f_m"], distributions[distribution[5]], size)
+    f_j = sample_value(bounds["f_j"], distributions[int(np.random.randint(0, 3, 1)[0])], size)
+    f_me = sample_value(bounds["f_{me}"], distributions[int(np.random.randint(0, 3, 1)[0])], size)
 
     #       with other planets
     # N = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-    paramDist = RStarSample + fPlanets + nEnvironment + fLifeEks + fIntelligence + fCivilization
+    phisic = R_star + f_p + n_e
+    bio = f_l + f_i + f_c
+    logL4 = (Nzvezdica_ne + f_g + f_pm + f_m + f_j + f_me) - (R_star + n_e)
 
-    f = 10 ** paramDist
+    # f = 10 ** (phisic + bio)
     # logL = log10(N) - log10(f)   ... model 1 would return logL like this
-    B = 0.004  # number density of stars per cubic light year from Wikipedia
-    a4 = 10 ** (fPlanets + nEnvironment) * B * np.pi  # estimated number of earth-like planets per pi square light years
-    a4 = 1e-6 * a4 * f  # we are moving with 0.1 % of light speed
+    # B = 0.004  # number density of stars per cubic light year from Wikipedia
+    # a4 = 10 ** (f_p + n_e) * B * np.pi  # estimated number of earth-like planets per pi square light years
+    # a4 = 1e-6 * a4  # we are moving with 0.1 % of light speed
     # model 3:
     # zeros of: f * (1e-6 * a4 * x^3 + x) - N
     # actually we want to solve equation: f*L*(1 + A * pi * 1e-6*10**(fPlanets+nEnvironment)*B * L**2) = N
-    logL3 = solveL3(f, a4, np.array(N))
-
     if size == 1:
-        return ["Expand", 0, RStarSample[0], fPlanets[0], 0, nEnvironment[0], fLifeEks[0],
-                fIntelligence[0], fCivilization[0], 0, 0, 0, 0, 0, 0,
-                np.log10(N[0])], logL3[0][0]
-    return [logL3]
+        auxfa = (f_a[0] - bounds["f_a"][1]) / (bounds["f_a"][2] - bounds["f_a"][1])
+        auxfb = (f_b[0] - bounds["f_b"][1]) / (bounds["f_b"][2] - bounds["f_b"][1])
+        auxphisic = [(bounds[ph][2] - bounds[ph][1]) * auxfa + bounds[ph][1] for ph in ["R_*", "f_p", "n_e"]]
+        auxbio = [(bounds[ph][2] - bounds[ph][1]) * auxfb + bounds[ph][1] for ph in ["f_l", "f_i", "f_c"]]
+        return [[([sm, 1, 0, 0, 0, np.log10(N[0]),
+                  phisic[0], R_star[0], f_p[0], n_e[0],
+                  bio[0], f_l[0], f_i[0], f_c[0],
+                  Nzvezdica_ne[0], f_g[0], f_pm[0], f_m[0], f_j[0], f_me[0]], np.log10(N[0]) - (phisic + bio)[0]),
+                ([sm, 0, 1, 0, 0, np.log10(N[0]),
+                  f_a[0], auxphisic[0], auxphisic[1], auxphisic[2],
+                  f_b[0], auxbio[0], auxbio[1], auxbio[2],
+                  Nzvezdica_ne[0], f_g[0], f_pm[0], f_m[0], f_j[0], f_me[0]], np.log10(N[0]) - (f_a + f_b)[0]),
+                ([sm, 0, 0, 1, 0, np.log10(N[sm - 1]),
+                  phisic[0], R_star[0], f_p[0], n_e[0],
+                  bio[0], f_l[0], f_i[0], f_c[0],
+                  Nzvezdica_ne[0], f_g[0], f_pm[0], f_m[0], f_j[0], f_me[0]],
+                 findElementsL3([(phisic + bio)[:1]], (f_p + n_e)[:1], np.log10(N[sm - 1]))[0][0]),
+                ([sm, 0, 0, 0, 1, np.log10(N[0]),
+                  phisic[0], R_star[0], f_p[0], n_e[0],
+                  bio[0], f_l[0], f_i[0], f_c[0],
+                  Nzvezdica_ne[0], f_g[0], f_pm[0], f_m[0], f_j[0], f_me[0]], logL4[0])] for sm in [1, 2]]
+    logL1 = [np.histogram(np.log10(n) - (phisic + bio), bin_no, (-1, maxLogL))[0] / noIterations for n in N]
+    logL2 = [np.histogram(np.log10(n) - (f_a + f_b), bin_no, (-1, maxLogL))[0] / noIterations for n in N]
+    # logL3 = [np.histogram(r, bin_no, (-1, maxLogL))[0] / noIterations for r in solveL3(f, a4 * f, np.array(N))]
+    logL3 = [np.histogram(r, bin_no, (-1, maxLogL))[0] / noIterations for r in findElementsL3(phisic + bio, f_p + n_e, np.log10(N))]
+    logL4 = [np.histogram(logL4, bin_no, (-1, maxLogL))[0] / noIterations] * len(N)
+    return [logL1, logL2, logL3, logL4]
 
 
-def get_point_model_2(N=nrange, distribution=(0, 0), size=noIterations):
-    astrophysicsProbability = sample_value(np.log10(3.6), -2, np.log10(25), distributions[distribution[0]], size)
-    biotechnicalProbability = sample_value(np.log10(0.081), -4.5, 0, distributions[distribution[1]], size)
-    if size == 1:
-        return ["Simplified", astrophysicsProbability[0], 0, 0, biotechnicalProbability[0],
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                np.log10(N)], (np.log10(N) - (astrophysicsProbability + biotechnicalProbability)).real[0]
-    return [[(np.log10(n) - (astrophysicsProbability + biotechnicalProbability)).real for n in N]]
+def get_point(Ns=nrange2, distribution=(0, 0, 0, 0, 0, 0, 0, 0)):  # get point for selected parameters
+    return np.array(get_point_models(Ns, distribution))
 
 
-# rare earth theory
-def get_point_model_4(N=nrange, distribution=(0, 0, 0, 0, 0, 0, 0, 0), size=noIterations):
-    RStarSample = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[0]],
-                               size)  # rate of new star born
-    nEnvironment = sample_value(np.log10(2), 0, np.log10(5), distributions[distribution[1]],
-                                size)  # number of potentialy eart-like planets per star
-
-    # f_l * f_i * f_c from Drake is equal to f_i * f_c * f_l from RareEarth equation
-    DrakesParam = RStarSample + nEnvironment
-
-    # rare earth equation
-    Nzvezdica_ne = sample_value(np.log10(5e11), np.log10(5e10), np.log10(5e12), distributions[distribution[2]], size)
-    fGalactic = sample_value(-1, np.log10(0.05), np.log10(0.15), distributions[distribution[3]], size)
-    fMetal = sample_value(-1, -2, np.log10(0.2), distributions[distribution[4]], size)
-
-    fMoon = sample_value(-2, -2.5, -1.5, distributions[distribution[5]], size)
-    fJupiter = sample_value(np.log10(0.8), -1, 0, distributions[distribution[6]], size)
-    fNoExtinction = sample_value(-2, -2.5, -1.5, distributions[distribution[7]], size)
-
-    L = (Nzvezdica_ne + fGalactic + fMetal + fMoon + fJupiter + fNoExtinction) - DrakesParam
-    if size == 1:
-        return ["Rare_Earth", 0, RStarSample[0], 0, 0, nEnvironment[0], 0, 0, 0,
-                Nzvezdica_ne[0], fGalactic[0], fMetal[0], fMoon[0], fJupiter[0], fNoExtinction[0],
-                np.log10(N)], L[0].real
-    return [[L.real for _ in N]]
-
-
-def get_point(Ns=nrange, distribution=(0, 0, 0, 0, 0), model=(1, 3)):  # get point for selected parameters
-    rezultati = []
-    if 1 in model:
-        rezultati += get_point_model_1(Ns, distribution)
-    if 2 in model:
-        rezultati += get_point_model_2(Ns, distribution)
-    if 3 in model:
-        rezultati += get_point_model_3(Ns, distribution)
-    if 4 in model:
-        rezultati += get_point_model_4(Ns, distribution)
-    rHist = [[np.histogram(r, bin_no, (-1, maxLogL))[0] for r in rez]
-             for rez in rezultati]
-    hists = [[] for _ in model]  # make some initially empty lists
-    for m in range(len(model)):
-        for n in range(len(Ns)):
-            hists[m].append(rHist[m][n] / noIterations)
-    return np.array(hists)
-
-
-def random_point(supermodel_1=True):
-    j = np.random.randint(0, 4)
-    n1 = 10 ** sample_value(0.5, 0, 3, distributions[np.random.randint(0, len(distributions), 1)[0]], 1)[0]
-    n2 = 10 ** sample_value(6, 0, 8, ["loglinear", "uniform", "loguniform"][np.random.randint(0, 3, 1)[0]], 1)[0]
-    n = n1 if supermodel_1 else n2
-    if j == 0:
-        return get_point_model_1(n1, np.random.randint(0, len(distributions), 6), 1)
-    elif j == 1:
-        return get_point_model_2(n1, np.random.randint(0, len(distributions), 2), 1)
-    elif j == 2:
-        return get_point_model_3([n], np.random.randint(0, len(distributions), 6), 1)
-    else:
-        return get_point_model_4(n1, np.random.randint(0, len(distributions), 8), 1)
-
-
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    ns = [1, 1000, 1000000]
-    plt.figure(figsize=(12, 12), tight_layout=True)
-    for d in range(3):
-        distribution = tuple([d] * 8)
-        pt = get_point(ns, distribution, (1, 2, 3, 4))
-        for i, n in enumerate(ns):
-            plt.subplot(len(ns), 3, d + i * 3 + 1)
-            plt.title(f"{distributions[d]}, N = {n}")
-            for j in [1, 2, 3, 4]:
-                if j in [1, 3]:
-                    plt.plot(xLogL, pt[j-1][i, :].T, label=j)
-            plt.grid()
-            plt.legend()
-    plt.show()
-    print("Done!")
+def random_point():
+    n1 = 10 ** sample_value(bounds["N"], distributions[np.random.randint(0, len(distributions), 1)[0]], 1)[0]
+    n2 = 10 ** sample_value(bounds["N2"], ["loglinear", "uniform", "loguniform"][np.random.randint(0, 3, 1)[0]], 1)[0]
+    points = get_point_models([n1, n2], np.random.randint(0, len(distributions), 6), 1)
+    return points[0] + points[1]

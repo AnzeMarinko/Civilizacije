@@ -1,7 +1,7 @@
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.cluster import KMeans
 from matplotlib.tri import Triangulation
-from config import *
+from models import *
 from sklearn.decomposition import PCA
 
 
@@ -11,7 +11,7 @@ for mu, minB, maxB in [(0.5, 0, 3), (-0.5, -2, 0)]:
                  f" with mean (peak) at {10 ** mu:.2f}")
     plt.subplot(1, 2, 1)
     for d in distributions:
-        p = sample_value(mu, minB, maxB, d, noIterations)
+        p = sample_value((mu, minB, maxB), d, noIterations)
         h, b = np.histogram(p, 32, (minB, maxB))
         plt.plot(b[:-1], h / noIterations, label=d)
     plt.legend()
@@ -21,7 +21,7 @@ for mu, minB, maxB in [(0.5, 0, 3), (-0.5, -2, 0)]:
     plt.subplot(1, 2, 2)
 
     for d in distributions:
-        h, b = np.histogram(10 ** sample_value(mu, minB, maxB, d, noIterations), 32,
+        h, b = np.histogram(10 ** sample_value((mu, minB, maxB), d, noIterations), 32,
                             (10 ** minB, 10 ** maxB if mu < 0 else 10 ** (maxB - 1.5)))
         plt.plot(b[:-1], h / noIterations, label=d)
     plt.legend()
@@ -33,7 +33,7 @@ for mu, minB, maxB in [(0.5, 0, 3), (-0.5, -2, 0)]:
 plt.figure(figsize=(3, 3), dpi=200, tight_layout=True)
 plt.suptitle(f"Distributions of x from 1 to 1e8\nwith mean (peak) at 1e6")
 for d in ["loglinear", "uniform", "loguniform"]:
-    p = sample_value(6, np.log10(np.min(nrange2)), np.log10(np.max(nrange2)), d, noIterations)
+    p = sample_value(bounds["N2"], d, noIterations)
     h, b = np.histogram(p, 32, (np.log10(np.min(nrange2)), np.log10(np.max(nrange2))))
     plt.plot(b[:-1], h / noIterations, label=d)
 plt.legend()
@@ -283,14 +283,13 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         plt.show()
         if supermodel == 1 and model != 0:
             parameter_list = (["log(N)", "log(f_a)", "log(f_b)"] if model == 2 else
-                          ["log(N)", "log(R_*)", "log(f_p)", "log(n_e)", "log(f_i)", "log(f_c)", "log(f_l)"] if model < 4 else
-                          ["log(N)", "log(R_*)", "log(n_e)", "log(N_* n_e)", "log(f_g)", "log(f_pm)", "log(f_m)",
-                           "log(f_j)", "log(f_me)"])
+                          ["log(N)", "log(R_*)", "log(f_p)", "log(n_e)", "log(f_l)", "log(f_i)", "log(f_c)"] if model < 4 else
+                          ["log(R_*)", "log(n_e)", "log(N_* n_e)", "log(f_g)", "log(f_pm)", "log(f_m)"])
             plt.figure(figsize=(10, 5), dpi=300 if sci_view else 100, tight_layout=True)
             plt.suptitle(f"Percent of submodels in model {model} distributed with\n"
                          f"particular distribution on particular parameter in each of\n"
                          f"{k} clusters")
-            columns = np.array([9] + [i+1 for i in range(2 if model == 2 else 6 if model < 4 else 8)])
+            columns = np.array([[7, 1, 2, 3, 4, 5, 6], [7, 2, 6], [7, 1, 2, 3, 4, 5, 6], [2, 4, 3, 5, 6, 7]][model - 1])
             for i in range(k):
                 cluster_parameters = parameters[clusters == i, :][:, columns].T
                 pojavitve = np.array([np.histogram(p, 3, (-1 / 2, 2 + 1 / 2))[0] / cluster_parameters.shape[1] for ip, p in
@@ -319,7 +318,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
             parameter_list = (["log(f_b)", "log(f_a)", "log(N)"] if model == 2 else
                               ["log(N)", "log(f_p)", "log(f_c)"] if model < 4 else
                               ["log(N_* n_e)", "log(f_pm)", "log(f_m)"])
-            columns = np.array([2, 1, 9] if model == 2 else [9, 2, 5] if model < 4 else [3, 5, 6])
+            columns = np.array([7, 3, 1] if model == 2 else [1, 3, 7] if model < 4 else [3, 6, 7])
             plt.figure(figsize=(7, 5), dpi=300 if sci_view else 100, tight_layout=True)
             tuples = sorted(list({tuple(t) for t in parameters[:, columns]}))
             cluster_parameters = np.array([[[tuple(t) for t in parameters[clusters == i, :][:, columns]].count(t)
@@ -338,7 +337,3 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
 
             plt.savefig(f"out/{title.replace(' ', '-')}_cluster-distributions_{k}-clusters.png")
             plt.show()
-
-
-if __name__ == "__main__":
-    cluster(model=1, ks=[4], sci_view=False)

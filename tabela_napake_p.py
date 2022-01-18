@@ -8,8 +8,6 @@ printing_trees = False
 
 data = pd.read_csv(f'{collected_folder}/meti_tabela_csv.csv', index_col=0)
 parameters = list(data.columns)[1:-1]
-parameters = [p.replace("_pm", "_{pm}").replace("_me", "_{me}").replace("log(", "").replace(")", "") for p in parameters]
-parameters = [p.replace("_Expand", " III").replace("_Drake", " I").replace("_Rare_Earth", " IV").replace("_Simplified", " II") for p in parameters]
 label_columns = [("L", lambda x: x),
                  ("P(L < 1 000)", lambda x: np.where(x < 3, 1, 0)),
                  ("P(1 000 < L < 10 000)", lambda x: np.where(x < 4, np.where(x > 3, 1, 0), 0)),
@@ -19,7 +17,8 @@ labels_list = [l[0] for l in label_columns]
 dataTotal = np.load(f'{collected_folder}/meti_parameters.npy')
 labelsTotal = np.load(f'{collected_folder}/meti_labels.npy')
 labelsTotal = np.concatenate([l[1](labelsTotal) for l in label_columns], 1)
-columns_id = [[4, 6, 7, 9, 10, 11, 12], [4, 5, 8], [4, 6, 7, 9, 10, 11, 12], [6, 9, 13, 14, 15, 16, 17, 18]]
+columns_id = [[4, 6, 7, 8, 10, 11, 12], [4, 5, 9],
+              [4, 6, 7, 8, 10, 11, 12], [6, 8, 13, 14, 15, 16, 17, 18]]
 
 data = dataTotal[dataTotal[:, 0] == 1, 1:]
 labels = labelsTotal[dataTotal[:, 0] == 1, :]

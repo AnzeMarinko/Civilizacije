@@ -10,7 +10,7 @@
 Python 3 is needed for running. We recommend
 using virtual environment.
 Then we install all required libraries 
-and generate data (It could take few hours!)
+and generate data (It could take about 30 minutes)
 using terminal:
 ```
 pip install -r requirements.txt
@@ -22,7 +22,7 @@ python generateData_L.py
 We run all the cells in Jupyter notebook: 
 `supermodel.ipynb`. It could take few minutes.
 
-We can convert it after execution 
+We can convert it after execution of all cells
 to `.pdf` format running command:
 ```
 jupyter nbconvert --to pdf supermodel.ipynb --output 01_supermodel
@@ -45,6 +45,5 @@ Abort server when finished using program
 pressing `Ctrl+C`.
 
 ## TODO:
-* uredi in komentiraj kodo
-* obreži slike za v članek
-* dodaj končno verzijo članka
+* uredi in komentiraj kodo, posodobi Github in članek
+* dodaj končno verzijo članka na Github

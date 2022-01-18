@@ -3,7 +3,6 @@ Anže Marinko, januar 2022
 
 Run:  bokeh serve interactive_graphs.py
 """
-import time
 from bokeh.io import curdoc
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, Slider, Select, Div, Band, RadioGroup

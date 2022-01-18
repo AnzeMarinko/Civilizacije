@@ -1,53 +1,28 @@
+import itertools
 from time import time  # to measure runtime
 from os import listdir, mkdir, path  # to get list of files in directory
 from models import *
 from multiprocessing import Pool, freeze_support  # multi-threading
 import pandas as pd
-import nbformat
-from nbconvert.preprocessors import ExecutePreprocessor
-from nbconvert.preprocessors.execute import CellExecutionError
 
 d = len(distributions)
-parameters = list(
-    set(((0, 1), (d1, d2, d3, d4, d5, d6, 0, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
-        for d4 in range(d) for d5 in range(d) for d6 in range(d)))
-parameters += [((0, 2), (d1, d2, 0, 0, 0, 0, 0, 0)) for d1 in range(d) for d2 in range(d)]
-parameters += list(set(((0, 4), (d1, d2, d3, d4, d5, d6, d7, d8)) for d1 in range(d) for d2 in range(d)
-                       for d3 in range(d) for d4 in range(d) for d5 in range(d) for d6 in range(d)
-                       for d7 in range(d) for d8 in range(d)))
-parameters += list(
-    set(((0, 3), (d1, d2, d3, d4, d5, d6, 0, 0)) for d1 in range(d) for d2 in range(d) for d3 in range(d)
-        for d4 in range(d) for d5 in range(d) for d6 in range(d)))
-# maximal number of new histograms:
-n_histograms = len(parameters) * len(list(nrange))
-if not path.exists(collected_folder):
-    mkdir(collected_folder)
+parameters = [*itertools.product([*range(d)], repeat=6)]
 
 
 def generate_by_n(par):  # generate histograms for all maxN-s at selected model and distributions
-    if 2 in par[0]:  # model 2 has only 3 random variables etc.
-        (model, dist) = ((2,), par[1][:2])
-    elif 1 in par[0]:
-        (model, dist) = ((1,), par[1][:6])
-    elif 3 in par[0]:
-        (model, dist) = ((3,), par[1][:6])
-    else:
-        (model, dist) = ((4,), par[1])
-    name = [f"{m}_" + "_".join([str(ps) for ps in dist]) for m in model]  # make name for file
-    if path.exists(f'{data_folder}/hists-{name[0]}.npy') and path.exists(f'{data_folder}/hists-{name[-1]}.npy'):
+    name = "_".join([str(ps) for ps in par])  # make name for file
+    if path.exists(f'{data_folder}/hists-{name}.npy'):
         return 0
     t = time()
     # generate points distributed by model using selected distribution and maxN
-    hists = get_point(nrange2, dist, model)
-    for m in range(len(model)):
-        # write all histograms and moments and list of parameters in files to get processed data faster
-        np.save(f'{data_folder}/hists-{name[m]}.npy', hists[m])
-    percV = round(len(listdir(data_folder)) / (d ** 2 + 2 * d ** 6 + d ** 8) * 40)
-    perc = round(len(listdir(data_folder)) / (d ** 2 + 2 * d ** 6 + d ** 8) * 1000) / 10
+    hists = get_point(nrange2, par)
+    np.save(f'{data_folder}/hists-{name}.npy', hists)
+    ldf = len(listdir(data_folder))
+    percV = round(ldf / len(parameters) * 40)
+    perc = round(ldf / len(parameters) * 100, 1)
     t0 = time() - t
-    print(f"\r\t[{'#' * percV}{' ' * (40 - percV)}]\t\t Model {model[0]} generated in: {t0:.2f} s\t"
-          f"\t{len(listdir(data_folder))}/{d ** 2 + 2 * d ** 6 + d ** 8} ({perc} %)    ",
-          flush=True, end="")
+    print(f"\r\t[{'#' * percV}{' ' * (40 - percV)}]\t  {ldf}/{len(parameters)} ({perc} %)  "
+          f"\t  Distribution {name} generated in: {t0:.2f} s     ", flush=True, end="")
     return time() - t
 
 
@@ -55,16 +30,18 @@ def generate():
     if not path.exists(data_folder):
         mkdir(data_folder)
     freeze_support()
+    ldf = len(listdir(data_folder))
+    percV = round(ldf / len(parameters) * 40)
+    perc = round(ldf / len(parameters) * 100, 1)
+    print(f"\r\t[{'#' * percV}{' ' * (40 - percV)}]\t  {ldf}/{len(parameters)} ({perc} %)     ", flush=True, end="")
     # run generator of histograms on set of free parameters
     t0 = time()
     # use 12 threads, compute cumulative runtime for all histograms
-    tsum = sum(Pool(12).map(generate_by_n, parameters)) + 1e-8
-    # number of random variables: model 1: 6, model 2: 3, model 3: 6
+    tsum = sum(Pool(12).map(generate_by_n, parameters)) + 1e-3
     tend = time() - t0  # runtime used after multi-threading
-    if tend > 1e-1:
-        print(f"\n\n\tTime used: {tend // 3600}h {tend // 60 % 60}min {tend % 60:.2f}s")
-        print(f"\tMultithreading speedup: {n_histograms} histograms in {tend / tsum * 100:.2f} % of time")
-        print("Generating PCA data is done.")
+    print(f"\n\tTime used: {tend // 3600}h {tend // 60 % 60}min {tend % 60:.2f}s")
+    print(f"\tMultithreading speedup: used only {tend / tsum * 100:.2f} % of time ({tsum / tend:.1f}-times faster)")
+    print("Generating PCA data is done.")
 
 
 def collect():
@@ -72,25 +49,13 @@ def collect():
     if (not os.path.exists(f"{collected_folder}/pca_histograms.npy") or
             not os.path.exists(f"{collected_folder}/pca_histograms_supermodel2.npy") or
             not os.path.exists(f"{collected_folder}/pca_parameters.npy")):
-        files = [(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy"
-                  if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}_{p7}_{p8}.npy") else
-                  f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy"
-                  if path.exists(f"{data_folder}/hists-{m}_{p1}_{p2}_{p3}_{p4}_{p5}_{p6}.npy") else
-                  f"{data_folder}/hists-{m}_{p1}_{p2}.npy", dn, m,
-                  [m, p1, p2, p3, p4, p5, p6, p7, p8, dn])
-                 for m in models
-                 for p1 in range(len(distributions))
-                 for p2 in range(len(distributions))
-                 for p3 in range(len(distributions))
-                 for p4 in range(len(distributions))
-                 for p5 in range(len(distributions))
-                 for p6 in range(len(distributions))
-                 for p7 in range(len(distributions))
-                 for p8 in range(len(distributions))
-                 for dn in range(len(distributions))]
-        hists = np.array([weight_dist(np.load(file), dn) for file, dn, m, _ in files if path.exists(file)])
-        hists2 = np.array([weight_dist(np.load(file), dn, 2, m) for file, dn, m, _ in files if path.exists(file)])
-        param = np.array([ps for file, _, _, ps in files if path.exists(file)])
+        files = [(f"{data_folder}/hists-{'_'.join([str(ps) for ps in par])}.npy", list(par)) for par in parameters]
+        all_hists = [(np.load(file), par) for file, par in files if path.exists(file)]
+        hists = np.array([weight_dist(hist, dn) for hists, _ in all_hists
+                          for m, hist in enumerate(hists) for dn in range(d)])
+        hists2 = np.array([weight_dist(hist, dn, False, m+1) for hists, _ in all_hists
+                          for m, hist in enumerate(hists) for dn in range(d)])
+        param = np.array([[m, dn] + par for _, par in all_hists for m in models for dn in range(d)])
         np.save(f"{collected_folder}/pca_histograms.npy", hists)
         np.save(f"{collected_folder}/pca_histograms_supermodel2.npy", hists2)
         np.save(f"{collected_folder}/pca_parameters.npy", param)
@@ -104,25 +69,20 @@ def meti(n):
     if (not os.path.exists(f"{collected_folder}/meti_parameters.npy") or
             not os.path.exists(f"{collected_folder}/meti_labels.npy") or
             not os.path.exists(f"{collected_folder}/meti_tabela_csv.csv")):
-        parameters = ["log(f_a)", "log(R_*)", "log(f_p)", "log(f_b)", "log(n_e)", "log(f_l)", "log(f_i)", "log(f_c)",
-                      "log(N_* n_e)", "log(f_g)", "log(f_pm)", "log(f_m)", "log(f_j)", "log(f_me)"]
+        parameters = ["Supermodel", "Model I", "Model II", "Model III", "Model IV", "N",
+                      "f_a", "R_*", "f_p", "n_e", "f_b", "f_l", "f_i", "f_c",
+                      "N_* n_e", "f_g", "f_{pm}", "f_m", "f_j", "f_{me}"]
         labels = ['log(L)']
-        columns = ["Supermodel", "Model"] + parameters + ['log(N)'] + labels
+        columns = parameters + labels
         frames = []
         for _ in range(n):
-            sm = np.random.randint(1, 3, 1)[0]
-            point = random_point(sm == 1)
-            frames.append([sm] + point[0] + [point[1]])
+            for point in random_point():
+                frames.append(point[0] + [point[1]])
         df = pd.DataFrame(frames, columns=columns)
-        result = pd.get_dummies(df, columns=['Model'])
-        result.index = list(range(1, n + 1))
-        result = result.fillna(0)
-        columns = ['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth',
-                   'log(N)'] + parameters + labels
-        result = result[columns]
-        result.to_csv(f'{collected_folder}/meti_tabela_csv.csv')
-        parameters = result[['Supermodel', 'Model_Drake', 'Model_Simplified', 'Model_Expand', 'Model_Rare_Earth', 'log(N)'] + parameters]
-        labels = result[labels]
+        df.index = list(range(1, n * 8 + 1))
+        df.to_csv(f'{collected_folder}/meti_tabela_csv.csv')
+        parameters = df[parameters]
+        labels = df[labels]
         np.save(f'{collected_folder}/meti_parameters.npy', parameters)
         np.save(f'{collected_folder}/meti_labels.npy', labels)
     tend = time() - t0  # runtime used after multi-threading
@@ -131,7 +91,7 @@ def meti(n):
 
 
 if __name__ == "__main__":
-    print("\nIt will take few hours to execute.")
+    print("\nIt will take about 30 minutes to execute.")
     generate()
     collect()
-    meti(30000)
+    meti(5000)
