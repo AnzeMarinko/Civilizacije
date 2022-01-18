@@ -1,6 +1,6 @@
 import itertools
 from time import time  # to measure runtime
-from os import listdir, mkdir, path  # to get list of files in directory
+from os import listdir, path  # to get list of files in directory
 from models import *
 from multiprocessing import Pool, freeze_support  # multi-threading
 import pandas as pd
@@ -27,8 +27,6 @@ def generate_by_n(par):  # generate histograms for all maxN-s at selected model 
 
 
 def generate():
-    if not path.exists(data_folder):
-        mkdir(data_folder)
     freeze_support()
     ldf = len(listdir(data_folder))
     percV = round(ldf / len(parameters) * 40)
@@ -44,7 +42,7 @@ def generate():
     print("Generating PCA data is done.")
 
 
-def collect():
+def collect():  # collect all generated data to few files
     t0 = time()
     if (not os.path.exists(f"{collected_folder}/pca_histograms.npy") or
             not os.path.exists(f"{collected_folder}/pca_histograms_supermodel2.npy") or
@@ -64,7 +62,7 @@ def collect():
     print("Collecting PCA data is done.")
 
 
-def meti(n):
+def meti(n):  # data for ML
     t0 = time()
     if (not os.path.exists(f"{collected_folder}/meti_parameters.npy") or
             not os.path.exists(f"{collected_folder}/meti_labels.npy") or

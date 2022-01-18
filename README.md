@@ -9,8 +9,8 @@
 
 Python 3 is needed for running. We recommend
 using virtual environment.
-Then we install all required libraries 
-and generate data (It could take about 30 minutes)
+Then install all required libraries 
+and generate data (it takes about 30 minutes)
 using terminal:
 ```
 pip install -r requirements.txt
@@ -45,5 +45,4 @@ Abort server when finished using program
 pressing `Ctrl+C`.
 
 ## TODO:
-* uredi in komentiraj kodo, posodobi Github in članek
 * dodaj končno verzijo članka na Github
