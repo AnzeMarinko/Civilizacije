@@ -31,7 +31,7 @@ def L1toL3():
 # interpolate value of L3 from value of L1 and f_p + n_e
 interp_logL1 = np.linspace(-3, 12, 15 * 128)
 interp_inva4 = np.linspace(bounds["f_p"][1] + bounds["n_e"][1] - 0.1,
-                           bounds["f_p"][2] + bounds["n_e"][2] + 0.1, 128)
+                           bounds["f_p"][2] + bounds["n_e"][2] + 0.1, 64)
 interp_file = f"{collected_folder}/arrayL3.npy"   # write values in file
 if os.path.exists(interp_file):
     array = np.load(interp_file)
@@ -109,7 +109,8 @@ def get_point_models(N=nrange2, distribution=(0, 0, 0, 0, 0, 0, 0, 0), size=noIt
     # make histograms
     logL1 = [np.histogram(np.log10(n) - (phisic + bio), bin_no, (-1, maxLogL))[0] / noIterations for n in N]
     logL2 = [np.histogram(np.log10(n) - (f_a + f_b), bin_no, (-1, maxLogL))[0] / noIterations for n in N]
-    logL3 = [np.histogram(r, bin_no, (-1, maxLogL))[0] / noIterations for r in findElementsL3(phisic + bio, f_p + n_e, np.log10(N))]
+    logL3 = [np.histogram(r, bin_no, (-1, maxLogL))[0] / noIterations
+             for r in findElementsL3(phisic + bio, f_p + n_e, np.log10(N))]
     logL4 = [np.histogram(logL4, bin_no, (-1, maxLogL))[0] / noIterations] * len(N)
     return [logL1, logL2, logL3, logL4]
 
@@ -120,6 +121,6 @@ def get_point(Ns=nrange2, distribution=(0, 0, 0, 0, 0, 0, 0, 0)):  # get histogr
 
 def random_point():   # get only random shots for ML and not whole histograms
     n1 = 10 ** sample_value(bounds["N"], distributions[np.random.randint(0, len(distributions), 1)[0]], 1)[0]
-    n2 = 10 ** sample_value(bounds["N2"], ["loglinear", "uniform", "loguniform"][np.random.randint(0, 3, 1)[0]], 1)[0]
+    n2 = 10 ** sample_value(bounds["N2"], ["loglinear", "lognormal2", "loguniform"][np.random.randint(0, 3, 1)[0]], 1)[0]
     points = get_point_models([n1, n2], np.random.randint(0, len(distributions), 6), 1)
     return points[0] + points[1]

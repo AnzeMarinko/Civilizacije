@@ -168,3 +168,16 @@ def modeli_napake():
         f.write(pr)
     plt.savefig(f'out/importance-random_forest_model.png')
     plt.show()
+
+
+if __name__ == "__main__":
+    data = {(label[0], tuple(columns), subdata): (X, Y) for X, columns, Y, label, subdata in podatki}
+    for columns, subdata in sorted(list(set([(col, s) for _, col, s in data.keys()]))):
+        print("\n", subdata, "    (value, size, mse)")
+        res = [[check_rule([(None, "N", "<=", value)], X, Y, columns, "P" in label)
+                for value in [1, 2, 3] if "N" in columns] +
+               [check_rule([], X, Y, columns, "P" in label)]
+               for (X, Y), label in [(data[(label, columns, subdata)], label) for label in labels_list]]
+        df = pd.DataFrame(res, columns=[f"N <= {v}" for v in [1, 2, 3] if "N" in columns] + ["T"], index=labels_list)
+        print(df)
+

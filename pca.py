@@ -32,7 +32,7 @@ for mu, minB, maxB in [(0.5, 0, 3), (-0.5, -2, 0)]:
 
 plt.figure(figsize=(3, 3), dpi=200, tight_layout=True)
 plt.suptitle(f"Distributions of x from 1 to 1e8\nwith mean (peak) at 1e6")
-for d in ["loglinear", "uniform", "loguniform"]:
+for d in ["loglinear", "lognormal2", "loguniform"]:
     p = sample_value(bounds["N2"], d, noIterations)
     h, b = np.histogram(p, 32, (np.log10(np.min(nrange2)), np.log10(np.max(nrange2))))
     plt.plot(b[:-1], h / noIterations, label=d)

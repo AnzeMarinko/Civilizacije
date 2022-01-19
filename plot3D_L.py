@@ -70,3 +70,8 @@ def draw_histograms_N3D(model=1, distribution=0, supermodel=1):
         ax.set_zlabel("density")
         plt.title(f"N distributed by {distributions[d]}")
     plt.savefig(f"out/distribute-N_3D.png")
+
+
+if __name__ == "__main__":
+    draw_histograms3D(3, 0, 2)
+    plt.show()

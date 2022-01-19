@@ -27,6 +27,7 @@ def generate_by_n(par):  # generate histograms for all maxN-s at selected model 
 
 
 def generate():
+    print("Generating data for PCA ...")
     freeze_support()
     ldf = len(listdir(data_folder))
     percV = round(ldf / len(parameters) * 40)
@@ -43,6 +44,7 @@ def generate():
 
 
 def collect():  # collect all generated data to few files
+    print("Collecting data for PCA ...")
     t0 = time()
     if (not os.path.exists(f"{collected_folder}/pca_histograms.npy") or
             not os.path.exists(f"{collected_folder}/pca_histograms_supermodel2.npy") or
@@ -63,6 +65,7 @@ def collect():  # collect all generated data to few files
 
 
 def meti(n):  # data for ML
+    print("Generating data for ML ...")
     t0 = time()
     if (not os.path.exists(f"{collected_folder}/meti_parameters.npy") or
             not os.path.exists(f"{collected_folder}/meti_labels.npy") or
@@ -85,7 +88,7 @@ def meti(n):  # data for ML
         np.save(f'{collected_folder}/meti_labels.npy', labels)
     tend = time() - t0  # runtime used after multi-threading
     print(f"\tTime used: {tend:.2f}s")
-    print("Generating ML data (shots) is done.\n")
+    print("Generating ML data is done.\n")
 
 
 if __name__ == "__main__":
