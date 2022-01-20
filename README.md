@@ -30,6 +30,7 @@ jupyter nbconvert --to pdf supermodel.ipynb --output 01_supermodel
 
 All the output files are now in:
 * folder `out`,
+* `01_table.tex`,
 * `01_rules.tex` and
 * `01_supermodel.pdf`.
 

@@ -175,11 +175,21 @@ def conditionN():
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', None)
     data = {(label[0], tuple(columns), subdata): (X, Y) for X, columns, Y, label, subdata in podatki}
+    latex = "\\documentclass[numbered]{CSL}\n\\usepackage[utf8]{inputenc}\n" \
+            "\\usepackage{booktabs}\n\\begin{document}\n\n"
+    file = "01_table.tex"
     for columns, subdata in sorted(list(set([(col, s) for _, col, s in data.keys()]))):
         print("\n", subdata, "    (value, size, mse) at condition on N")
         res = [[check_rule([(None, "N", "<=", value)], X, Y, columns, "P" in label)
-                for value in [1, 2, 3] if "N" in columns] +
+                for value in ([1, 2, 3] if "2" in subdata else [1, 2]) if "N" in columns] +
                [check_rule([], X, Y, columns, "P" in label)]
                for (X, Y), label in [(data[(label, columns, subdata)], label) for label in labels_list]]
-        df = pd.DataFrame(res, columns=[f"N <= {10 ** v}" for v in [1, 2, 3] if "N" in columns] + ["T"], index=labels_list)
+        df = pd.DataFrame(res, columns=[f"N <= {10 ** v}" for v in ([1, 2, 3] if "2" in subdata else [1, 2]) if "N" in columns] + ["T"], index=labels_list)
         print(str(df))
+        latex += "\n\n" + subdata + "    (value, size, mse) at condition on N\n\n" + df.to_latex() + "\n"
+    with open(file, "w") as f:
+        f.write(latex + "\n\\end{document}")
+
+
+if __name__ == "__main__":
+    conditionN()
