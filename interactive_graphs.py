@@ -164,7 +164,7 @@ class Properties:
             cube = [self.minimal[self.inds[0]], self.maximal[self.inds[0]]]
             for c, s, t in rule:
                 cube = [cube[0], max(min(t, cube[1]), cube[0])] if s == 0 else [min(max(t, cube[0]), cube[1]), cube[1]]
-            bounds = np.where(self.bound_all[:, :1] > np.mean(self.bound_all[:, 1:]), cube[1], cube[0])
+            bounds = np.where(self.bound_all[:, :1] > np.mean(self.bound_all[:, :1]), cube[1], cube[0])
             bound = np.concatenate([bounds, self.bound_all[:, 1:]], 1)
         else:
             cube = [[self.minimal[i], self.maximal[i]] for i in range(len(self.columns)) if i in self.inds]
