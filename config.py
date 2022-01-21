@@ -49,9 +49,14 @@ def sample_value(bound, distribution="lognormal", size=noIterations, i=0):
     elif distribution == "gauss":
         sigma = (10 ** tov - 10 ** mu) / 1.5 if mu < 0 else (10 ** mu - 10 ** fromv)
         d = np.log10(np.abs(np.random.normal(10 ** mu, sigma, size)))  # lognormal
-    if i > 10:  # try 10-times to get values in interval
-        return d
-    return np.where((d > d * 0 + tov) + (d < d * 0 + fromv), sample_value(bound, distribution, size, i + 1), d)
+    out = (d > tov) + (d < fromv)
+    if i < 10 and np.sum(out) > 0:  # try 10-times to get values in interval
+        d[out] = sample_value(bound, distribution, np.sum(out), i + 1)
+    if np.sum(d > tov) > 0:
+        d[d > tov] = tov
+    if np.sum(d < fromv) > 0:
+        d[d < fromv] = fromv
+    return d
 
 
 # all parameters peaks, minimums and maximums in logarithmic scale

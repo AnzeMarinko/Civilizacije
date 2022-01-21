@@ -72,7 +72,7 @@ class Properties:
                 continue
             tresh = 10 ** round(thresh, 1)
             prob = "f_" in col and "f_a" not in col
-            tresh = round(tresh * (100 if prob else 1), round(1 - thresh) - (2 if prob else 0)) \
+            tresh = round(tresh * (100 if prob else 1), int(round(1 - thresh) - (2 if prob else 0))) \
                 if "N_*" not in col else f"{round(tresh / 1e10, 1)} * " + "10^{10}"
             rule_text.append(f"({col} {side.replace('<=', bs + 'leq')} {tresh}{'~' + bs + '%' if prob else ''})")
         rule_text = " \\land ".join(rule_text)

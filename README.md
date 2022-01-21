@@ -46,4 +46,9 @@ Abort server when finished using program
 pressing `Ctrl+C`.
 
 ## TODO:
+* preberi še del s pravili od Model I (L) do tabel
+* za interaktivne grafe daj raje L in P(probability condition), 
+  kjer je P odvisen od zgornje in spodnje meje za L, ki jo nastaviš in se ob tem ne računa vse na novo
+* popravi izris ko je samo en pogoj v pravilu
+* glajenje 3D slik
 * dodaj končno verzijo članka na Github

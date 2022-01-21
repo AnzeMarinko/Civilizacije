@@ -303,7 +303,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
                                  va='center', ha='center')
                 if i == 0:
                     plt.ylabel("Parameter")
-                    plt.yticks(np.arange(0, len(parameter_list)), parameter_list)
+                    plt.yticks(np.arange(0, len(parameter_list)), [f"${p}$" for p in parameter_list])
                 else:
                     plt.yticks([])
                 plt.xticks(np.arange(0, 3), distributions, rotation=90)

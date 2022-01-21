@@ -2,6 +2,7 @@ from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 from models import *
 import matplotlib.pyplot as plt
+
 plt.rcParams['figure.facecolor'] = 'white'
 
 printing_trees = False
@@ -78,8 +79,8 @@ def rules_from_tree(tree, columns, printing_trees=printing_trees):
             if is_leaves[i]:
                 print("{space}node={node} is a leaf node with value {value:.1f} with {n_node_samples} samples,"
                       " gini impurity = {impurity}.".format(
-                        space=(node_depth[i] + 1) * "\t", node=i, value=value[i], n_node_samples=n_node_samples[i],
-                        impurity=impurity[i]))
+                    space=(node_depth[i] + 1) * "\t", node=i, value=value[i], n_node_samples=n_node_samples[i],
+                    impurity=impurity[i]))
             else:
                 print("{space}node={node} is a split node: go to node {left} if {feature} <= {threshold:.1f} "
                       "else to node {right}.".format(space=(node_depth[i] + 1) * "\t", node=i, left=children_left[i],
@@ -93,13 +94,13 @@ def rules_from_tree(tree, columns, printing_trees=printing_trees):
         if "Model" in col:
             return [[(f"not~{col.replace(' ', '~')}", col, "<=", 0.5)] + r for r in recursive_rule(children_left[i])] + \
                    [[(col.replace(' ', '~'), col, ">", 0.5)] + r for r in recursive_rule(children_right[i])] + \
-                    [[]]
+                   [[]]
         tresh = 10 ** round(threshold[i], 1)
         prob = "f_" in col and "f_a" not in col
         tresh = round(tresh * (100 if prob else 1), round(1 - threshold[i]) - (2 if prob else 0)) \
             if "N_*" not in col else f"{round(tresh / 1e10, 1)} * " + "10^{10}"
         tresh = f"{tresh}~\\%" if prob else tresh
-        return [[(f"{col} \\leq {tresh}", col, "<=", threshold[i])] + r for r in recursive_rule(children_left[i])] +\
+        return [[(f"{col} \\leq {tresh}", col, "<=", threshold[i])] + r for r in recursive_rule(children_left[i])] + \
                [[(f"{col} > {tresh}", col, ">", threshold[i])] + r for r in recursive_rule(children_right[i])] + \
                [[]]
 
@@ -131,7 +132,7 @@ def modeli_napake():
                                       max_depth=4, random_state=1, min_samples_leaf=0.03)  # regresor
         model = model.fit(X, Y)
         feat_importances = pd.Series(model.feature_importances_,
-                                     [f"${p}$" if "(" in p else p for p in columns])
+                                     [f"${p}$" if "Model" not in p else p for p in columns])
         plt.subplot(len(label_columns), 7, j + 1)
         feat_importances.plot(kind='bar')
         if j // 7 == 0:
@@ -178,17 +179,27 @@ def conditionN():
     latex = "\\documentclass[numbered]{CSL}\n\\usepackage[utf8]{inputenc}\n" \
             "\\usepackage{booktabs}\n\\begin{document}\n\n"
     file = "01_table.tex"
-    for columns, subdata in sorted(list(set([(col, s) for _, col, s in data.keys()]))):
+    for columns, subdata in [(tuple(col), s) for _, col, _, l, s in podatki if "P" not in l[0]]:
         print("\n", subdata, "    (value, size, mse) at condition on N")
-        res = [[check_rule([(None, "N", "<=", value)], X, Y, columns, "P" in label)
-                for value in ([1, 2, 3] if "2" in subdata else [1, 2]) if "N" in columns] +
+        sel = [0, 1, 4, round(np.max(xLogN2))] if "2" in subdata else [0, 1, 2, 3]
+        res = [[check_rule([(None, "N", ">", v1)] if v2 > sel[-2] else
+                           [(None, "N", "<=", v2), (None, "N", ">", v1)] if v1 > 0 else
+                           [(None, "N", "<=", v2)], X, Y, columns, "P" in label)
+                for v1, v2 in zip(sel[:-1], sel[1:]) if "N" in columns] +
                [check_rule([], X, Y, columns, "P" in label)]
                for (X, Y), label in [(data[(label, columns, subdata)], label) for label in labels_list]]
-        df = pd.DataFrame(res, columns=[f"N <= {10 ** v}" for v in ([1, 2, 3] if "2" in subdata else [1, 2]) if "N" in columns] + ["T"], index=labels_list)
+        sizes = [f"{r[1]} %" for r in res[0]]
+        cols = [f"lbrack {v1}, {v2} rbrack" for v1, v2 in zip(sel[:-1], sel[1:])
+                 if "N" in columns] + [f"lbrack {sel[0]}, {sel[-1]} rbrack"]
+        res = [sizes, [r[0] for r in res[0]]] + [[f"{int(val[0])} %" for val in r] for r in res[1:]]
+        df = pd.DataFrame(np.array(res), columns=cols, index=["Size", "mean(L)"] + labels_list[1:])
         print(str(df))
-        latex += "\n\n" + subdata + "    (value, size, mse) at condition on N\n\n" + df.to_latex() + "\n"
+        latex += "\\setlength{\\tabcolsep}{0.5em}\n"
+        latex += df.to_latex(caption=f"{subdata}, values on intervals of log(N) \\label" +
+                                     "{table:N" + subdata.replace(" ", "") + "}").replace("l" + "l" * len(cols), "l|" + "c" * (len(cols)-1) + "|r") + "\n"
     with open(file, "w") as f:
-        f.write(latex + "\n\\end{document}")
+        f.write(latex.replace("<=", "\\leq").replace(
+            " %", " \\%").replace("lbrack", "\\small{$\\lbrack").replace("rbrack", "\\rbrack$}") + "\n\\end{document}")
 
 
 if __name__ == "__main__":
