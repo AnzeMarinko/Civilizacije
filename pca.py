@@ -96,8 +96,8 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         plt.figure(figsize=(5, 5), dpi=300, tight_layout=True)  # draw distributions
 
         ax = plt.subplot(projection='3d')
-        ax.plot_surface(X, Y, super_model, cmap=plt.get_cmap("jet"),
-                            shade=True, alpha=0.8)
+        ax.plot_surface(X, Y, super_model, cmap=cmap,
+                            shade=True, alpha=0.95)
         plt.xlabel("log(L)")
         plt.ylabel("log(N)")
         plt.suptitle(title, size=20)
@@ -106,7 +106,7 @@ def cluster(model=0, ks=None, supermodel=1, sci_view=True):
         plt.show()
 
         plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)
-        plt.imshow(super_model[::-1, :], cmap=plt.get_cmap("jet"),
+        plt.imshow(super_model[::-1, :], cmap=cmap,
                    extent=[xLogL.min(), xLogL.max(), (xLogN if supermodel == 1 else xLogN2).min(),
                            (xLogN if supermodel == 1 else xLogN2).max()])
         plt.xlabel("log(L)")

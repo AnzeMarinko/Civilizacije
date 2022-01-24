@@ -16,6 +16,7 @@ nrange = [10 ** (i / logaritmic_steps_in_1logN) for i in range(0, 3 * logaritmic
 nrange2 = [10 ** (i / logaritmic_steps_in_1logN) for i in range(0, 8 * logaritmic_steps_in_1logN + 1)]  # N = 1:1e8
 xLogN = np.log10(nrange)
 xLogN2 = np.log10(nrange2)
+cmap = plt.get_cmap("viridis")
 
 distributions = ["lognormal", "gauss", "loglinear"]  # all possible distributions
 models = [1, 2, 3, 4]    # all possible models

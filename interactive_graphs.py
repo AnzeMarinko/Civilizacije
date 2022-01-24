@@ -5,24 +5,28 @@ Run:  bokeh serve interactive_graphs.py
 """
 from bokeh.io import curdoc
 from bokeh.layouts import column, row
-from bokeh.models import ColumnDataSource, Slider, Select, Div, Band, RadioGroup
+from bokeh.models import ColumnDataSource, Slider, Select, Div, Band, RadioGroup, RangeSlider
 from bokeh.plotting import figure
-from tabela_napake_p import podatki, labels_list
+from tabela_napake_p import podatki, maxLogL
 from bokeh.palettes import *
 from sklearn.decomposition import PCA
 from scipy.spatial import ConvexHull
 import itertools
 
-data = {(label[0], subdata): (X, columns, Y) for X, columns, Y, label, subdata in podatki}
+data = {subdata: (X, columns, Y) for X, columns, Y, subdata in podatki}
 sides = ["<=", ">"]
 bs = '\\'
-labels = labels_list
-models = sorted(list(set([s for _, s in data.keys()])))
+label_columns = [("Regression: L", lambda x, a, b: np.reshape(x, (1, -1)).T),
+                 ("Classification: P(a < L < b)", lambda x, a, b: np.reshape(np.where(x < b, np.where(x > a, 1, 0), 0),
+                                                                             (1, -1)).T)]
+labels = [l[0] for l in label_columns]
+models = sorted(list(set(data.keys())))
 
 # Set up widgets
 latex_rule = Div(text=r"Rule in LaTeX")
-label_select = Select(title="Label", value=labels[0], options=labels)
 model_select = Select(title="Model", value=models[0], options=models)
+label_select = Select(title="Label", value=labels[0], options=labels)
+range_L_slider = RangeSlider(start=0, end=maxLogL, value=(0, 3), step=0.25, title="Range (a, b) of L in classification")
 rule_len = Select(title="Rule length", value="0", options=["0", "1", "2", "3", "4"])
 rule_parts = [(Select(title=f"Rule {r + 1} column", value="N", options=["N"]),
                RadioGroup(labels=sides, active=0),
@@ -49,11 +53,12 @@ plot.add_layout(Band(base='x', lower='lower', upper='upper', source=areaDown, fi
 class Properties:
     def __init__(self):
         self.label, self.model, self.X, self.columns, self.Y, self.minimal, self.mean, self.maximal = (None,) * 8
-        self.bounds_all, self.selection, self.inds, self.not_inds, self.pca, self.data, self.color = (None,) * 7
-        self.mx, self.dx, self.my, self.dy, self.std, self.bound_all = (None,) * 6
+        self.bounds_all, self.selection, self.inds, self.not_inds, self.pca, self.color = (None,) * 6
+        self.data = np.array([[]])
+        self.mx, self.dx, self.my, self.dy, self.std, self.bound_all, self.L, self.a, self.b = (None,) * 9
 
     def rule_values(self, rule, prob):
-        trues = self.Y > -10
+        trues = self.Y.T > -10
         for _, col, side, thresh in rule:
             if ">" in side:
                 trues = (self.X[:, self.columns.index(col)] > thresh) * trues
@@ -61,8 +66,8 @@ class Properties:
                 trues = (self.X[:, self.columns.index(col)] <= thresh) * trues
         if np.sum(trues) == 0:
             return 0, 0, 0
-        return round(np.mean(self.Y[trues]) * 100 if prob else 10 ** np.mean(self.Y[trues]), 0 if prob else 1), round(
-            np.mean(trues) * 100), round(np.std(self.Y[trues]) ** 2, 3)
+        return round(np.mean(self.Y.T[trues]) * 100 if prob else 10 ** np.mean(self.Y.T[trues]), 0 if prob else 1), round(
+            np.mean(trues) * 100), round(np.std(self.Y.T[trues]) ** 2, 3)
 
     def process_rule(self, rule):
         rule_text = [] if len(rule) else ["(T)"]
@@ -76,8 +81,11 @@ class Properties:
                 if "N_*" not in col else f"{round(tresh / 1e10, 1)} * " + "10^{10}"
             rule_text.append(f"({col} {side.replace('<=', bs + 'leq')} {tresh}{'~' + bs + '%' if prob else ''})")
         rule_text = " \\land ".join(rule_text)
+        label_text = f"P({str(round(10 ** self.a, 2 - round(range_L_slider.value[0]))) + ' < ' if range_L_slider.value[0] > 0.1 else ''}L" \
+                     f"{' < ' + str(round(10 ** self.b, 2 - round(range_L_slider.value[1]))) if range_L_slider.value[1] < maxLogL - 0.1 else ''})" \
+                     f"" if "P" in self.label else "L"
         val, siz, mse = self.rule_values(rule, "P" in self.label)
-        rule_text = f"${rule_text} \\Rightarrow {self.label} = {val}{'~' + bs + '%' if 'P' in self.label else ''}$," \
+        rule_text = f"${rule_text} \\Rightarrow {label_text} = {val}{'~' + bs + '%' if 'P' in self.label else ''}$," \
                     f"\\hfill Size={siz} \\%, MSE={mse}"
         rule = rule_text.split('$')[1]
         tex = "<big>Rule in LaTeX:</big>"
@@ -85,18 +93,16 @@ class Properties:
 
     def update(self, attrname, old, new):
         # izbor pogleda in modela
-        self.label = label_select.value
         self.model = model_select.value
         # nastavitve za izbor
-        self.X, self.columns, self.Y = data[(self.label, self.model)]
+        self.X, self.columns, self.L = data[self.model]
         self.minimal = np.round(np.min(self.X, 0) - 0.05, 1)
         self.mean = np.round(np.mean(self.X, 0), 1)
         self.maximal = np.round(np.max(self.X, 0) + 0.05, 1)
         self.bounds_all = np.array([[[self.minimal[i], self.maximal[i]][c] for i, c in enumerate(comb)]
                                     for comb in itertools.product([0, 1], repeat=len(self.columns))])
-        colors = Turbo256[25:-25] if "P" in self.label else Turbo256
-        n_colors = len(colors)
-        self.color = [colors[int(i)] for i in np.round((self.Y - np.min(self.Y)) / (np.max(self.Y) - np.min(self.Y)) * (n_colors - 1))]
+        self.data = np.array([[]])
+        self.new_label(None, None, None)
         rule_len.value = "0"
         self.selection = []
         self.std = sorted([(-s, i) for i, s in enumerate(np.std(self.X, 0))])
@@ -112,6 +118,20 @@ class Properties:
             r2.end = self.maximal[j]
             r2.visible = False
         self.update_part(None, None, None)
+
+    def new_label(self, attrname, old, new):
+        self.label = label_select.value
+        self.a = range_L_slider.value[0] if range_L_slider.value[0] > 0.1 else -10
+        self.b = range_L_slider.value[1] if range_L_slider.value[1] < maxLogL - 0.1 else maxLogL * 2
+        self.Y = label_columns[labels.index(self.label)][1](self.L, self.a, self.b)
+        colors = Turbo256[25:-25] if "P" in self.label else Turbo256
+        n_colors = len(colors)
+        self.color = [colors[int(i)] for i in
+                      np.round((self.Y - np.min(self.Y)) / max(np.max(self.Y) - np.min(self.Y), 1e-3) * (n_colors - 1))]
+        if np.prod(self.data.shape) > 0:
+            points.data = dict(x=(self.data[:, 0] - self.mx) / self.dx,
+                               y=(self.data[:, 1] - self.my) / self.dy, color=self.color)
+            self.frule(None, None, None)
 
     def update_part(self, attrname, old, new):
         new_selection = [rule_parts[i][0].value for i in range(int(rule_len.value))]
@@ -211,19 +231,22 @@ class Properties:
 main_prop = Properties()
 main_prop.update(None, None, None)
 
-widgets1 = [label_select, model_select]
-widgets2 = [rule_len] + [r for r, _, _ in rule_parts]
-widgets3 = [r for _, r, _ in rule_parts]
-widgets4 = [r for _, _, r in rule_parts]
+widgets1 = [model_select]
+widgets2 = [label_select, range_L_slider]
+widgets3 = [rule_len] + [r for r, _, _ in rule_parts]
+widgets4 = [r for _, r, _ in rule_parts]
+widgets5 = [r for _, _, r in rule_parts]
 for w in widgets1:
     w.on_change('value', main_prop.update)
 for w in widgets2:
-    w.on_change('value', main_prop.update_part)
+    w.on_change('value', main_prop.new_label)
 for w in widgets3:
-    w.on_change('active', main_prop.frule)
+    w.on_change('value', main_prop.update_part)
 for w in widgets4:
+    w.on_change('active', main_prop.frule)
+for w in widgets5:
     w.on_change('value', main_prop.frule)
-widgets = [label_select, model_select, rule_len]
+widgets = [model_select, label_select, range_L_slider, rule_len]
 for r in rule_parts:
     widgets += list(r)
 

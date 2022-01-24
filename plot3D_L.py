@@ -15,8 +15,8 @@ def draw_histograms3D(model=1, distribution=0, supermodel=1):
     d = distribution[0]
     ax = plt.subplot(1, 1, 1, projection='3d')
     # Plot the surface
-    ax.plot_surface(X, Y, weight_dist(data, d, supermodel == 1, model), cmap=plt.get_cmap("jet"),
-                    shade=True, alpha=0.8, linewidth=0)
+    ax.plot_surface(X, Y, weight_dist(data, d, supermodel == 1, model), cmap=cmap,
+                    shade=True, alpha=0.95, linewidth=0)
     # ax.view_init(60, 270)
     ax.set_xlabel("log(L)")
     ax.set_ylabel("log(N)")
@@ -25,7 +25,7 @@ def draw_histograms3D(model=1, distribution=0, supermodel=1):
     plt.savefig(f"out/{title.replace(' ', '-')}_{distributions[d]}_3D.png")
 
     plt.figure(figsize=(5, 4), dpi=300, tight_layout=True)
-    plt.imshow(weight_dist(data, d, supermodel == 1, model)[::-1, :], cmap=plt.get_cmap("jet"),
+    plt.imshow(weight_dist(data, d, supermodel == 1, model)[::-1, :], cmap=cmap,
                extent=[xLogL.min(), xLogL.max(), xlogn.min(), xlogn.max()])
     plt.xlabel("log(L)")
     plt.ylabel("log(N)")
@@ -62,8 +62,8 @@ def draw_histograms_N3D(model=1, distribution=0, supermodel=1):
     for d in range(len(distributions)):
         ax = plt.subplot(1, 3, d+1, projection='3d')
         # Plot the surface
-        ax.plot_surface(X, Y, weight_dist(data, d, supermodel == 1, model), cmap=plt.get_cmap("jet"),
-                        shade=True, alpha=0.8)
+        ax.plot_surface(X, Y, weight_dist(data, d, supermodel == 1, model), cmap=cmap,
+                        shade=True, alpha=0.95)
         # ax.view_init(60, 270)
         ax.set_xlabel("log(L)")
         ax.set_ylabel("log(N)")
